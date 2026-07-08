@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../domain/constants";
+import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 
@@ -9,11 +9,10 @@ function useCanvasScale() {
 
   useEffect(() => {
     const computeScale = () => {
-      const fit = Math.min(
-        window.innerWidth / CANVAS_WIDTH,
-        window.innerHeight / CANVAS_HEIGHT,
-      );
-      setScale(Math.min(fit, 1));
+      // Scales to fill the viewport width, but never shrinks past the
+      // reference small-desktop width — below that the page just scrolls.
+      const effectiveWidth = Math.max(window.innerWidth, MIN_DESKTOP_WIDTH);
+      setScale(effectiveWidth / CANVAS_WIDTH);
     };
 
     computeScale();
@@ -63,7 +62,7 @@ export default function AppShell() {
   };
 
   return (
-    <main className={styles.container} data-testid="farm-shell">
+    <main className={styles.container} data-testid="farm-shell" style={{ minWidth: MIN_DESKTOP_WIDTH }}>
       <div
         className={styles.scaleViewport}
         style={{
