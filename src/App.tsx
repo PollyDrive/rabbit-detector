@@ -1,13 +1,8 @@
-import { FarmMap } from "./components/FarmMap";
-import "./App.css";
+import './App.css';
+import AppShell from "./components/AppShell";
 
 function App() {
-  return (
-    <div className="app">
-      <h1>Ферма невидимых кроликов</h1>
-      <FarmMap />
-    </div>
-  );
+  return <AppShell />;
 }
 
 export default App;
