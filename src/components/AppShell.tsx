@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./AppShell.module.css";
-import { CANVAS_WIDTH, CANVAS_HEIGHT, ZONES } from "../domain/constants";
-import type { ZoneId } from "../domain/constants";
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../domain/constants";
+import { FarmMap } from "./FarmMap";
 
 function ControlArea() {
   return (
@@ -27,16 +27,16 @@ function DashboardArea() {
 function OverlayButtons() {
   return (
     <div className="overlay-buttons">
-      <button>AI Worklog</button>
-      <button>Legend</button>
+      <div style={{ cursor: 'pointer' }}>AI Worklog</div>
+      <div style={{ cursor: 'pointer' }}>Legend</div>
     </div>
   );
 }
 
 export default function AppShell() {
-  const [activePopup, setActivePopup] = useState<ZoneId | null>(null);
+  const [activePopup, setActivePopup] = useState<string | null>(null);
 
-  const handleZoneClick = (zone: ZoneId) => {
+  const handleZoneClick = (zone: string) => {
     setActivePopup(zone);
   };
 
@@ -60,20 +60,7 @@ export default function AppShell() {
           <DashboardArea />
         </div>
         
-        {Object.entries(ZONES).map(([zoneId, box]) => (
-          <div
-            key={zoneId}
-            className={styles.hitbox}
-            data-testid={`hitbox-${zoneId}`}
-            onClick={() => handleZoneClick(zoneId as ZoneId)}
-            style={{
-              left: box.x1,
-              top: box.y1,
-              width: box.x2 - box.x1,
-              height: box.y2 - box.y1
-            }}
-          />
-        ))}
+        <FarmMap onZoneClick={handleZoneClick} />
 
         {activePopup && (
           <div className={styles.popup} data-testid="zone-popup">
