@@ -11,7 +11,7 @@
 
 ## Роли
 
-- `PM` режет фичу на issues, пишет acceptance tests (`*.test.tsx` для React-сценариев), создаёт `stage_*_issue_*_test` и сразу открывает draft PR `stage_*_issue_*_test -> preprod`.
+- `PM` режет фичу на issues (нарезка на все stage наперёд не запрещена, от веток она не зависит). Когда реально стартует работа над конкретным issue, PM создаёт `stage_*_issue_*_test` от свежего `preprod`, пишет acceptance tests (`*.test.tsx` для React-сценариев) и сразу открывает draft PR `stage_*_issue_*_test -> preprod`.
 - `implementer` берёт `ready` issues, делает `stage_*_issue_*`, пишет код и unit-тесты, открывает PR в `stage_*_issue_*_test`.
 - `reviewer` проверяет PR `stage_*_issue_* -> stage_*_issue_*_test`, возвращает на доработку с лейблами (`bug`, `in-progress`) или мержит в `stage_*_issue_*_test`.
 - `reviewer` пишет GH-комментарий с `verdict / reasoning / judge_score / model`, не stdout.
@@ -29,7 +29,8 @@
 - Один implementer PR = одна issue.
 - PM и Implementer работают в своих отдельных worktree.
 - Issue создаётся сразу со статус-лейблом.
-- `draft` — старт.
+- `draft` — задача полностью описана по шаблону (`Goal`, `Why`, `Scope`, `Out of Scope`, `Acceptance Criteria`, `Edge Cases`, `Technical Notes` заполнены), но `stage_*_issue_*_test`-ветки, acceptance tests и draft PR ещё нет. Недописанный/пустой issue в `draft` не переводится — текст должен быть готов к работе implementer'а, только ветка отложена.
+- Ветку/тесты/draft PR PM создаёт вторым заходом, когда стартует работа именно над этим stage — не обязательно сразу при нарезке issue. Так `_test`-ветка всегда режется от свежего `preprod`, без дрейфа за время, пока issue лежал нарезанным.
 - PM ставит `ready` только после того, как созданы `stage_*_issue_*_test`, draft PR и acceptance tests (`*.test.tsx` там, где нужен JSX).
 - `bug` после трёх возвратов подряд превращается в `human-needed`.
 - Reviewer пишет вердикт GH-комментом:
