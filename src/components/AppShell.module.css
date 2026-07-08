@@ -3,18 +3,16 @@
   height: 100vh;
   overflow: auto;
   background: var(--bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.scaleViewport {
+  position: relative;
 }
 
 .shell {
   position: relative;
-  /* background-image: url("/assets/canvas.png"); */
-  /* Assuming canvas is in public/ or assets/, vite handles /assets/canvas.png if it is in public/assets/ */
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  flex-shrink: 0;
   border: 1px solid #ccc;
 }
 
@@ -51,13 +49,14 @@
 
 .dashboardArea {
   position: absolute;
-  left: 1450px;
-  top: 1080px;
+  right: 0;
+  bottom: 0;
   width: 1302px;
   height: 456px;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border: 1px dashed blue;
+  z-index: 5;
 }
 
 .popup {

@@ -1,3 +1,5 @@
+import styles from "./AppShell.module.css";
+
 export interface ZonePopoverProps {
   location: string;
   onClose: () => void;
@@ -5,7 +7,7 @@ export interface ZonePopoverProps {
 
 export function ZonePopover({ location, onClose }: ZonePopoverProps) {
   return (
-    <dialog open aria-label="Ручной ввод" className="zone-popover">
+    <dialog open aria-label="Ручной ввод" className={styles.popup}>
       <h2>Ручной ввод</h2>
       <div>
         <input readOnly value={location} />
