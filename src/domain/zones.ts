@@ -35,8 +35,8 @@ export const ZONES: Record<Location, ZoneConfig> = {
   },
   'Сарай': {
     location: 'Сарай',
-    hitbox: { x: [1690, 2120], y: [110, 500] },
-    badgeAnchor: { x: 2120, y: 110 },
+    hitbox: { x: [1660, 2200], y: [90, 500] },
+    badgeAnchor: { x: 2200, y: 90 },
   },
   'Забор — Запад': {
     location: 'Забор — Запад',
@@ -50,12 +50,12 @@ export const ZONES: Record<Location, ZoneConfig> = {
   },
   'Забор — Юго-Восток': {
     location: 'Забор — Юго-Восток',
-    hitbox: { x: [2440, 2550], y: [780, 890] },
-    badgeAnchor: { x: 2550, y: 780 },
+    hitbox: { x: [2385, 2470], y: [695, 890] },
+    badgeAnchor: { x: 2470, y: 695 },
   },
   'Забор — Восток': {
     location: 'Забор — Восток',
-    hitbox: { x: [2610, 2720], y: [430, 560] },
-    badgeAnchor: { x: 2720, y: 430 },
+    hitbox: { x: [2600, 2700], y: [420, 520] },
+    badgeAnchor: { x: 2700, y: 420 },
   },
 };
