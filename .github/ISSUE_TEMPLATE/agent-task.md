@@ -31,6 +31,12 @@ assignees: ""
 
 - `none` или список issue / task title
 
+## Branch / PR
+
+- target branch:
+- draft PR:
+- acceptance tests live in:
+
 ## Scope
 
 Что входит в задачу:
