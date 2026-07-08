@@ -22,6 +22,8 @@ export function FarmMap({ onZoneClick }: FarmMapProps) {
           onClick={() => onZoneClick?.(zone.location)}
           data-testid={`zone-${zone.location}`}
           title={zone.location}
+          role="button"
+          tabIndex={0}
         />
       ))}
     </div>
