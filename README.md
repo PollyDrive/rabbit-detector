@@ -4,7 +4,7 @@
 
 ## Стек
 
-React 19 + TypeScript + Vite · `useReducer` + Context (reducer только append, projection — чистый селектор) · Zod (runtime-валидация матрицы локация×сигнал) · CSS Modules · Vitest + React Testing Library + Playwright (smoke).
+React 19 + TypeScript + Vite · `useReducer` + Context (reducer только append, projection — чистый селектор) · Zod (runtime-валидация матрицы локация×сигнал) · CSS Modules · Vitest + React Testing Library.
 
 ## Запуск
 
