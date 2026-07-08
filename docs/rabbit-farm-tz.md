@@ -332,7 +332,7 @@ priority = presence × asset_value        // диапазон 0..10 при max a
 | Состояние / event log | `useReducer` + Context | Reducer **только append'ит** (единая точка входа, тут же Zod-guard по 4.4). Projection (presence/priority/численность) — **чистый мемоизированный селектор поверх лога**, не пишется в стейт. Reducer и projection строго разведены. Zustand не берём (стейта немного); при реальной боли миграция дёшева — стейт уже централизован в Provider |
 | Runtime-валидация | Zod | Compile-time enum'ов недостаточно: пара location × event_type валидируется в runtime на входе в reducer (форма + симулятор + seed через один guard) |
 | Стилизация | CSS Modules + CSS variables | Координатный layout с фикс-панелями поверх background — явные классы/keyframes, не utility-слой |
-| Тесты | Vitest + RTL (ядро), Playwright (1–2 smoke) | Приоритет — доменная математика: окно, presence, численность по одновременности, τ, пороги рекомендаций, seed, fast-forward. Smoke: run/pause, ручной ввод, выпадение событий после fast-forward |
+| Тесты | Vitest + RTL | Приоритет — доменная математика: окно, presence, численность по одновременности, τ, пороги рекомендаций, seed, fast-forward. Компонентные smoke (run/pause, ручной ввод, fast-forward) — тоже через RTL, отдельный e2e-раннер не нужен |
 | Бэкенд | Отсутствует | Всё in-memory на клиенте |
 | Симулятор | Кастомная реализация на таймере | См. 3.6 |
 
