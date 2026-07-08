@@ -1,9 +1,7 @@
+import AppShell from "./components/AppShell";
+
 function App() {
-  return (
-    <div className="app">
-      <h1>Ферма невидимых кроликов</h1>
-    </div>
-  )
+  return <AppShell />;
 }
 
-export default App
+export default App;
