@@ -3,6 +3,36 @@ import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, ZONES } from "../domain/constants";
 import type { ZoneId } from "../domain/constants";
 
+function ControlArea() {
+  return (
+    <div className="control-area">
+      <div className="control-section">
+        <h2>Симулятор</h2>
+      </div>
+      <div className="control-section parameters">
+        <h3>Параметры estimator'а</h3>
+      </div>
+    </div>
+  );
+}
+
+function DashboardArea() {
+  return (
+    <div className="dashboard-area">
+      <h2>Дашборд</h2>
+    </div>
+  );
+}
+
+function OverlayButtons() {
+  return (
+    <div className="overlay-buttons">
+      <button>AI Worklog</button>
+      <button>Legend</button>
+    </div>
+  );
+}
+
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<ZoneId | null>(null);
 
@@ -20,9 +50,15 @@ export default function AppShell() {
           height: CANVAS_HEIGHT,
         }}
       >
-        <div className={styles.controlArea} data-testid="control-area">Controls</div>
-        <div className={styles.overlayTriggers} data-testid="overlay-triggers">Overlays</div>
-        <div className={styles.dashboardArea} data-testid="dashboard-area">Dashboard</div>
+        <div className={styles.controlArea} data-testid="control-area">
+          <ControlArea />
+        </div>
+        <div className={styles.overlayTriggers} data-testid="overlay-triggers">
+          <OverlayButtons />
+        </div>
+        <div className={styles.dashboardArea} data-testid="dashboard-area">
+          <DashboardArea />
+        </div>
         
         {Object.entries(ZONES).map(([zoneId, box]) => (
           <div
