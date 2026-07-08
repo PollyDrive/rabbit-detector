@@ -1,8 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../domain/constants";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
+
+function useCanvasScale() {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const computeScale = () => {
+      const fit = Math.min(
+        window.innerWidth / CANVAS_WIDTH,
+        window.innerHeight / CANVAS_HEIGHT,
+      );
+      setScale(Math.min(fit, 1));
+    };
+
+    computeScale();
+    window.addEventListener("resize", computeScale);
+    return () => window.removeEventListener("resize", computeScale);
+  }, []);
+
+  return scale;
+}
 
 function ControlArea() {
   return (
@@ -36,39 +56,50 @@ function OverlayButtons() {
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<string | null>(null);
+  const scale = useCanvasScale();
 
   const handleZoneClick = (zone: string) => {
     setActivePopup(zone);
   };
 
   return (
-    <main className={styles.container} data-testid="farm-shell" style={{ minWidth: CANVAS_WIDTH }}>
-      <div 
-        className={styles.shell} 
-        data-testid="app-shell"
+    <main className={styles.container} data-testid="farm-shell">
+      <div
+        className={styles.scaleViewport}
         style={{
-          width: CANVAS_WIDTH,
-          height: CANVAS_HEIGHT,
+          width: CANVAS_WIDTH * scale,
+          height: CANVAS_HEIGHT * scale,
         }}
       >
-        <div className={styles.controlArea} data-testid="control-area">
-          <ControlArea />
-        </div>
-        <div className={styles.overlayTriggers} data-testid="overlay-triggers">
-          <OverlayButtons />
-        </div>
-        <div className={styles.dashboardArea} data-testid="dashboard-area">
-          <DashboardArea />
-        </div>
-        
-        <FarmMap onZoneClick={handleZoneClick} />
+        <div
+          className={styles.shell}
+          data-testid="app-shell"
+          style={{
+            width: CANVAS_WIDTH,
+            height: CANVAS_HEIGHT,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <div className={styles.controlArea} data-testid="control-area">
+            <ControlArea />
+          </div>
+          <div className={styles.overlayTriggers} data-testid="overlay-triggers">
+            <OverlayButtons />
+          </div>
+          <div className={styles.dashboardArea} data-testid="dashboard-area">
+            <DashboardArea />
+          </div>
 
-        {activePopup && (
-          <ZonePopover
-            location={activePopup}
-            onClose={() => setActivePopup(null)}
-          />
-        )}
+          <FarmMap onZoneClick={handleZoneClick} />
+
+          {activePopup && (
+            <ZonePopover
+              location={activePopup}
+              onClose={() => setActivePopup(null)}
+            />
+          )}
+        </div>
       </div>
     </main>
   );

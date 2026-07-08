@@ -8,6 +8,6 @@ describe('stage 1 shell', () => {
     render(<App />)
 
     expect(screen.getByRole('main')).toBeVisible()
-    expect(screen.getByTestId('farm-shell')).toHaveStyle({ minWidth: '2752px' })
+    expect(screen.getByTestId('app-shell')).toHaveStyle({ width: '2752px', height: '1536px' })
   })
 })
