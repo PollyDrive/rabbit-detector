@@ -11,7 +11,7 @@ export default function AppShell() {
   };
 
   return (
-    <div className={styles.container} data-testid="app-shell-container" style={{ minWidth: CANVAS_WIDTH }}>
+    <main className={styles.container} data-testid="farm-shell" style={{ minWidth: CANVAS_WIDTH }}>
       <div 
         className={styles.shell} 
         data-testid="app-shell"
@@ -46,6 +46,6 @@ export default function AppShell() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }
