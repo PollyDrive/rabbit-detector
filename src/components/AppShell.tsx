@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../domain/constants";
 import { FarmMap } from "./FarmMap";
+import { ZonePopover } from "./ZonePopover";
 
 function ControlArea() {
   return (
@@ -63,10 +64,10 @@ export default function AppShell() {
         <FarmMap onZoneClick={handleZoneClick} />
 
         {activePopup && (
-          <div className={styles.popup} data-testid="zone-popup">
-            Popup for {activePopup}
-            <button onClick={() => setActivePopup(null)}>Close</button>
-          </div>
+          <ZonePopover
+            location={activePopup}
+            onClose={() => setActivePopup(null)}
+          />
         )}
       </div>
     </main>
