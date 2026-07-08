@@ -1,18 +1,8 @@
 import { useState } from "react";
 import styles from "./AppShell.module.css";
-import { CANVAS_WIDTH, CANVAS_HEIGHT, ZONES } from "../domain/constants";
-import type { ZoneId } from "../domain/constants";
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../domain/constants";
+import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
-
-const ZONE_NAMES: Record<ZoneId, string> = {
-  garden: "Огород",
-  greenhouse: "Теплица",
-  barn: "Сарай",
-  "fence-west": "Забор — Запад",
-  "fence-sw": "Забор — Юго-Запад",
-  "fence-se": "Забор — Юго-Восток",
-  "fence-east": "Забор — Восток",
-};
 
 function ControlArea() {
   return (
@@ -45,9 +35,9 @@ function OverlayButtons() {
 }
 
 export default function AppShell() {
-  const [activePopup, setActivePopup] = useState<ZoneId | null>(null);
+  const [activePopup, setActivePopup] = useState<string | null>(null);
 
-  const handleZoneClick = (zone: ZoneId) => {
+  const handleZoneClick = (zone: string) => {
     setActivePopup(zone);
   };
 
@@ -71,30 +61,11 @@ export default function AppShell() {
           <DashboardArea />
         </div>
         
-        {Object.entries(ZONES).map(([zoneId, box]) => (
-          <button
-            key={zoneId}
-            className={styles.hitbox}
-            data-testid={`hitbox-${zoneId}`}
-            onClick={() => handleZoneClick(zoneId as ZoneId)}
-            aria-label={ZONE_NAMES[zoneId as ZoneId]}
-            style={{
-              position: 'absolute',
-              left: box.x1,
-              top: box.y1,
-              width: box.x2 - box.x1,
-              height: box.y2 - box.y1,
-              background: 'transparent',
-              border: 'none',
-              padding: 0,
-              cursor: 'pointer'
-            }}
-          />
-        ))}
+        <FarmMap onZoneClick={handleZoneClick} />
 
         {activePopup && (
           <ZonePopover
-            location={ZONE_NAMES[activePopup]}
+            location={activePopup}
             onClose={() => setActivePopup(null)}
           />
         )}
