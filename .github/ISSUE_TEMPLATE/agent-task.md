@@ -31,6 +31,14 @@ assignees: ""
 
 - `none` или список issue / task title
 
+## Branch / PR
+
+- PM branch: `stage_<stage>_issue_<id>_test`
+- implementer branch: `stage_<stage>_issue_<id>`
+- PM draft PR: `stage_<stage>_issue_<id>_test -> preprod`
+- implementer PR: `stage_<stage>_issue_<id> -> stage_<stage>_issue_<id>_test`
+- acceptance tests live in: `stage_<stage>_issue_<id>_test`
+
 ## Scope
 
 Что входит в задачу:
@@ -49,8 +57,10 @@ assignees: ""
 
 Сюда PM кладёт только релевантные локаторы.
 
-- `path/to/test-file::test_name`
-- `path/to/test-file::test_name`
+- `path/to/test-file.test.tsx::test_name`
+- `path/to/test-file.test.tsx::test_name`
+
+Если тест использует JSX / React-рендер, файл должен быть `*.test.tsx`, а не `*.test.ts`.
 
 ## Acceptance Criteria
 
