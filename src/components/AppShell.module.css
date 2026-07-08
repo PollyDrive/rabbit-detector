@@ -1,0 +1,73 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shell {
+  position: relative;
+  /* background-image: url("/assets/canvas.png"); */
+  /* Assuming canvas is in public/ or assets/, vite handles /assets/canvas.png if it is in public/assets/ */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+}
+
+.hitbox {
+  position: absolute;
+  cursor: pointer;
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.hitbox:hover {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+.controlArea {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 650px;
+  height: 430px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px dashed blue;
+}
+
+.overlayTriggers {
+  position: absolute;
+  left: 2150px;
+  top: 0;
+  width: 602px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px dashed blue;
+}
+
+.dashboardArea {
+  position: absolute;
+  left: 1450px;
+  top: 1080px;
+  width: 1302px;
+  height: 456px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 1px dashed blue;
+}
+
+.popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  z-index: 100;
+}

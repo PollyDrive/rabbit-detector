@@ -1,0 +1,68 @@
+import { useState } from "react";
+import styles from "./AppShell.module.css";
+import { CANVAS_WIDTH, CANVAS_HEIGHT, ZONES } from "../domain/constants";
+import type { ZoneId } from "../domain/constants";
+import { ZonePopover } from "./ZonePopover";
+
+const ZONE_NAMES: Record<ZoneId, string> = {
+  garden: "Огород",
+  greenhouse: "Теплица",
+  barn: "Сарай",
+  "fence-west": "Забор — Запад",
+  "fence-sw": "Забор — Юго-Запад",
+  "fence-se": "Забор — Юго-Восток",
+  "fence-east": "Забор — Восток",
+};
+
+export default function AppShell() {
+  const [activePopup, setActivePopup] = useState<ZoneId | null>(null);
+
+  const handleZoneClick = (zone: ZoneId) => {
+    setActivePopup(zone);
+  };
+
+  return (
+    <main className={styles.container} data-testid="farm-shell" style={{ minWidth: CANVAS_WIDTH }}>
+      <div 
+        className={styles.shell} 
+        data-testid="app-shell"
+        style={{
+          width: CANVAS_WIDTH,
+          height: CANVAS_HEIGHT,
+        }}
+      >
+        <div className={styles.controlArea} data-testid="control-area">Controls</div>
+        <div className={styles.overlayTriggers} data-testid="overlay-triggers">Overlays</div>
+        <div className={styles.dashboardArea} data-testid="dashboard-area">Dashboard</div>
+        
+        {Object.entries(ZONES).map(([zoneId, box]) => (
+          <button
+            key={zoneId}
+            className={styles.hitbox}
+            data-testid={`hitbox-${zoneId}`}
+            onClick={() => handleZoneClick(zoneId as ZoneId)}
+            aria-label={ZONE_NAMES[zoneId as ZoneId]}
+            style={{
+              position: 'absolute',
+              left: box.x1,
+              top: box.y1,
+              width: box.x2 - box.x1,
+              height: box.y2 - box.y1,
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer'
+            }}
+          />
+        ))}
+
+        {activePopup && (
+          <ZonePopover
+            location={ZONE_NAMES[activePopup]}
+            onClose={() => setActivePopup(null)}
+          />
+        )}
+      </div>
+    </main>
+  );
+}
