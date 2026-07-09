@@ -122,3 +122,23 @@ export function presenceByLocation(
   
   return result;
 }
+
+export interface BoardEntry {
+  location: Location;
+  presence: number;
+  priority: number;
+}
+
+// Per-zone board projection (ТЗ 5.2) — one sorted entry per location, for
+// dashboard consumers (Stage 4C/4D). Order matches priority ranking.
+export function buildPerZoneBoard(
+  events: FarmEvent[],
+  windowEnd: number,
+  settings: EstimatorSettings
+): BoardEntry[] {
+  return rankZonesByPriority(events, windowEnd, settings).map(({ location, presence, priority }) => ({
+    location,
+    presence,
+    priority,
+  }));
+}
