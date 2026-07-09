@@ -10,7 +10,7 @@ describe('farmReducer', () => {
       type: 'ADD_EVENT',
       payload: {
         location: 'Огород',
-        eventType: 'Следы',
+        event_type: 'Следы',
         intensity: 5,
       },
     });
@@ -19,7 +19,7 @@ describe('farmReducer', () => {
     expect(state.events[0]).toEqual({
       id: 1,
       location: 'Огород',
-      eventType: 'Следы',
+      event_type: 'Следы',
       intensity: 5,
     });
     expect(state.nextId).toBe(2);
@@ -31,7 +31,7 @@ describe('farmReducer', () => {
       type: 'ADD_EVENT',
       payload: {
         location: 'Теплица',
-        eventType: 'Шуршание',
+        event_type: 'Шуршание',
         intensity: 8,
       },
     });
@@ -45,7 +45,7 @@ describe('farmReducer', () => {
     expect(state.events[1]).toEqual({
       id: 2,
       location: 'Теплица',
-      eventType: 'Шуршание',
+      event_type: 'Шуршание',
       intensity: 8,
     });
     expect(state.nextId).toBe(3);

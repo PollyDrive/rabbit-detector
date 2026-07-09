@@ -3,7 +3,7 @@ import type { Location } from './zones';
 export interface FarmEvent {
   id: number;
   location: Location | string;
-  eventType: string;
+  event_type: string;
   intensity: number;
 }
 
@@ -13,7 +13,7 @@ export interface FarmState {
 }
 
 export type FarmAction = 
-  | { type: 'ADD_EVENT'; payload: { location: string; eventType: string; intensity: number } };
+  | { type: 'ADD_EVENT'; payload: { location: string; event_type: string; intensity: number } };
 
 export const initialState: FarmState = {
   events: [],
@@ -26,7 +26,7 @@ export function farmReducer(state: FarmState, action: FarmAction): FarmState {
       const newEvent: FarmEvent = {
         id: state.nextId,
         location: action.payload.location,
-        eventType: action.payload.eventType,
+        event_type: action.payload.event_type,
         intensity: action.payload.intensity,
       };
       
