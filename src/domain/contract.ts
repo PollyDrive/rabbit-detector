@@ -73,6 +73,23 @@ export const ACTION_CONTRACTS = [
   },
 ] as const;
 
+export const presencePrioritySchema = z.object({
+  presence: z.number(),
+  priority: z.number(),
+  dominantSignal: z.string(),
+  urgencyLevel: z.string(),
+  evidence: z.array(z.any()),
+  topSignals: z.array(z.any()),
+});
+
+export const dashboardProjectionSchema = z.object({
+  low: z.number(),
+  high: z.number(),
+  pointEstimate: z.number(),
+  confidencePercent: z.number(),
+  recommendations: z.array(z.any()),
+});
+
 export const PROJECTION_CONTRACT = {
   zone: {
     presence: 'number',
