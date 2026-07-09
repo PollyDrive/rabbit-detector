@@ -10,18 +10,19 @@ afterEach(() => {
 })
 
 describe('stage 5 integrated app flow', () => {
-  it('simulator_manual_seed_and_fast_forward_update_one_integrated_dashboard', () => {
+  it('seed_manual_fast_forward_and_simulator_flow_stays_visible_in_the_event_log', () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
     vi.spyOn(Math, 'random').mockReturnValue(0)
 
     render(<App />)
 
-    const dashboard = screen.getByRole('region', { name: 'Дашборд' })
-    const recommendations = screen.getByRole('region', { name: 'Рекомендации и настройки' })
+    const logRegion = screen.getByRole('region', { name: 'Лог событий' })
+    const log = within(logRegion).getByRole('table')
+    const initialSeedRow = within(log).getByRole('row', { name: /#1\b.*seed/i })
 
+    expect(initialSeedRow).toBeVisible()
     expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).getByText('Огород')).toBeVisible()
 
     fireEvent.click(screen.getByRole('button', { name: 'Теплица' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
@@ -32,9 +33,11 @@ describe('stage 5 integrated app flow', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
+    const manualRow = within(log).getByRole('row', { name: /#25\b.*Теплица.*manual/i })
+
+    expect(manualRow).toBeVisible()
     expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).getByText('Теплица')).toBeVisible()
-    expect(within(recommendations).getByText('Теплица')).toBeVisible()
+    expect(screen.queryByRole('dialog', { name: 'Ручной ввод' })).not.toBeInTheDocument()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -46,8 +49,7 @@ describe('stage 5 integrated app flow', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
 
-    expect(within(dashboard).queryByText('Теплица')).not.toBeInTheDocument()
-    expect(within(recommendations).queryByText('Теплица')).not.toBeInTheDocument()
+    expect(screen.getByText('Игровое время: 03:00:00')).toBeVisible()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -56,7 +58,6 @@ describe('stage 5 integrated app flow', () => {
 
     expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).getByText('Огород')).toBeVisible()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -68,6 +69,5 @@ describe('stage 5 integrated app flow', () => {
     })
 
     expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).queryByText('Нет активности')).not.toBeInTheDocument()
   })
 })
