@@ -1,5 +1,5 @@
 import styles from "./DashboardBoard.module.css";
-import { useMockedProjection } from "../testing/contractTestHelpers";
+import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import {
   formatConfidencePercent,
   formatRange,
@@ -12,7 +12,7 @@ function isDashboardProjection(value: DashboardProjection | undefined): value is
 }
 
 export default function DashboardBoard() {
-  const projection = useMockedProjection();
+  const projection = useDashboardProjection();
 
   const safeProjection = isDashboardProjection(projection) ? projection : undefined;
   const zoneRows = safeProjection ? getZoneRows(safeProjection) : [];
@@ -20,7 +20,6 @@ export default function DashboardBoard() {
   return (
     <section className={styles.board} aria-label="Панель dashboard">
       <div className={styles.summary}>
-        <h2>Дашборд</h2>
         <div className={styles.metrics} aria-label="Показатели численности">
           {safeProjection ? (
             <>

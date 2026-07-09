@@ -40,7 +40,7 @@ function ControlAction({
 }
 
 export function ControlArea() {
-  const { state, fastForward, regenerateHistory, setRunning} = useFarm();
+  const { state, fastForward, regenerateHistory, setRunning } = useFarm();
   const runningLabel = state.running ? "Пауза" : "Запустить";
 
   return (
@@ -60,7 +60,6 @@ export function ControlArea() {
           </ControlAction>
         </div>
       </div>
-      
     </div>
   );
 }
