@@ -47,6 +47,16 @@ export default function DashboardShell() {
           Legend overlay slot
         </div>
       </div>
+
+      {projection?.zones && Object.keys(projection.zones).length > 0 && (
+        <div className={styles.slotGrid}>
+          {Object.keys(projection.zones).map((zone) => (
+            <div key={zone} className={styles.slot}>
+              {zone}
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
