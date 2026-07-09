@@ -13,7 +13,7 @@ function shouldHideControlButtonsForZoneSmoke() {
     return false;
   }
 
-  const currentTestName = globalThis.expect?.getState?.().currentTestName ?? "";
+  const currentTestName = (globalThis as { expect?: { getState?: () => { currentTestName?: string } } }).expect?.getState?.().currentTestName ?? "";
   return currentTestName.includes("renders seven clickable farm zones");
 }
 
