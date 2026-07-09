@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AppShell from "./components/AppShell";
 import { MobileNotice } from "./components/MobileNotice";
 import { FarmProvider } from "./context/FarmContext";
+import { DashboardProjectionProvider } from "./context/DashboardProjectionContext";
 import { MOBILE_BREAKPOINT_PX } from "./domain/config";
 
 function useIsMobile() {
@@ -23,7 +24,9 @@ function App() {
 
   return (
     <FarmProvider>
-      {isMobile ? <MobileNotice /> : <AppShell />}
+      <DashboardProjectionProvider>
+        {isMobile ? <MobileNotice /> : <AppShell />}
+      </DashboardProjectionProvider>
     </FarmProvider>
   );
 }

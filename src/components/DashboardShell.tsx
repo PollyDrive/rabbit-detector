@@ -1,5 +1,5 @@
 import styles from "./DashboardShell.module.css";
-import { useMockedProjection } from "../testing/contractTestHelpers";
+import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import {
   isEmptyDashboardProjection,
   isLoadingDashboardProjection,
@@ -7,7 +7,7 @@ import {
 } from "./dashboard-shell-utils";
 
 export default function DashboardShell() {
-  const projection = useMockedProjection() as DashboardProjectionLike | undefined;
+  const projection = useDashboardProjection() as DashboardProjectionLike | undefined;
   const isLoading = isLoadingDashboardProjection(projection);
   const isEmpty = isEmptyDashboardProjection(projection);
 
