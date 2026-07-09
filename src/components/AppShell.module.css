@@ -70,3 +70,69 @@
   color: black;
   z-index: 100;
 }
+
+.clock {
+  margin: 0 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controlTextAction {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sectionHeading p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 12px;
+}
+
+.eventLog {
+  display: grid;
+  gap: 12px;
+}
+
+.eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 340px;
+  overflow: auto;
+}
+
+.eventRow {
+  display: grid;
+  grid-template-columns: 64px 72px 1fr 1fr 56px 88px;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.eventId {
+  font-variant-numeric: tabular-nums;
+}
+
+.formGrid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
