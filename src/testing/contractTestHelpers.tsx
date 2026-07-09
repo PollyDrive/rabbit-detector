@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { render } from '@testing-library/react';
 import { FarmContext } from '../context/FarmContext';
 import type { FarmState } from '../domain/contract';
+import type { DashboardProjection } from '../components/dashboard-board-utils';
 
 export function renderWithFarmState(state: FarmState, children: React.ReactNode) {
   const mockValue = {
@@ -22,9 +23,9 @@ export function runSelectorOnFixture<T, R>(selector: (state: T) => R, fixture: T
   return selector(fixture);
 }
 
-export const MockedProjectionContext = createContext<any>(undefined);
+export const MockedProjectionContext = createContext<DashboardProjection | undefined>(undefined);
 
-export function renderWithMockedProjection(projection: any, children: React.ReactNode) {
+export function renderWithMockedProjection(projection: DashboardProjection, children: React.ReactNode) {
   return render(
     <MockedProjectionContext.Provider value={projection}>
       {children}
