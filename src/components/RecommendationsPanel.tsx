@@ -16,20 +16,6 @@ export default function RecommendationsPanel() {
 
   return (
     <section className={styles.panel} aria-label="Рекомендации и настройки">
-      <div className={styles.recommendations}>
-        <h3>Рекомендации</h3>
-        {recommendations.length ? (
-          <ul className={styles.recommendationList}>
-            {recommendations.map((item) => (
-              <li key={item.zone} className={styles.recommendationItem}>
-                <strong className={styles.zone}>{item.zone}</strong>
-                <span>{item.text}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
-
       <div className={styles.settingsShell}>
         <h3>Параметры estimator'а</h3>
         <div className={styles.settingsFields}>
@@ -57,6 +43,20 @@ export default function RecommendationsPanel() {
         <div data-testid="dog-toggle-slot" className={styles.slot}>
           Слот под dog toggle
         </div>
+      </div>
+
+      <div className={styles.recommendations}>
+        <h3>Рекомендации</h3>
+        {recommendations.length ? (
+          <ul className={styles.recommendationList}>
+            {recommendations.map((item) => (
+              <li key={item.zone} className={styles.recommendationItem}>
+                <strong className={styles.zone}>{item.zone}</strong>
+                <span>{item.text}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </section>
   );
