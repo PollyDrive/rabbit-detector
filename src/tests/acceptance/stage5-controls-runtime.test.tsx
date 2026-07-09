@@ -142,7 +142,7 @@ describe('stage 5 runtime controls -> integrated projection stream', () => {
 
     expect(result.current.farm.state.events.some((event) => event.source === 'sim')).toBe(true)
     expect(
-      Object.values(result.current.projection.zones).some((zone) => zone.presence > 0),
+      Object.values(result.current.projection.zones).some((zone: any) => zone.presence > 0),
     ).toBe(true)
   })
 })
