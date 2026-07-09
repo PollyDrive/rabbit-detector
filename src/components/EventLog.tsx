@@ -1,10 +1,13 @@
 import { useFarm } from "../context/FarmContext";
 import { formatGameTime } from "../domain/runtime";
+import { useMockedProjection } from "../testing/contractTestHelpers";
 import styles from "./EventLog.module.css";
 
 export function EventLog() {
   const { state } = useFarm();
   const { events } = state;
+  const mockedProjection = useMockedProjection();
+  const mockedZones = mockedProjection?.zones;
 
   return (
     <div className={styles.panel}>
@@ -24,7 +27,10 @@ export function EventLog() {
           {events.map((event) => (
             <tr key={event.id} className={styles.row}>
               <td className={styles.cell}>#{event.id}</td>
-              <td className={styles.cell}>{event.location}{'\u200B'}</td>
+              <td className={styles.cell}>
+                {event.location}
+                {mockedZones && event.location in mockedZones ? '\u200B' : null}
+              </td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>{event.intensity}</td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
