@@ -6,6 +6,7 @@ import type { FarmEvent, FarmState } from '../domain/contract';
 import {
   createSeedBatch,
   createSimulatorEvent,
+  validateSeedBatch,
   INITIAL_SEED_COUNT,
 } from '../domain/runtime';
 import { createLogger } from '../domain/logger';
@@ -18,10 +19,8 @@ function nextEventId(events: FarmEvent[]): number {
 
 function createInitialEvents(now: number): FarmEvent[] {
   const seedBatch = createSeedBatch(now, Math.random, false, INITIAL_SEED_COUNT);
-  return seedBatch.map((event, index) => ({
-    ...event,
-    id: index + 1,
-  }));
+  const { valid } = validateSeedBatch(seedBatch, false, 1);
+  return valid;
 }
 
 function appendValidatedEvent(
@@ -115,29 +114,12 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     }
 
     case 'SEED_BULK': {
-      // Every event in the batch is validated one at a time (shape + matrix) —
-      // the same guard ADD_EVENT goes through. Invalid entries are dropped,
-      // not the whole batch (see #95 for the mount-time createInitialEvents gap
-      // this doesn't cover).
+      // Same shared validator (shape + matrix) as ADD_EVENT and
+      // createInitialEvents — invalid entries are dropped, not the whole
+      // batch (#95).
       const nonSeedEvents = state.events.filter((event) => event.source !== 'seed');
-      let id = nextEventId(nonSeedEvents);
-      const seeded: FarmEvent[] = [];
-      let rejectedCount = 0;
-
-      for (const event of action.payload) {
-        const candidate: FarmEvent = {
-          ...event,
-          id,
-        };
-        const parsed = farmEventSchema.safeParse(candidate);
-        if (!parsed.success || !isValidEvent(candidate, state.dogInGarden)) {
-          rejectedCount += 1;
-          continue;
-        }
-
-        seeded.push(parsed.data);
-        id += 1;
-      }
+      const startId = nextEventId(nonSeedEvents);
+      const { valid: seeded, rejectedCount } = validateSeedBatch(action.payload, state.dogInGarden, startId);
 
       if (rejectedCount > 0) {
         log.warn(`Dropped ${rejectedCount} invalid seed events`);
