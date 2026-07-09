@@ -29,7 +29,7 @@ export function EventLog() {
               <td className={styles.cell}>#{event.id}</td>
               <td className={styles.cell}>
                 {event.location}
-                {mockedZones && event.location in mockedZones ? '\u200B' : null}
+                {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>{event.intensity}</td>
