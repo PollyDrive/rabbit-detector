@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { getEventTypeOptions, isValidEvent } from '../../domain/event';
 import { createSeedBatch, createSimulatorEvent, formatGameTime, validateSeedBatch } from '../../domain/runtime';
-import type { FarmEvent } from '../../domain/event';
+import type { FarmEvent } from '../../domain/contract';
 
 describe('runtime helpers', () => {
   it('creates only valid seed events inside the last hour window', () => {

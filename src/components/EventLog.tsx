@@ -1,37 +1,38 @@
-import { useFarm } from '../context/FarmContext';
-import { formatGameTime } from '../domain/runtime';
-import styles from './AppShell.module.css';
-
-function formatEventId(id: number): string {
-  if (id < 10) {
-    return `#${id}`;
-  }
-
-  return `#0${id}`;
-}
+import { useFarm } from "../context/FarmContext";
+import { formatGameTime } from "../domain/runtime";
+import styles from "./EventLog.module.css";
 
 export function EventLog() {
   const { state } = useFarm();
+  const { events } = state;
 
   return (
-    <section className={styles.eventLog}>
-      <div className={styles.sectionHeading}>
-        <h2>Лог событий</h2>
-        <p>Ряды пишутся в память сессии и не редактируются.</p>
-      </div>
-
-      <ol className={styles.eventList} aria-label="Лог событий">
-        {state.events.map((event) => (
-          <li key={event.id} className={styles.eventRow}>
-            <strong className={styles.eventId}>{formatEventId(event.id)}</strong>
-            <span>{event.source}</span>
-            <span>{event.location}</span>
-            <span>{event.event_type}</span>
-            <span>{event.intensity}</span>
-            <span>{formatGameTime(event.time)}</span>
-          </li>
-        ))}
-      </ol>
-    </section>
+    <div className={styles.panel}>
+      <h3>Лог событий</h3>
+      <table className={styles.table}>
+        <thead>
+          <tr className={styles.headerRow}>
+            <th className={styles.cell}>ID</th>
+            <th className={styles.cell}>Локация</th>
+            <th className={styles.cell}>Тип события</th>
+            <th className={styles.cell}>Интенсивность</th>
+            <th className={styles.cell}>Время</th>
+            <th className={styles.cell}>Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          {events.map((event) => (
+            <tr key={event.id} className={styles.row}>
+              <td className={styles.cell}>#{event.id}</td>
+              <td className={styles.cell}>{event.location}</td>
+              <td className={styles.cell}>{event.event_type}</td>
+              <td className={styles.cell}>{event.intensity}</td>
+              <td className={styles.cell}>{formatGameTime(event.time)}</td>
+              <td className={styles.cell}>{event.source}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

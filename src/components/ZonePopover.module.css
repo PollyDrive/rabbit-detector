@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: black;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.readonlyInput {
+  width: 100%;
+  background: #eee;
+}
+
+.error {
+  color: #b00020;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}

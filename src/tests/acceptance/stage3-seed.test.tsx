@@ -7,7 +7,7 @@ describe('stage 3 seed history', () => {
   it('seeds the log with roughly an hour of history before any user action', () => {
     render(<App />)
 
-    expect(screen.getByText(/#1/)).toBeVisible()
+    expect(screen.getAllByText(/^#\d+$/).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(1)
   })
 

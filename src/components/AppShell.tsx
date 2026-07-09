@@ -2,116 +2,14 @@ import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import type { Location } from "../domain/zones";
+import { useCanvasScale } from "../hooks/useCanvasScale";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 import { EventLog } from "./EventLog";
-import { formatGameTime } from "../domain/runtime";
+import { ControlArea } from "./panels/ControlArea";
+import { DashboardArea } from "./panels/DashboardArea";
+import { OverlayButtons } from "./panels/OverlayButtons";
 import { useFarm } from "../context/FarmContext";
-
-function shouldHideControlButtonsForZoneSmoke() {
-  if (import.meta.env.MODE !== "test") {
-    return false;
-  }
-
-  const currentTestName = (globalThis as { expect?: { getState?: () => { currentTestName?: string } } }).expect?.getState?.().currentTestName ?? "";
-  return currentTestName.includes("renders seven clickable farm zones");
-}
-
-function ControlAction({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  const hideButtons = shouldHideControlButtonsForZoneSmoke();
-
-  if (hideButtons) {
-    return (
-      <span
-        className={styles.controlTextAction}
-        onClick={onClick}
-        role="presentation"
-      >
-        {children}
-      </span>
-    );
-  }
-
-  return (
-    <button type="button" onClick={onClick}>
-      {children}
-    </button>
-  );
-}
-
-function useCanvasScale() {
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    const computeScale = () => {
-      // Scales to fill the viewport width, but never shrinks past the
-      // reference small-desktop width — below that the page just scrolls.
-      const effectiveWidth = Math.max(window.innerWidth, MIN_DESKTOP_WIDTH);
-      setScale(effectiveWidth / CANVAS_WIDTH);
-    };
-
-    computeScale();
-    window.addEventListener("resize", computeScale);
-    return () => window.removeEventListener("resize", computeScale);
-  }, []);
-
-  return scale;
-}
-
-function ControlArea() {
-  const { state, fastForward, regenerateHistory, setRunning, toggleDog } = useFarm();
-  const runningLabel = state.running ? "Пауза" : "Запустить";
-
-  return (
-    <div className="control-area">
-      <div className="control-section">
-        <h2>Симулятор</h2>
-        <p className={styles.clock}>Игровое время: {formatGameTime(state.gameTime)}</p>
-        <div className={styles.buttonRow}>
-          <ControlAction onClick={() => setRunning(!state.running)}>
-            {runningLabel}
-          </ControlAction>
-          <ControlAction onClick={fastForward}>
-            Промотать час
-          </ControlAction>
-          <ControlAction onClick={regenerateHistory}>
-            Пересоздать историю
-          </ControlAction>
-        </div>
-      </div>
-      <div className="control-section parameters">
-        <h3>Параметры estimator'а</h3>
-        <ControlAction onClick={toggleDog}>
-          {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
-        </ControlAction>
-      </div>
-    </div>
-  );
-}
-
-function DashboardArea() {
-  return (
-    <div className="dashboard-area">
-      <h2>Дашборд</h2>
-      <EventLog />
-    </div>
-  );
-}
-
-function OverlayButtons() {
-  return (
-    <div className="overlay-buttons">
-      <div style={{ cursor: 'pointer' }}>AI Worklog</div>
-      <div style={{ cursor: 'pointer' }}>Legend</div>
-    </div>
-  );
-}
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<Location | null>(null);
@@ -157,6 +55,7 @@ export default function AppShell() {
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area">
             <DashboardArea />
+            <EventLog />
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />

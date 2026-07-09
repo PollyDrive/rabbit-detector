@@ -1,0 +1,73 @@
+.shell {
+  display: grid;
+  gap: 16px;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  color: white;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.emptyState {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.loadingState {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.metricLabel {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.metricValue {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.slot {
+  min-height: 72px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.8);
+}
