@@ -1,5 +1,5 @@
 import styles from "./DashboardBoard.module.css";
-import { useDashboardProjection } from "./dashboard-board-utils";
+import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import {
   formatConfidencePercent,
   formatRange,

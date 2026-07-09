@@ -1,6 +1,6 @@
 import styles from "./RecommendationsPanel.module.css";
 import { DEFAULT_ESTIMATOR_SETTINGS } from "../domain/contract";
-import { useDashboardProjection } from "./dashboard-board-utils";
+import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import {
   getRecommendationItems,
   type RecommendationsProjection,
