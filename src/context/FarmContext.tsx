@@ -38,6 +38,7 @@ function appendValidatedEvent(
   state: FarmState,
   event: Omit<FarmEvent, 'id'>,
   now: number,
+  touchDispatchTime = true,
 ): FarmState {
   if (!isValidEvent(event, state.dogInGarden)) {
     log.warn('Rejected invalid event combination:', event);
@@ -68,7 +69,7 @@ function appendValidatedEvent(
   return {
     ...state,
     events: [...state.events, parsed.data],
-    lastDispatchTime: now,
+    lastDispatchTime: touchDispatchTime ? now : state.lastDispatchTime,
     lastRejectedReason: null,
   };
 }
@@ -115,11 +116,12 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
           time: state.gameTime,
         },
         now,
+        true,
       );
     }
 
     case 'SIMULATE_EVENT': {
-      return appendValidatedEvent(state, action.payload, now);
+      return appendValidatedEvent(state, action.payload, now, false);
     }
 
     case 'SEED_BULK': {

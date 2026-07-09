@@ -2,6 +2,14 @@ import { useFarm } from '../context/FarmContext';
 import { formatGameTime } from '../domain/runtime';
 import styles from './AppShell.module.css';
 
+function formatEventId(id: number): string {
+  if (id < 10) {
+    return `#${id}`;
+  }
+
+  return `#0${id}`;
+}
+
 export function EventLog() {
   const { state } = useFarm();
 
@@ -15,7 +23,7 @@ export function EventLog() {
       <ol className={styles.eventList} aria-label="Лог событий">
         {state.events.map((event) => (
           <li key={event.id} className={styles.eventRow}>
-            <strong className={styles.eventId}>#{event.id}</strong>
+            <strong className={styles.eventId}>{formatEventId(event.id)}</strong>
             <span>{event.source}</span>
             <span>{event.location}</span>
             <span>{event.event_type}</span>
