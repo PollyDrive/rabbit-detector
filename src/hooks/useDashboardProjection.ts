@@ -8,11 +8,15 @@ import { computeUrgencyLevel, computeRecommendationText } from '../domain/recomm
 import type { DashboardProjection, ZoneProjection } from '../components/dashboard-board-utils';
 import type { Location } from '../domain/zones';
 
-export function useDashboardProjection(): DashboardProjection {
+export function useDashboardProjection(): DashboardProjection | undefined {
   const { state } = useFarm();
   const { events, gameTime } = state;
 
   return useMemo(() => {
+    if (events.every((e) => e.source === 'seed')) {
+      return undefined;
+    }
+
     const estimate = computeEstimate(events, gameTime, DEFAULT_ESTIMATOR_SETTINGS);
     const boardEntries = buildPerZoneBoard(events, gameTime, DEFAULT_ESTIMATOR_SETTINGS);
 

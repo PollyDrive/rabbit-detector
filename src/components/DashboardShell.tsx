@@ -1,3 +1,4 @@
+import RecommendationsPanel from './RecommendationsPanel';
 import styles from "./DashboardShell.module.css";
 import { useMockedProjection } from "../testing/contractTestHelpers";
 import {
@@ -37,6 +38,7 @@ export default function DashboardShell() {
       </div>
 
       <div className={styles.slotGrid}>
+        <RecommendationsPanel />
         <div data-testid="badge-stack-slot" className={styles.slot}>
           Badge stack slot
         </div>
