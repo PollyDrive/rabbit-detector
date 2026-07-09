@@ -1,0 +1,58 @@
+.panel {
+  display: grid;
+  gap: 16px;
+}
+
+.recommendations,
+.settingsShell {
+  border: 1px solid rgba(31, 41, 55, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 16px;
+}
+
+.recommendationList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.recommendationItem {
+  display: grid;
+  gap: 4px;
+}
+
+.zone {
+  font-weight: 700;
+}
+
+.settingsFields {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field input {
+  border: 1px solid rgba(31, 41, 55, 0.18);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.slot {
+  min-height: 24px;
+  border: 1px dashed rgba(31, 41, 55, 0.18);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #6b7280;
+}
+
+.emptyState {
+  color: #6b7280;
+}

@@ -1,9 +1,10 @@
 import styles from "../AppShell.module.css";
+import DashboardShell from "../DashboardShell";
 
 export function DashboardArea() {
   return (
     <div className={styles.dashboardContent}>
-      <h2>Дашборд</h2>
+      <DashboardShell />
     </div>
   );
 }

@@ -76,15 +76,15 @@ export function presenceByLocation(
   settings: EstimatorSettings
 ): Record<Location, number> {
   const windowStart = windowEnd - TIME_WINDOW_SPEC.durationSeconds;
-
+  
   const windowEvents = events.filter(e => e.time >= windowStart && e.time <= windowEnd);
-
+  
   const result = {} as Record<Location, number>;
-
+  
   for (const loc of LOCATIONS) {
     result[loc] = 0;
   }
-
+  
   const byLocation: Partial<Record<Location, FarmEvent[]>> = {};
   for (const event of windowEvents) {
     if (!byLocation[event.location]) {
@@ -92,17 +92,17 @@ export function presenceByLocation(
     }
     byLocation[event.location]!.push(event);
   }
-
+  
   for (const loc of LOCATIONS) {
     const locEvents = byLocation[loc];
     if (!locEvents || locEvents.length === 0) {
       result[loc] = 0;
       continue;
     }
-
+    
     let hasOverride = false;
     let credibilitySum = 0;
-
+    
     for (const e of locEvents) {
       const cred = credibilityOf(e);
       credibilitySum += cred;
@@ -110,7 +110,7 @@ export function presenceByLocation(
         hasOverride = true;
       }
     }
-
+    
     if (hasOverride) {
       result[loc] = 1.0;
     } else {
@@ -119,7 +119,7 @@ export function presenceByLocation(
       result[loc] = avg * (1 - Math.exp(-n / settings.k));
     }
   }
-
+  
   return result;
 }
 
