@@ -108,8 +108,6 @@ export function runSpike(scenario: { events: FarmEvent[], name: string }) {
     const priority = presence * mockAssetValues[loc];
     
     const zoneEvents = scenario.events.filter(e => e.location === loc);
-    const credibilities = zoneEvents.map(calculateCredibility);
-    const maxCred = credibilities.length > 0 ? Math.max(...credibilities) : 0;
     
     let urgencyLevel = "low";
     if (presence === 1.0) urgencyLevel = "critical";
