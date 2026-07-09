@@ -19,10 +19,16 @@ function useIsMobile() {
   return isMobile;
 }
 
+import { FarmProvider } from "./context/FarmContext";
+
 function App() {
   const isMobile = useIsMobile();
 
-  return isMobile ? <MobileNotice /> : <AppShell />;
+  return (
+    <FarmProvider>
+      {isMobile ? <MobileNotice /> : <AppShell />}
+    </FarmProvider>
+  );
 }
 
 export default App;
