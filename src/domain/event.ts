@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { Location } from "./zones";
+import type { FarmEvent } from "./contract";
 
 export const EVENT_TYPES = [
   'Следы',
@@ -13,15 +14,6 @@ export type EventType = typeof EVENT_TYPES[number];
 
 export const EVENT_SOURCES = ['sim', 'manual', 'seed'] as const;
 export type EventSource = typeof EVENT_SOURCES[number];
-
-export interface FarmEvent {
-  id: number;
-  event_type: EventType;
-  location: Location;
-  intensity: number; // 1-10
-  time: number; // game time in seconds
-  source: EventSource;
-}
 
 export const COMPATIBILITY_MATRIX: Record<Location, readonly EventType[]> = {
   'Огород': ['Следы', 'Пропажа моркови', 'Новая яма'],
