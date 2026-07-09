@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import DashboardShell from '../../components/DashboardShell'
@@ -18,6 +18,15 @@ describe('stage 4D empty/loading states + badge/overlay layout slots', () => {
     renderWithMockedProjection(emptyProjection, <DashboardShell />)
 
     expect(screen.getByText(/нет активности/i)).toBeVisible()
+  })
+
+  it('renders a distinct loading-like state when no mocked projection has been provided yet', () => {
+    // contract: `undefined` projection = "not loaded yet", separate from a confirmed-empty
+    // projection object — the two must not render the same text.
+    renderWithMockedProjection(undefined, <DashboardShell />)
+
+    expect(screen.getByText(/загрузка|loading/i)).toBeVisible()
+    expect(screen.queryByText(/нет активности/i)).not.toBeInTheDocument()
   })
 
   it('exposes layout slots for the badge stack and overlays so Stage 8 can fill them without re-laying-out the page', () => {
