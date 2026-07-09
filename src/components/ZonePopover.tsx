@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./AppShell.module.css";
+import shellStyles from "./AppShell.module.css";
+import styles from "./ZonePopover.module.css";
 import { useFarm } from "../context/FarmContext";
 import type { RejectReason } from "../context/FarmContext";
 import { COMPATIBILITY_MATRIX } from "../domain/event";
@@ -71,11 +72,11 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
   };
 
   return (
-    <dialog open aria-label="Ручной ввод" className={styles.popup}>
+    <dialog open aria-label="Ручной ввод" className={shellStyles.popup}>
       <h2>Ручной ввод</h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", color: "black" }}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div>
-          <input readOnly value={location} style={{ width: "100%", background: "#eee" }} />
+          <input readOnly value={location} className={styles.readonlyInput} />
         </div>
 
         <div>
@@ -84,7 +85,7 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
             id="event-type-select"
             value={eventType}
             onChange={(e) => setEventType(e.target.value as EventType)}
-            style={{ width: "100%" }}
+            className={styles.fullWidth}
             required
           >
             <option value="">Выберите тип...</option>
@@ -108,18 +109,18 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
             max="10"
             value={intensity}
             onChange={(e) => setIntensity(Number(e.target.value))}
-            style={{ width: "100%" }}
+            className={styles.fullWidth}
             required
           />
         </div>
 
         {error && (
-          <p role="alert" style={{ color: "#b00020", margin: 0 }}>
+          <p role="alert" className={styles.error}>
             {error}
           </p>
         )}
 
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+        <div className={styles.actions}>
           <button type="button" onClick={onClose}>
             Закрыть
           </button>
