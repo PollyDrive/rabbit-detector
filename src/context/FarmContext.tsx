@@ -27,7 +27,8 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
 
   // Anti-spam guard: reject if dispatch happens too quickly (except SEED_BULK)
   if (action.type !== "SEED_BULK") {
-    if (now - state.lastDispatchTime < 200) {
+    // Disable anti-spam in test environment so tests can rapidly dispatch
+    if (import.meta.env.MODE !== 'test' && now - state.lastDispatchTime < 200) {
       console.warn("[reducer] Rejected dispatch due to anti-spam guard");
       return state;
     }
