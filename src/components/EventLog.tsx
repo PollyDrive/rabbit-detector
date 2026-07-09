@@ -24,7 +24,7 @@ export function EventLog() {
           {events.map((event) => (
             <tr key={event.id} className={styles.row}>
               <td className={styles.cell}>#{event.id}</td>
-              <td className={styles.cell}>{event.location}</td>
+              <td className={styles.cell}>{event.location}{'\u200B'}</td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>{event.intensity}</td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
