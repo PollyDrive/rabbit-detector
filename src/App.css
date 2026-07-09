@@ -24,6 +24,7 @@
   color: white;
   padding: 20px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .overlay-buttons {
@@ -34,4 +35,10 @@
   gap: 10px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.control-area,
+.dashboard-area,
+.overlay-buttons {
+  font-size: 14px;
 }
