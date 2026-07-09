@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
+import type { Location } from "../domain/zones";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 import { EventLog } from "./EventLog";
@@ -55,10 +56,10 @@ function OverlayButtons() {
 }
 
 export default function AppShell() {
-  const [activePopup, setActivePopup] = useState<string | null>(null);
+  const [activePopup, setActivePopup] = useState<Location | null>(null);
   const scale = useCanvasScale();
 
-  const handleZoneClick = (zone: string) => {
+  const handleZoneClick = (zone: Location) => {
     setActivePopup(zone);
   };
 
