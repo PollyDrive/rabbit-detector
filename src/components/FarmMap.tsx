@@ -1,8 +1,9 @@
 import { ZONES } from "../domain/zones";
+import type { Location } from "../domain/zones";
 import styles from "./FarmMap.module.css";
 
 interface FarmMapProps {
-  onZoneClick?: (location: string) => void;
+  onZoneClick?: (location: Location) => void;
 }
 
 export function FarmMap({ onZoneClick }: FarmMapProps) {

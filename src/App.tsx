@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import AppShell from "./components/AppShell";
 import { MobileNotice } from "./components/MobileNotice";
+import { FarmProvider } from "./context/FarmContext";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -22,7 +23,11 @@ function useIsMobile() {
 function App() {
   const isMobile = useIsMobile();
 
-  return isMobile ? <MobileNotice /> : <AppShell />;
+  return isMobile ? <MobileNotice /> : (
+    <FarmProvider>
+      <AppShell />
+    </FarmProvider>
+  );
 }
 
 export default App;
