@@ -1,6 +1,6 @@
 import styles from "./RecommendationsPanel.module.css";
 import { DEFAULT_ESTIMATOR_SETTINGS } from "../domain/contract";
-import { useMockedProjection } from "../testing/contractTestHelpers";
+import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import {
   getRecommendationItems,
   type RecommendationsProjection,
@@ -11,11 +11,12 @@ function hasRecommendations(value: RecommendationsProjection | undefined): value
 }
 
 export default function RecommendationsPanel() {
-  const projection = useMockedProjection() as RecommendationsProjection | undefined;
+  const projection = useDashboardProjection() as RecommendationsProjection | undefined;
   const recommendations = hasRecommendations(projection) ? getRecommendationItems(projection) : [];
 
   return (
     <section className={styles.panel} aria-label="Рекомендации и настройки">
+
       <div className={styles.settingsShell}>
         <h3>Параметры estimator'а</h3>
         <div className={styles.settingsFields}>

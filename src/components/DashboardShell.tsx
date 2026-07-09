@@ -1,5 +1,6 @@
 import styles from "./DashboardShell.module.css";
-import { useMockedProjection } from "../testing/contractTestHelpers";
+import DashboardBoard from "./DashboardBoard";
+import { useDashboardProjection, useDashboardActivityStarted } from "../context/DashboardProjectionContext";
 import {
   isEmptyDashboardProjection,
   isLoadingDashboardProjection,
@@ -8,8 +9,9 @@ import {
 import RecommendationsPanel from "./RecommendationsPanel";
 
 export default function DashboardShell() {
-  const projection = useMockedProjection() as DashboardProjectionLike | undefined;
-  const isLoading = isLoadingDashboardProjection(projection);
+  const projection = useDashboardProjection() as DashboardProjectionLike | undefined;
+  const hasStarted = useDashboardActivityStarted();
+  const isLoading = isLoadingDashboardProjection(projection) || !hasStarted;
   const isEmpty = isEmptyDashboardProjection(projection);
 
   return (
@@ -20,22 +22,7 @@ export default function DashboardShell() {
         {!isLoading && isEmpty ? <p className={styles.emptyState}>Нет активности</p> : null}
       </header>
 
-      <div className={styles.summary} aria-label="Сводка dashboard">
-        <div className={styles.metric}>
-          <span className={styles.metricLabel}>Диапазон</span>
-          <span className={styles.metricValue}>
-            {projection ? `${projection.low} - ${projection.high}` : "0 - 0"}
-          </span>
-        </div>
-        <div className={styles.metric}>
-          <span className={styles.metricLabel}>Точка</span>
-          <span className={styles.metricValue}>{projection ? projection.pointEstimate : 0}</span>
-        </div>
-        <div className={styles.metric}>
-          <span className={styles.metricLabel}>Уверенность</span>
-          <span className={styles.metricValue}>{projection ? `${projection.confidencePercent}%` : "0%"}</span>
-        </div>
-      </div>
+      <DashboardBoard />
 
       <div className={styles.slotGrid}>
         <div data-testid="badge-stack-slot" className={styles.slot}>
