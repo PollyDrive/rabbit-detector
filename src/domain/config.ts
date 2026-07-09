@@ -15,3 +15,13 @@ export const DEFAULT_INTENSITY = 5;
 
 /** Below this viewport width, the app shows the desktop-only notice. */
 export const MOBILE_BREAKPOINT_PX = 768;
+
+export type LogLevel = "debug" | "info" | "warn" | "silent";
+
+/**
+ * Verbosity for namespaced console logging ([reducer], [projection], etc —
+ * ТЗ 9.2: "уровни debug/info/warn, глушится флагом"). Silent in tests to
+ * keep output clean; debug otherwise. Change here to tune, not per call site.
+ */
+export const LOG_LEVEL: LogLevel =
+  import.meta.env.MODE === "test" ? "silent" : "debug";

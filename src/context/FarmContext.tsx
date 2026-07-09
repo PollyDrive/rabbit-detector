@@ -6,6 +6,9 @@ import {
   FAST_FORWARD_STEP_S,
   INITIAL_GAME_TIME_S,
 } from "../domain/config";
+import { createLogger } from "../domain/logger";
+
+const log = createLogger("reducer");
 
 export type RejectReason = "anti-spam" | "invalid-combination" | "invalid-shape";
 
@@ -41,7 +44,7 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
   // Anti-spam guard: reject if dispatch happens too quickly (except SEED_BULK,
   // which is a batch action, not a user gesture — see ТЗ 9.1).
   if (action.type !== "SEED_BULK" && now - state.lastDispatchTime < ANTI_SPAM_INTERVAL_MS) {
-    console.warn("[reducer] Rejected dispatch due to anti-spam guard");
+    log.warn("Rejected dispatch due to anti-spam guard");
     return { ...state, lastRejectedReason: "anti-spam" };
   }
 
@@ -49,7 +52,7 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     case "ADD_EVENT": {
       // Compatibility matrix + dog-suppression business rules.
       if (!isValidEvent(action.payload, state.dogInGarden)) {
-        console.warn("[reducer] Rejected invalid event combination:", action.payload);
+        log.warn("Rejected invalid event combination:", action.payload);
         return { ...state, lastDispatchTime: now, lastRejectedReason: "invalid-combination" };
       }
 
@@ -64,11 +67,11 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
       // domain/event.ts, instead of leaving it unused.
       const parsed = farmEventSchema.safeParse(candidate);
       if (!parsed.success) {
-        console.warn("[reducer] Rejected malformed event:", parsed.error.flatten());
+        log.warn("Rejected malformed event:", parsed.error.flatten());
         return { ...state, lastDispatchTime: now, lastRejectedReason: "invalid-shape" };
       }
 
-      console.info(`[reducer] Added event #${parsed.data.id}:`, parsed.data);
+      log.info(`Added event #${parsed.data.id}:`, parsed.data);
 
       return {
         ...state,
@@ -90,7 +93,7 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     }
 
     case "FAST_FORWARD": {
-      console.info("[reducer] Fast forwarding 1 hour");
+      log.info("Fast forwarding 1 hour");
       return {
         ...state,
         gameTime: state.gameTime + FAST_FORWARD_STEP_S,
@@ -99,7 +102,7 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     }
 
     case "TOGGLE_DOG": {
-      console.info("[reducer] Toggling dog in garden:", !state.dogInGarden);
+      log.info("Toggling dog in garden:", !state.dogInGarden);
       return {
         ...state,
         dogInGarden: !state.dogInGarden,
