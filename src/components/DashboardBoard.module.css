@@ -1,0 +1,66 @@
+.board {
+  display: grid;
+  gap: 16px;
+  color: #1f2937;
+}
+
+.summary {
+  display: grid;
+  gap: 10px;
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.metricLabel {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+.boardGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.zoneBoard,
+.recommendations {
+  border: 1px solid rgba(31, 41, 55, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(31, 41, 55, 0.08);
+}
+
+.recommendationList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.recommendationList li {
+  display: grid;
+  gap: 4px;
+}
+
+.emptyState {
+  color: #6b7280;
+}
