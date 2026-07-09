@@ -1,9 +1,9 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
-import { farmReducer, initialState, type FarmEvent } from "../domain/store";
+import { EventLog } from "./EventLog";
 
 function useCanvasScale() {
   const [scale, setScale] = useState(1);
@@ -37,20 +37,10 @@ function ControlArea() {
   );
 }
 
-function DashboardArea({ events }: { events: FarmEvent[] }) {
+function DashboardArea() {
   return (
     <div className="dashboard-area">
       <h2>Дашборд</h2>
-      <div className="log-list">
-        {events.map((event) => (
-          <div key={event.id} className="log-item">
-            <span>#{event.id}</span>
-            <span>{event.location}</span>
-            <span>{event.eventType}</span>
-            <span>Int: {event.intensity}</span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
@@ -66,24 +56,10 @@ function OverlayButtons() {
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<string | null>(null);
-  const [state, dispatch] = useReducer(farmReducer, initialState);
   const scale = useCanvasScale();
 
   const handleZoneClick = (zone: string) => {
     setActivePopup(zone);
-  };
-
-  const handleAddEvent = (eventType: string, intensity: number) => {
-    if (activePopup) {
-      dispatch({
-        type: 'ADD_EVENT',
-        payload: {
-          location: activePopup,
-          eventType,
-          intensity,
-        },
-      });
-    }
   };
 
   return (
@@ -112,7 +88,8 @@ export default function AppShell() {
             <OverlayButtons />
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area">
-            <DashboardArea events={state.events} />
+            <DashboardArea />
+            <EventLog />
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
@@ -121,7 +98,6 @@ export default function AppShell() {
             <ZonePopover
               location={activePopup}
               onClose={() => setActivePopup(null)}
-              onAdd={handleAddEvent}
             />
           )}
         </div>
