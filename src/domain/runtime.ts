@@ -1,4 +1,4 @@
-import { COMPATIBILITY_MATRIX, type EventType, type FarmEvent, isValidEvent } from './event';
+import { COMPATIBILITY_MATRIX, type EventType, type FarmEvent, isValidEvent, farmEventSchema } from './event';
 import type { Location } from './zones';
 
 export const GAME_DAY_SECONDS = 3600;
@@ -83,4 +83,31 @@ export function isValidSeedBatchEntry(
   dogInGarden = false,
 ): boolean {
   return isValidEvent(event, dogInGarden);
+}
+
+export function validateSeedBatch(
+  batch: Omit<FarmEvent, 'id'>[],
+  dogInGarden: boolean,
+  startId: number
+): { valid: FarmEvent[]; rejectedCount: number } {
+  const valid: FarmEvent[] = [];
+  let id = startId;
+  let rejectedCount = 0;
+
+  for (const event of batch) {
+    const candidate: FarmEvent = {
+      ...event,
+      id,
+    };
+    const parsed = farmEventSchema.safeParse(candidate);
+    if (!parsed.success || !isValidEvent(candidate, dogInGarden)) {
+      rejectedCount += 1;
+      continue;
+    }
+
+    valid.push(parsed.data);
+    id += 1;
+  }
+
+  return { valid, rejectedCount };
 }
