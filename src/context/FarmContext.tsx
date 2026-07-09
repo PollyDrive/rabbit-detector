@@ -120,7 +120,8 @@ interface FarmContextProps {
   toggleDog: () => void;
 }
 
-const FarmContext = createContext<FarmContextProps | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const FarmContext = createContext<FarmContextProps | undefined>(undefined);
 
 export function FarmProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(farmReducer, initialState);
