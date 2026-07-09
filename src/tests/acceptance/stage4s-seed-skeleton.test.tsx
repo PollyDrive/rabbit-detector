@@ -62,11 +62,16 @@ describe('stage 4S seed walking skeleton', () => {
 
     const shell = screen.getByTestId('app-shell')
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
+    const eventLog = within(shell).getByText('Лог событий').closest('div')!
 
     expect(within(shell).getByText('Лог событий')).toBeVisible()
     expect(within(shell).getByText('#1')).toBeVisible()
     expect(within(shell).getByText('seed')).toBeVisible()
-    expect(within(shell).getByText('Огород')).toBeVisible()
+    // The location cell may carry a trailing zero-width space to disambiguate
+    // it from the dashboard's own "Огород" text (see EventLog.tsx) — match
+    // by substring, not exact string, and scope to the log so it can't
+    // accidentally match the dashboard board/recommendations cells instead.
+    expect(within(eventLog).getByText(/Огород/)).toBeVisible()
     expect(within(dashboard).getByText('Огород')).toBeVisible()
   })
 

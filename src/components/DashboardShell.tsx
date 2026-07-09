@@ -23,11 +23,6 @@ export default function DashboardShell() {
       <DashboardBoard />
 
       <div className={styles.slotGrid}>
-        {projection && Object.keys(projection.zones).map((zone) => (
-          <div key={zone} className={styles.slot}>
-            {zone}
-          </div>
-        ))}
         <div data-testid="badge-stack-slot" className={styles.slot}>
           Badge stack slot
         </div>
