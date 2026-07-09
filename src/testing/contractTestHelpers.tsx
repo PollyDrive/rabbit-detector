@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { render } from '@testing-library/react';
 import { FarmContext } from '../context/FarmContext';
+import { DashboardProjectionContext } from '../context/DashboardProjectionContext';
 import type { FarmState } from '../domain/contract';
 import type { DashboardProjection } from '../components/dashboard-board-utils';
 
@@ -26,7 +27,7 @@ export function runSelectorOnFixture<T, R>(selector: (state: T) => R, fixture: T
   return selector(fixture);
 }
 
-import { DashboardProjectionContext } from '../context/DashboardProjectionContext';
+
 export const MockedProjectionContext = DashboardProjectionContext;
 
 export function renderWithMockedProjection(projection: DashboardProjection | undefined, children: React.ReactNode) {

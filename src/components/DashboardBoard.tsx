@@ -20,7 +20,6 @@ export default function DashboardBoard() {
   return (
     <section className={styles.board} aria-label="Дашборд">
       <div className={styles.summary}>
-        <h2>Дашборд</h2>
         <div className={styles.metrics} aria-label="Показатели численности">
           {safeProjection ? (
             <>
