@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 import { farmEventSchema, isValidEvent } from "../domain/event";
-import type { FarmEvent } from "../domain/event";
+import type { FarmEvent, FarmState } from "../domain/contract";
 import {
   ANTI_SPAM_INTERVAL_MS,
   FAST_FORWARD_STEP_S,
@@ -9,16 +9,6 @@ import {
 import { createLogger } from "../domain/logger";
 
 const log = createLogger("reducer");
-
-export type RejectReason = "anti-spam" | "invalid-combination" | "invalid-shape";
-
-export interface FarmState {
-  events: FarmEvent[];
-  gameTime: number; // in seconds
-  dogInGarden: boolean;
-  lastDispatchTime: number; // Date.now()
-  lastRejectedReason: RejectReason | null;
-}
 
 const initialState: FarmState = {
   events: [],
@@ -130,7 +120,8 @@ interface FarmContextProps {
   toggleDog: () => void;
 }
 
-const FarmContext = createContext<FarmContextProps | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const FarmContext = createContext<FarmContextProps | undefined>(undefined);
 
 export function FarmProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(farmReducer, initialState);
