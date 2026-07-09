@@ -1,6 +1,6 @@
 import styles from "./RecommendationsPanel.module.css";
 import { DEFAULT_ESTIMATOR_SETTINGS } from "../domain/contract";
-import { useMockedProjection } from "../testing/contractTestHelpers";
+import { useDashboardProjection } from "./dashboard-board-utils";
 import {
   getRecommendationItems,
   type RecommendationsProjection,
@@ -11,7 +11,7 @@ function hasRecommendations(value: RecommendationsProjection | undefined): value
 }
 
 export default function RecommendationsPanel() {
-  const projection = useMockedProjection() as RecommendationsProjection | undefined;
+  const projection = useDashboardProjection() as RecommendationsProjection | undefined;
   const recommendations = hasRecommendations(projection) ? getRecommendationItems(projection) : [];
 
   return (

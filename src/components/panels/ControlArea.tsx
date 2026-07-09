@@ -61,7 +61,7 @@ export function ControlArea() {
         </div>
       </div>
       <div>
-        <h3>Параметры estimator'а</h3>
+        
         <ControlAction onClick={toggleDog}>
           {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
         </ControlAction>
