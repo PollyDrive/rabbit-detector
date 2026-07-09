@@ -10,7 +10,7 @@ export function EventLog() {
   const mockedZones = mockedProjection?.zones;
 
   return (
-    <div className={styles.panel}>
+    <section aria-label="Лог событий" className={styles.panel}>
       <h3>Лог событий</h3>
       <table className={styles.table}>
         <thead>
@@ -39,6 +39,6 @@ export function EventLog() {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }

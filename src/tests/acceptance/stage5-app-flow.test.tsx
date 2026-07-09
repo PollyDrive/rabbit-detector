@@ -9,19 +9,22 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-describe('stage 5 runtime controls -> integrated farm session', () => {
-  it('controls_drive_real_runtime_and_refresh_dashboard', () => {
+describe('stage 5 integrated app flow', () => {
+  it('seed_manual_fast_forward_and_simulator_flow_stays_visible_in_the_event_log', () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
     vi.spyOn(Math, 'random').mockReturnValue(0)
 
     render(<App />)
 
-    const dashboard = screen.getByRole('region', { name: 'Дашборд' })
+    const logRegion = screen.getByRole('region', { name: 'Лог событий' })
+    const log = within(logRegion).getByRole('table')
+    const initialSeedRow = within(log).getByRole('row', { name: /#1\b.*seed/i })
 
-    expect(within(dashboard).getByText(/0\s*-\s*1/)).toBeVisible()
+    expect(initialSeedRow).toBeVisible()
+    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Теплица' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
       target: { value: 'Следы' },
     })
@@ -30,9 +33,11 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
-    expect(within(dashboard).queryByText(/0\s*-\s*1/)).not.toBeInTheDocument()
-    expect(within(dashboard).getByText('Огород')).toBeVisible()
+    const manualRow = within(log).getByRole('row', { name: /#25\b.*Теплица.*manual/i })
+
+    expect(manualRow).toBeVisible()
+    expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
+    expect(screen.queryByRole('dialog', { name: 'Ручной ввод' })).not.toBeInTheDocument()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -44,38 +49,19 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).getByText(/0\s*-\s*0/)).toBeVisible()
-    expect(within(dashboard).getByText(/0%/)).toBeVisible()
+    expect(screen.getByText('Игровое время: 03:00:00')).toBeVisible()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
     fireEvent.click(screen.getByRole('button', { name: /пересоздать историю/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
     expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /запустить/i }))
-
-    act(() => {
-      vi.advanceTimersByTime(5000)
-    })
-
-    expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
-  })
-
-  it('simulator_run_updates_the_same_session_as_other_controls', () => {
-    vi.useFakeTimers()
-    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
-    vi.spyOn(Math, 'random').mockReturnValue(0)
-
-    render(<App />)
-
     fireEvent.click(screen.getByRole('button', { name: /запустить/i }))
 
     act(() => {

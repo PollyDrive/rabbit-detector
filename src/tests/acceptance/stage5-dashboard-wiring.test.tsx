@@ -5,6 +5,7 @@ import AppShell from '../../components/AppShell'
 import type { FarmEvent, FarmState } from '../../domain/contract'
 import { concurrentZonesScenario, strongSignalScenario } from '../../testing/contractFixtures'
 import { renderWithFarmState } from '../../testing/contractTestHelpers'
+import { DashboardProjectionProvider } from '../../context/DashboardProjectionContext'
 
 function buildState(events: FarmEvent[]): FarmState {
   return {
@@ -25,7 +26,7 @@ describe('stage 5 provider-driven dashboard wiring', () => {
   it('dashboard_uses_real_projection_instead_of_mock_context', () => {
     const state = buildState(withIds(concurrentZonesScenario.events))
 
-    renderWithFarmState(state, <AppShell />)
+    renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
     const recommendations = screen.getByRole('region', { name: 'Рекомендации и настройки' })
@@ -39,7 +40,7 @@ describe('stage 5 provider-driven dashboard wiring', () => {
   it('switches dashboard and recommendations when the provider state changes instead of keeping a stale zone from a local mock adapter', () => {
     const state = buildState(withIds(strongSignalScenario.events))
 
-    renderWithFarmState(state, <AppShell />)
+    renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
     const recommendations = screen.getByRole('region', { name: 'Рекомендации и настройки' })

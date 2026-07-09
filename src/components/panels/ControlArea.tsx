@@ -40,7 +40,7 @@ function ControlAction({
 }
 
 export function ControlArea() {
-  const { state, fastForward, regenerateHistory, setRunning } = useFarm();
+  const { state, fastForward, regenerateHistory, setRunning, toggleDog } = useFarm();
   const runningLabel = state.running ? "Пауза" : "Запустить";
 
   return (
@@ -59,6 +59,11 @@ export function ControlArea() {
             Пересоздать историю
           </ControlAction>
         </div>
+      </div>
+      <div>
+        <ControlAction onClick={toggleDog}>
+          {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
+        </ControlAction>
       </div>
     </div>
   );
