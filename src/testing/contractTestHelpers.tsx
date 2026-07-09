@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { render } from '@testing-library/react';
 import { FarmContext } from '../context/FarmContext';
+import { DashboardProjectionContext } from '../context/DashboardProjectionContext';
 import type { FarmState } from '../domain/contract';
 import type { DashboardProjection } from '../components/dashboard-board-utils';
 
@@ -30,9 +31,9 @@ export const MockedProjectionContext = createContext<DashboardProjection | undef
 
 export function renderWithMockedProjection(projection: DashboardProjection | undefined, children: React.ReactNode) {
   return render(
-    <MockedProjectionContext.Provider value={projection}>
+    <DashboardProjectionContext.Provider value={projection}>
       {children}
-    </MockedProjectionContext.Provider>
+    </DashboardProjectionContext.Provider>
   );
 }
 
