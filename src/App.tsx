@@ -3,8 +3,6 @@ import AppShell from "./components/AppShell";
 import { MobileNotice } from "./components/MobileNotice";
 import { FarmProvider } from "./context/FarmContext";
 import { MOBILE_BREAKPOINT_PX } from "./domain/config";
-import { MockedProjectionContext } from "./testing/contractTestHelpers";
-import { useDashboardProjection } from "./hooks/useDashboardProjection";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(
@@ -20,23 +18,12 @@ function useIsMobile() {
   return isMobile;
 }
 
-function ProjectionWiring({ children }: { children: React.ReactNode }) {
-  const projection = useDashboardProjection();
-  return (
-    <MockedProjectionContext.Provider value={projection}>
-      {children}
-    </MockedProjectionContext.Provider>
-  );
-}
-
 function App() {
   const isMobile = useIsMobile();
 
   return (
     <FarmProvider>
-      <ProjectionWiring>
-        {isMobile ? <MobileNotice /> : <AppShell />}
-      </ProjectionWiring>
+      {isMobile ? <MobileNotice /> : <AppShell />}
     </FarmProvider>
   );
 }

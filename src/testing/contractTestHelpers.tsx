@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { useContext } from 'react';
 import { render } from '@testing-library/react';
 import { FarmContext } from '../context/FarmContext';
 import { DashboardProjectionContext } from '../context/DashboardProjectionContext';
@@ -27,7 +27,7 @@ export function runSelectorOnFixture<T, R>(selector: (state: T) => R, fixture: T
   return selector(fixture);
 }
 
-export const MockedProjectionContext = createContext<DashboardProjection | undefined>(undefined);
+export const MockedProjectionContext = DashboardProjectionContext;
 
 export function renderWithMockedProjection(projection: DashboardProjection | undefined, children: React.ReactNode) {
   return render(
