@@ -29,11 +29,9 @@ describe('stage 4D empty/loading states + badge/overlay layout slots', () => {
     expect(screen.queryByText(/нет активности/i)).not.toBeInTheDocument()
   })
 
-  it('exposes layout slots for the badge stack and overlays so Stage 8 can fill them without re-laying-out the page', () => {
+  it('exposes a layout slot for the badge stack so Stage 8 can fill it without re-laying-out the page', () => {
     renderWithMockedProjection(emptyProjection, <DashboardShell />)
 
     expect(screen.getByTestId('badge-stack-slot')).toBeInTheDocument()
-    expect(screen.getByTestId('overlay-ai-worklog-slot')).toBeInTheDocument()
-    expect(screen.getByTestId('overlay-legend-slot')).toBeInTheDocument()
   })
 })

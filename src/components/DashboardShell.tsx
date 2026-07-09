@@ -5,6 +5,7 @@ import {
   isLoadingDashboardProjection,
   type DashboardProjectionLike,
 } from "./dashboard-shell-utils";
+import RecommendationsPanel from "./RecommendationsPanel";
 
 export default function DashboardShell() {
   const projection = useMockedProjection() as DashboardProjectionLike | undefined;
@@ -40,13 +41,9 @@ export default function DashboardShell() {
         <div data-testid="badge-stack-slot" className={styles.slot}>
           Badge stack slot
         </div>
-        <div data-testid="overlay-ai-worklog-slot" className={styles.slot}>
-          AI worklog overlay slot
-        </div>
-        <div data-testid="overlay-legend-slot" className={styles.slot}>
-          Legend overlay slot
-        </div>
       </div>
+
+      <RecommendationsPanel />
     </section>
   );
 }

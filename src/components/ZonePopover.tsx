@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import shellStyles from "./AppShell.module.css";
 import styles from "./ZonePopover.module.css";
 import { useFarm } from "../context/FarmContext";
 import type { RejectReason } from "../domain/contract";
@@ -10,6 +9,7 @@ import { DEFAULT_INTENSITY } from "../domain/config";
 
 export interface ZonePopoverProps {
   location: Location;
+  anchor: { x: number; y: number };
   onClose: () => void;
 }
 
@@ -24,7 +24,13 @@ function rejectionMessage(reason: RejectReason): string {
   }
 }
 
-export function ZonePopover({ location, onClose }: ZonePopoverProps) {
+const INTENSITY_LABELS: Array<{ value: number; label: string }> = [
+  { value: 1, label: "Низкая" },
+  { value: 5, label: "Средняя" },
+  { value: 10, label: "Высокая" },
+];
+
+export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
   const { state, addEvent } = useFarm();
   const { dogInGarden } = state;
 
@@ -54,6 +60,16 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
     }
   }, [state.events.length, state.lastRejectedReason, onClose]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!eventType) return;
@@ -70,20 +86,21 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
   };
 
   return (
-    <dialog open aria-label="Ручной ввод" className={shellStyles.popup}>
-      <h2>Ручной ввод</h2>
+    <dialog
+      open
+      aria-label="Ручной ввод"
+      className={styles.popup}
+      style={{ left: anchor.x, top: anchor.y }}
+    >
+      <h2 className={styles.title}>{location}</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div>
-          <input readOnly value={location} className={styles.readonlyInput} />
-        </div>
-
-        <div>
+        <div className={styles.field}>
           <label htmlFor="event-type-select">Тип события</label>
           <select
             id="event-type-select"
             value={eventType}
             onChange={(e) => setEventType(e.target.value as EventType)}
-            className={styles.fullWidth}
+            className={styles.select}
             required
           >
             <option value="">Выберите тип...</option>
@@ -95,18 +112,28 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
           </select>
         </div>
 
-        <div>
+        <div className={styles.field}>
           <label htmlFor="intensity-input">Интенсивность</label>
+          <div className={styles.sliderScaleNumbers}>
+            <span>1</span>
+            <span>5</span>
+            <span>10</span>
+          </div>
           <input
             id="intensity-input"
-            type="number"
+            type="range"
             min="1"
             max="10"
             value={intensity}
             onChange={(e) => setIntensity(Number(e.target.value))}
-            className={styles.fullWidth}
+            className={styles.slider}
             required
           />
+          <div className={styles.sliderScaleLabels}>
+            {INTENSITY_LABELS.map(({ value, label }) => (
+              <span key={value}>{label}</span>
+            ))}
+          </div>
         </div>
 
         {error && (
@@ -116,10 +143,12 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
         )}
 
         <div className={styles.actions}>
-          <button type="button" onClick={onClose}>
+          <button type="button" className={styles.secondaryButton} onClick={onClose}>
             Закрыть
           </button>
-          <button type="submit">Добавить</button>
+          <button type="submit" className={styles.primaryButton}>
+            Добавить
+          </button>
         </div>
       </form>
     </dialog>
