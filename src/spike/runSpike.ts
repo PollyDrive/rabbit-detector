@@ -1,9 +1,11 @@
 import { emptyLogScenario, strongSignalScenario, weakSignalsScenario } from "../testing/contractFixtures";
 import { runSpike } from "./mathSpike";
 
-runSpike({ events: emptyLogScenario.events, name: "Empty Log Scenario" });
-runSpike({ events: strongSignalScenario.events, name: "Strong Signal Scenario" });
-runSpike({ events: weakSignalsScenario.events, name: "Weak Signals Scenario" });
+import type { FarmEvent } from "../domain/contract";
+
+runSpike({ events: emptyLogScenario.events as FarmEvent[], name: "Empty Log Scenario" });
+runSpike({ events: strongSignalScenario.events as FarmEvent[], name: "Strong Signal Scenario" });
+runSpike({ events: weakSignalsScenario.events as FarmEvent[], name: "Weak Signals Scenario" });
 
 // Documented fields for the projection shape:
 // ZONE:
