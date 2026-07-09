@@ -68,7 +68,7 @@ describe('stage 4S manual walking skeleton', () => {
     expect(within(shell).getByText('Лог событий')).toBeVisible()
     expect(within(shell).getByText('#1')).toBeVisible()
     expect(within(shell).getByText('manual')).toBeVisible()
-    expect(within(shell).getByText('Огород')).toBeVisible()
+    expect(within(shell).getAllByText('Огород')[0]).toBeVisible()
     expect(within(dashboard).getByText('Огород')).toBeVisible()
   })
 
