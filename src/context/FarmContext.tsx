@@ -5,6 +5,7 @@ import { farmEventSchema, isValidEvent, type FarmEvent } from '../domain/event';
 import {
   createSeedBatch,
   createSimulatorEvent,
+  validateSeedBatch,
   INITIAL_SEED_COUNT,
 } from '../domain/runtime';
 import { createLogger } from '../domain/logger';
@@ -28,10 +29,8 @@ function nextEventId(events: FarmEvent[]): number {
 
 function createInitialEvents(now: number): FarmEvent[] {
   const seedBatch = createSeedBatch(now, Math.random, false, INITIAL_SEED_COUNT);
-  return seedBatch.map((event, index) => ({
-    ...event,
-    id: index + 1,
-  }));
+  const { valid } = validateSeedBatch(seedBatch, false, 1);
+  return valid;
 }
 
 function appendValidatedEvent(
@@ -126,33 +125,17 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
 
     case 'SEED_BULK': {
       const nonSeedEvents = state.events.filter((event) => event.source !== 'seed');
-      let id = nextEventId(nonSeedEvents);
-      const seeded: FarmEvent[] = [];
-      let rejectedCount = 0;
-
-      for (const event of action.payload) {
-        const candidate: FarmEvent = {
-          ...event,
-          id,
-        };
-        const parsed = farmEventSchema.safeParse(candidate);
-        if (!parsed.success || !isValidEvent(candidate, state.dogInGarden)) {
-          rejectedCount += 1;
-          continue;
-        }
-
-        seeded.push(parsed.data);
-        id += 1;
-      }
+      const startId = nextEventId(nonSeedEvents);
+      const { valid, rejectedCount } = validateSeedBatch(action.payload, state.dogInGarden, startId);
 
       if (rejectedCount > 0) {
         log.warn(`Dropped ${rejectedCount} invalid seed events`);
       }
-      log.info(`Seeded ${seeded.length} events`);
+      log.info(`Seeded ${valid.length} events`);
 
       return {
         ...state,
-        events: [...nonSeedEvents, ...seeded],
+        events: [...nonSeedEvents, ...valid],
         lastRejectedReason: null,
       };
     }

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
 import { getEventTypeOptions, isValidEvent } from '../../domain/event';
-import { createSeedBatch, createSimulatorEvent, formatGameTime } from '../../domain/runtime';
+import { createSeedBatch, createSimulatorEvent, formatGameTime, validateSeedBatch } from '../../domain/runtime';
+import type { FarmEvent } from '../../domain/event';
 
 describe('runtime helpers', () => {
   it('creates only valid seed events inside the last hour window', () => {
@@ -41,5 +42,19 @@ describe('runtime helpers', () => {
 
   it('formats the clock as hh:mm:ss', () => {
     expect(formatGameTime(3661)).toBe('01:01:01');
+  });
+
+  it('validates a seed batch dropping invalid events', () => {
+    const batch: Omit<FarmEvent, 'id'>[] = [
+      { source: 'seed', time: 1000, location: 'Огород', event_type: 'Пропажа моркови', intensity: 5 }, // valid
+      { source: 'seed', time: 1100, location: 'Огород', event_type: 'Следы', intensity: 5 }, // invalid with dog
+      { source: 'seed', time: 1200, location: 'Сарай', event_type: 'Шуршание', intensity: 99 }, // invalid shape (intensity > 10)
+    ];
+
+    const result = validateSeedBatch(batch, true, 10);
+    
+    expect(result.valid).toHaveLength(1);
+    expect(result.valid[0]).toMatchObject({ id: 10, source: 'seed', location: 'Огород', event_type: 'Пропажа моркови' });
+    expect(result.rejectedCount).toBe(2);
   });
 });
