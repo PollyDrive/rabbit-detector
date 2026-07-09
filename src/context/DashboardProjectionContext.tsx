@@ -107,3 +107,19 @@ export function useDashboardActivityStarted(): boolean {
 
   return farmCtx?.state.events.some((e) => e.source !== 'seed') ?? false;
 }
+
+export function DashboardProjectionProvider({ children }: { children: React.ReactNode }) {
+  const farmCtx = useContext(FarmContext);
+  const state = farmCtx?.state || { events: [], gameTime: 0 };
+
+  const projection = useMemo(() => {
+    const { events, gameTime } = state;
+    return computeRealProjection(events, gameTime);
+  }, [state]);
+
+  return (
+    <DashboardProjectionContext.Provider value={projection}>
+      {children}
+    </DashboardProjectionContext.Provider>
+  );
+}

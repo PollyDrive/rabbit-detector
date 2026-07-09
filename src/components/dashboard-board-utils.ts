@@ -53,3 +53,4 @@ export function getZoneRows(projection: DashboardProjection): ZoneBoardRow[] {
       return left.location.localeCompare(right.location);
     });
 }
+

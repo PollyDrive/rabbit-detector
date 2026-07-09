@@ -18,7 +18,7 @@ export default function DashboardBoard() {
   const zoneRows = safeProjection ? getZoneRows(safeProjection) : [];
 
   return (
-    <section className={styles.board} aria-label="Панель dashboard">
+    <section className={styles.board} aria-label="Дашборд">
       <div className={styles.summary}>
         <div className={styles.metrics} aria-label="Показатели численности">
           {safeProjection ? (

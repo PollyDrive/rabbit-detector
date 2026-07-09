@@ -62,7 +62,7 @@ describe('stage 4S seed walking skeleton', () => {
 
     const shell = screen.getByTestId('app-shell')
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
-    const eventLog = within(shell).getByText('Лог событий').closest('div')!
+    const eventLog = screen.getByRole('region', { name: 'Лог событий' })
 
     expect(within(shell).getByText('Лог событий')).toBeVisible()
     expect(within(shell).getByText('#1')).toBeVisible()

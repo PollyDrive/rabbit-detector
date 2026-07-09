@@ -8,7 +8,7 @@ describe('stage 1 control panels', () => {
     render(<App />)
 
     expect(screen.getByText('Симулятор')).toBeVisible()
-    expect(screen.getByText('Дашборд')).toBeVisible()
+    expect(screen.getByRole('region', { name: 'Дашборд' })).toBeVisible()
     expect(screen.getByText("Параметры estimator'а")).toBeVisible()
     expect(screen.getByText('Правила фермы')).toBeVisible()
     expect(screen.getByRole('button', { name: 'AI Worklog' })).toBeVisible()

@@ -27,6 +27,7 @@ export function runSelectorOnFixture<T, R>(selector: (state: T) => R, fixture: T
   return selector(fixture);
 }
 
+
 export const MockedProjectionContext = DashboardProjectionContext;
 
 export function renderWithMockedProjection(projection: DashboardProjection | undefined, children: React.ReactNode) {

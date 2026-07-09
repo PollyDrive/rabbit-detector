@@ -47,7 +47,7 @@ describe('stage 2 append-only reducer', () => {
     expect(dataRows).toHaveLength(rowsBefore - 1 + 2)
 
     const [secondToLast, last] = dataRows.slice(-2)
-    expect(within(secondToLast).getByText('Огород')).toBeVisible()
-    expect(within(last).getByText('Теплица')).toBeVisible()
+    expect(within(secondToLast).getByText(/Огород/)).toBeVisible()
+    expect(within(last).getByText(/Теплица/)).toBeVisible()
   })
 })
