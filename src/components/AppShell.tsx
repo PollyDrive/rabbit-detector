@@ -3,6 +3,7 @@ import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import { FarmMap } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
+import { EventLog } from "./EventLog";
 
 function useCanvasScale() {
   const [scale, setScale] = useState(1);
@@ -88,6 +89,7 @@ export default function AppShell() {
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area">
             <DashboardArea />
+            <EventLog />
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
