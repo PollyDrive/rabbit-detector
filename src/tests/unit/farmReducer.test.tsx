@@ -141,10 +141,12 @@ describe('farmReducer (live write path via FarmContext)', () => {
         source: 'manual',
       })
     })
+    const [manualEvent] = result.current.state.events
+
     act(() => {
       result.current.seedEvents([
-        { id: 101, location: 'Сарай', event_type: 'Шуршание', intensity: 3, time: 10, source: 'seed' },
-        { id: 102, location: 'Теплица', event_type: 'Датчик движения', intensity: 4, time: 20, source: 'seed' },
+        { location: 'Сарай', event_type: 'Шуршание', intensity: 3, time: 10, source: 'seed' },
+        { location: 'Теплица', event_type: 'Датчик движения', intensity: 4, time: 20, source: 'seed' },
       ])
     })
 
@@ -152,17 +154,21 @@ describe('farmReducer (live write path via FarmContext)', () => {
     expect(events).toHaveLength(3)
     expect(events.filter((e) => e.source === 'manual')).toHaveLength(1)
     expect(events.filter((e) => e.source === 'seed')).toHaveLength(2)
+    // seed ids never collide with the live manual event's id.
+    const seedIds = events.filter((e) => e.source === 'seed').map((e) => e.id)
+    expect(seedIds).not.toContain(manualEvent.id)
+    expect(new Set(events.map((e) => e.id)).size).toBe(events.length)
 
     act(() => {
       result.current.seedEvents([
-        { id: 201, location: 'Сарай', event_type: 'Пропажа моркови', intensity: 6, time: 30, source: 'seed' },
+        { location: 'Сарай', event_type: 'Пропажа моркови', intensity: 6, time: 30, source: 'seed' },
       ])
     })
 
     const eventsAfterRegenerate = result.current.state.events
     expect(eventsAfterRegenerate.filter((e) => e.source === 'manual')).toHaveLength(1)
     expect(eventsAfterRegenerate.filter((e) => e.source === 'seed')).toHaveLength(1)
-    expect(eventsAfterRegenerate.find((e) => e.id === 201)).toBeDefined()
+    expect(eventsAfterRegenerate.find((e) => e.id === manualEvent.id)).toEqual(manualEvent)
   })
 
   it('FAST_FORWARD advances gameTime by exactly one hour without touching the log', () => {

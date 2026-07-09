@@ -30,7 +30,7 @@ const initialState: FarmState = {
 
 type FarmAction =
   | { type: "ADD_EVENT"; payload: Omit<FarmEvent, "id" | "time"> }
-  | { type: "SEED_BULK"; payload: FarmEvent[] }
+  | { type: "SEED_BULK"; payload: Omit<FarmEvent, "id">[] }
   | { type: "FAST_FORWARD" }
   | { type: "TOGGLE_DOG" };
 
@@ -83,11 +83,18 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
 
     case "SEED_BULK": {
       // Filter out existing seed events and replace them with the new ones;
-      // live (sim/manual) events are untouched.
+      // live (sim/manual) events are untouched. Ids are assigned here, off
+      // the same sequence ADD_EVENT uses — callers never supply an id, so a
+      // seed batch can never collide with a live manual/sim event's id.
       const nonSeedEvents = state.events.filter((e) => e.source !== "seed");
+      let id = nextEventId(nonSeedEvents);
+      const seeded: FarmEvent[] = action.payload.map((event) => ({ ...event, id: id++ }));
+
+      log.info(`Seeded ${seeded.length} events`);
+
       return {
         ...state,
-        events: [...nonSeedEvents, ...action.payload],
+        events: [...nonSeedEvents, ...seeded],
         // SEED_BULK does not update lastDispatchTime to avoid blocking user actions
       };
     }
@@ -118,7 +125,7 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
 interface FarmContextProps {
   state: FarmState;
   addEvent: (event: Omit<FarmEvent, "id" | "time">) => void;
-  seedEvents: (events: FarmEvent[]) => void;
+  seedEvents: (events: Omit<FarmEvent, "id">[]) => void;
   fastForward: () => void;
   toggleDog: () => void;
 }
@@ -134,7 +141,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({
     dispatch({ type: "ADD_EVENT", payload: event });
   };
 
-  const seedEvents = (events: FarmEvent[]) => {
+  const seedEvents = (events: Omit<FarmEvent, "id">[]) => {
     dispatch({ type: "SEED_BULK", payload: events });
   };
 
