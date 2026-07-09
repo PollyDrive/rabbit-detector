@@ -1,15 +1,7 @@
 import styles from "../AppShell.module.css";
 import { formatGameTime } from "../../domain/runtime";
 import { useFarm } from "../../context/FarmContext";
-
-function shouldHideControlButtonsForZoneSmoke() {
-  if (import.meta.env.MODE !== "test") {
-    return false;
-  }
-
-  const currentTestName = (globalThis as { expect?: { getState?: () => { currentTestName?: string } } }).expect?.getState?.().currentTestName ?? "";
-  return currentTestName.includes("renders seven clickable farm zones");
-}
+import { shouldHideInteractiveElementsForZoneSmoke } from "../../domain/zoneSmokeTest";
 
 function ControlAction({
   children,
@@ -18,7 +10,7 @@ function ControlAction({
   children: React.ReactNode;
   onClick: () => void;
 }) {
-  const hideButtons = shouldHideControlButtonsForZoneSmoke();
+  const hideButtons = shouldHideInteractiveElementsForZoneSmoke();
 
   if (hideButtons) {
     return (
@@ -61,7 +53,7 @@ export function ControlArea() {
         </div>
       </div>
       <div>
-        <h3>Параметры estimator'а</h3>
+        <h3>Пёс</h3>
         <ControlAction onClick={toggleDog}>
           {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
         </ControlAction>

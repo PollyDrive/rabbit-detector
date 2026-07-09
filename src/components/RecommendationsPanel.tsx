@@ -27,9 +27,7 @@ export default function RecommendationsPanel() {
               </li>
             ))}
           </ul>
-        ) : (
-          <p className={styles.emptyState}>Нет активности</p>
-        )}
+        ) : null}
       </div>
 
       <div className={styles.settingsShell}>

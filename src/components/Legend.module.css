@@ -1,5 +1,6 @@
 .legend {
-  margin: 24px auto;
+  width: 55%;
+  margin: 24px auto 24px 0;
   padding: 24px 28px;
   background: rgba(255, 255, 255, 0.92);
   border-radius: 16px;

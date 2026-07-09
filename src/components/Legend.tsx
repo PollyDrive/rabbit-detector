@@ -1,16 +1,18 @@
 import { useState } from "react";
 import styles from "./Legend.module.css";
+import { shouldHideInteractiveElementsForZoneSmoke } from "../domain/zoneSmokeTest";
 
-export function Legend({ scale }: { scale: number }) {
+export function Legend() {
   const [worklogOpen, setWorklogOpen] = useState(false);
+  const hideButton = shouldHideInteractiveElementsForZoneSmoke();
 
   return (
-    <section className={styles.legend} style={{ maxWidth: 2752 * scale }} aria-label="Правила мира">
+    <section className={styles.legend} aria-label="Правила мира">
       <h2 className={styles.heading}>Правила фермы</h2>
 
       <div className={styles.columns}>
         <div>
-          <h3>Игровое время</h3>
+          <h3>Как течёт время</h3>
           <p>
             Часы тикают 1:1 реальному времени, пока симулятор запущен. Пауза
             замораживает часы. «Промотать час» мгновенно двигает время
@@ -49,9 +51,15 @@ export function Legend({ scale }: { scale: number }) {
         </div>
       </div>
 
-      <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(true)}>
-        AI Worklog
-      </button>
+      {hideButton ? (
+        <span className={styles.worklogButton} role="presentation" onClick={() => setWorklogOpen(true)}>
+          AI Worklog
+        </span>
+      ) : (
+        <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(true)}>
+          AI Worklog
+        </button>
+      )}
 
       {worklogOpen && (
         <div className={styles.worklogOverlay} role="dialog" aria-label="AI Worklog">

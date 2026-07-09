@@ -70,7 +70,7 @@ export default function AppShell() {
         )}
       </div>
 
-      <Legend scale={scale} />
+      <Legend />
     </main>
   );
 }
