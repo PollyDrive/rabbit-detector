@@ -1,6 +1,6 @@
 import styles from "./DashboardShell.module.css";
 import DashboardBoard from "./DashboardBoard";
-import { useDashboardProjection } from "../context/DashboardProjectionContext";
+import { useDashboardProjection, useDashboardActivityStarted } from "../context/DashboardProjectionContext";
 import {
   isEmptyDashboardProjection,
   isLoadingDashboardProjection,
@@ -9,7 +9,8 @@ import {
 
 export default function DashboardShell() {
   const projection = useDashboardProjection() as DashboardProjectionLike | undefined;
-  const isLoading = isLoadingDashboardProjection(projection);
+  const hasStarted = useDashboardActivityStarted();
+  const isLoading = isLoadingDashboardProjection(projection) || !hasStarted;
   const isEmpty = isEmptyDashboardProjection(projection);
 
   return (
