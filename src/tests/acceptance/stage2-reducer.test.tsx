@@ -1,9 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import App from '../../App.tsx'
+import { ANTI_SPAM_INTERVAL_MS } from '../../domain/config.ts'
 
 describe('stage 2 append-only reducer', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('keeps earlier log rows untouched when a second event is added', () => {
     render(<App />)
 
@@ -15,6 +24,10 @@ describe('stage 2 append-only reducer', () => {
       target: { value: '5' },
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
+
+    // Real submissions are anti-spam gated (ТЗ 9.1) — space the two
+    // dispatches apart instead of firing them in the same tick.
+    vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 50)
 
     fireEvent.click(screen.getByRole('button', { name: 'Теплица' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
