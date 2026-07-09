@@ -132,9 +132,7 @@ interface FarmContextProps {
 
 const FarmContext = createContext<FarmContextProps | undefined>(undefined);
 
-export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export function FarmProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(farmReducer, initialState);
 
   const addEvent = (event: Omit<FarmEvent, "id" | "time">) => {
@@ -166,7 +164,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </FarmContext.Provider>
   );
-};
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useFarm = () => {
