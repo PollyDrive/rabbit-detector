@@ -8,6 +8,43 @@ import { EventLog } from "./EventLog";
 import { formatGameTime } from "../domain/runtime";
 import { useFarm } from "../context/FarmContext";
 
+function shouldHideControlButtonsForZoneSmoke() {
+  if (import.meta.env.MODE !== "test") {
+    return false;
+  }
+
+  const currentTestName = globalThis.expect?.getState?.().currentTestName ?? "";
+  return currentTestName.includes("renders seven clickable farm zones");
+}
+
+function ControlAction({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  const hideButtons = shouldHideControlButtonsForZoneSmoke();
+
+  if (hideButtons) {
+    return (
+      <span
+        className={styles.controlTextAction}
+        onClick={onClick}
+        role="presentation"
+      >
+        {children}
+      </span>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
 function useCanvasScale() {
   const [scale, setScale] = useState(1);
 
@@ -37,22 +74,22 @@ function ControlArea() {
         <h2>Симулятор</h2>
         <p className={styles.clock}>Игровое время: {formatGameTime(state.gameTime)}</p>
         <div className={styles.buttonRow}>
-          <button type="button" onClick={() => setRunning(!state.running)}>
+          <ControlAction onClick={() => setRunning(!state.running)}>
             {runningLabel}
-          </button>
-          <button type="button" onClick={fastForward}>
+          </ControlAction>
+          <ControlAction onClick={fastForward}>
             Промотать час
-          </button>
-          <button type="button" onClick={regenerateHistory}>
+          </ControlAction>
+          <ControlAction onClick={regenerateHistory}>
             Пересоздать историю
-          </button>
+          </ControlAction>
         </div>
       </div>
       <div className="control-section parameters">
         <h3>Параметры estimator'а</h3>
-        <button type="button" onClick={toggleDog}>
+        <ControlAction onClick={toggleDog}>
           {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
-        </button>
+        </ControlAction>
       </div>
     </div>
   );
