@@ -1,25 +1,52 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import type { ReactNode } from 'react'
+import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import App from '../../App.tsx'
+import { FarmProvider, useFarm } from '../../context/FarmContext.tsx'
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <FarmProvider>{children}</FarmProvider>
+)
 
 describe('stage 2 event model', () => {
-  it('shows the full event payload after manual submit', () => {
-    render(<App />)
+  it('shapes a manual event with id/time assigned and the given fields intact', () => {
+    const { result } = renderHook(() => useFarm(), { wrapper })
 
-    fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
-    fireEvent.change(screen.getByLabelText(/тип события/i), {
-      target: { value: 'Следы' },
+    act(() => {
+      result.current.addEvent({
+        location: 'Огород',
+        event_type: 'Следы',
+        intensity: 7,
+        source: 'manual',
+      })
     })
-    fireEvent.change(screen.getByLabelText(/интенсивность/i), {
-      target: { value: '7' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    expect(screen.getByText(/#1/)).toBeVisible()
-    expect(screen.getByText('Огород')).toBeVisible()
-    expect(screen.getByText('Следы')).toBeVisible()
-    expect(screen.getByText('7')).toBeVisible()
-    expect(screen.getByText(/manual/i)).toBeVisible()
+    expect(result.current.state.events).toHaveLength(1)
+    const [event] = result.current.state.events
+
+    expect(event).toMatchObject({
+      id: 1,
+      location: 'Огород',
+      event_type: 'Следы',
+      intensity: 7,
+      source: 'manual',
+    })
+    expect(typeof event.time).toBe('number')
+  })
+
+  it('rejects a combination outside the location/event-type compatibility matrix', () => {
+    const { result } = renderHook(() => useFarm(), { wrapper })
+
+    act(() => {
+      // Шуршание is not a valid signal for Огород per the matrix.
+      result.current.addEvent({
+        location: 'Огород',
+        event_type: 'Шуршание',
+        intensity: 5,
+        source: 'manual',
+      })
+    })
+
+    expect(result.current.state.events).toHaveLength(0)
   })
 })
