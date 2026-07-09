@@ -40,7 +40,7 @@ function ControlAction({
 }
 
 export function ControlArea() {
-  const { state, fastForward, regenerateHistory, setRunning, toggleDog } = useFarm();
+  const { state, fastForward, regenerateHistory, setRunning} = useFarm();
   const runningLabel = state.running ? "Пауза" : "Запустить";
 
   return (
@@ -60,12 +60,7 @@ export function ControlArea() {
           </ControlAction>
         </div>
       </div>
-      <div>
-        <h3>Параметры estimator'а</h3>
-        <ControlAction onClick={toggleDog}>
-          {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
-        </ControlAction>
-      </div>
+      
     </div>
   );
 }
