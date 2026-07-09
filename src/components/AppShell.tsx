@@ -27,11 +27,11 @@ function useCanvasScale() {
 
 function ControlArea() {
   return (
-    <div className="control-area">
-      <div className="control-section">
+    <div className={styles.controlContent}>
+      <div>
         <h2>Симулятор</h2>
       </div>
-      <div className="control-section parameters">
+      <div>
         <h3>Параметры estimator'а</h3>
       </div>
     </div>
@@ -40,7 +40,7 @@ function ControlArea() {
 
 function DashboardArea() {
   return (
-    <div className="dashboard-area">
+    <div className={styles.dashboardContent}>
       <h2>Дашборд</h2>
     </div>
   );
@@ -48,7 +48,7 @@ function DashboardArea() {
 
 function OverlayButtons() {
   return (
-    <div className="overlay-buttons">
+    <div className={styles.overlayButtonsContent}>
       <div style={{ cursor: 'pointer' }}>AI Worklog</div>
       <div style={{ cursor: 'pointer' }}>Legend</div>
     </div>
