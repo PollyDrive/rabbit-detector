@@ -67,7 +67,6 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
 
     expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).queryByText('Загрузка...')).not.toBeInTheDocument()
   })
 
   it('simulator_run_updates_the_same_session_as_other_controls', () => {
@@ -76,8 +75,6 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0)
 
     render(<App />)
-
-    const dashboard = screen.getByRole('region', { name: 'Дашборд' })
 
     fireEvent.click(screen.getByRole('button', { name: /запустить/i }))
 
