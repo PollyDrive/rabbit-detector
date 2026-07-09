@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { useContext } from 'react';
 import { render } from '@testing-library/react';
 import { FarmContext } from '../context/FarmContext';
 import type { FarmState } from '../domain/contract';
