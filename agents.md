@@ -11,7 +11,7 @@
 
 ## Роли
 
-- `PM` режет фичу на issues (нарезка на все stage наперёд не запрещена, от веток она не зависит). Когда реально стартует работа над конкретным issue, PM создаёт `stage_*_issue_*_test` от свежего `preprod`, пишет acceptance tests (`*.test.tsx` для React-сценариев) и сразу открывает draft PR `stage_*_issue_*_test -> preprod`.
+- `PM` режет фичу на issues (нарезка на все stage наперёд не запрещена, от веток она не зависит). Когда реально стартует работа над конкретным issue, PM создаёт `stage_*_issue_*_test` от свежего `preprod`, пишет acceptance tests (`*.test.tsx` для React-сценариев) и сразу открывает draft PR `stage_*_issue_*_test -> preprod`. При нарезке параллельных issues одного stage PM заранее сверяет, что каждый acceptance test бьёт по уровню Scope своей issue, а не по чужому — иначе issue выглядит самодостаточной на бумаге, но её тест физически не проходит без соседних issues (см. «Acceptance tests» ниже).
 - `implementer` берёт `ready` issues, делает `stage_*_issue_*`, пишет код и unit-тесты, открывает PR в `stage_*_issue_*_test`.
 - `reviewer` проверяет PR `stage_*_issue_* -> stage_*_issue_*_test`, возвращает на доработку с лейблами (`bug`, `in-progress`) или мержит в `stage_*_issue_*_test`.
 - `reviewer` пишет GH-комментарий с `verdict / reasoning / judge_score / model`, не stdout.
@@ -56,6 +56,7 @@
 - **1 к 1:** одна issue = одна ветка = один PR.
 - **Проверки:** запускать реальные `npm` скрипты перед сдачей.
 - **Эскалация:** звать человека при противоречиях или блокерах.
+- **Scope-check тестов при нарезке:** для каждой issue в stage — прогнать чек-лист из «Acceptance tests» (позитив+негатив, уровень теста = уровень Scope) ДО простановки `ready`, не после того как reviewer/implementer упрутся в противоречие.
 
 **Don't:**
 - 🚫 **НЕ пушить в `main`** (строго для человека).
