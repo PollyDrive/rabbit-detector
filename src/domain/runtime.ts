@@ -1,4 +1,5 @@
-import { COMPATIBILITY_MATRIX, type EventType, type FarmEvent, isValidEvent } from './event';
+import { COMPATIBILITY_MATRIX, type EventType, isValidEvent } from './event';
+import type { FarmEvent } from './contract';
 import type { Location } from './zones';
 
 export const GAME_DAY_SECONDS = 3600;

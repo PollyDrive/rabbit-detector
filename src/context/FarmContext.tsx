@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { ANTI_SPAM_INTERVAL_MS, FAST_FORWARD_STEP_S, INITIAL_GAME_TIME_S } from '../domain/config';
-import { farmEventSchema, isValidEvent, type FarmEvent } from '../domain/event';
+import { farmEventSchema, isValidEvent } from '../domain/event';
+import type { FarmEvent, FarmState } from '../domain/contract';
 import {
   createSeedBatch,
   createSimulatorEvent,
@@ -10,17 +11,6 @@ import {
 import { createLogger } from '../domain/logger';
 
 const log = createLogger('reducer');
-
-export type RejectReason = 'anti-spam' | 'invalid-combination' | 'invalid-shape';
-
-export interface FarmState {
-  events: FarmEvent[];
-  gameTime: number;
-  running: boolean;
-  dogInGarden: boolean;
-  lastDispatchTime: number;
-  lastRejectedReason: RejectReason | null;
-}
 
 function nextEventId(events: FarmEvent[]): number {
   return events.length > 0 ? Math.max(...events.map((event) => event.id)) + 1 : 1;
@@ -125,6 +115,10 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     }
 
     case 'SEED_BULK': {
+      // Every event in the batch is validated one at a time (shape + matrix) —
+      // the same guard ADD_EVENT goes through. Invalid entries are dropped,
+      // not the whole batch (see #95 for the mount-time createInitialEvents gap
+      // this doesn't cover).
       const nonSeedEvents = state.events.filter((event) => event.source !== 'seed');
       let id = nextEventId(nonSeedEvents);
       const seeded: FarmEvent[] = [];
@@ -209,7 +203,8 @@ interface FarmContextProps {
   toggleDog: () => void;
 }
 
-const FarmContext = createContext<FarmContextProps | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const FarmContext = createContext<FarmContextProps | undefined>(undefined);
 
 export function FarmProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(farmReducer, undefined, createInitialState);

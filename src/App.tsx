@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import AppShell from "./components/AppShell";
 import { MobileNotice } from "./components/MobileNotice";
 import { FarmProvider } from "./context/FarmContext";
-
-const MOBILE_BREAKPOINT = 768;
+import { MOBILE_BREAKPOINT_PX } from "./domain/config";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(
-    () => window.innerWidth < MOBILE_BREAKPOINT,
+    () => window.innerWidth < MOBILE_BREAKPOINT_PX,
   );
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT_PX);
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
@@ -23,9 +21,9 @@ function useIsMobile() {
 function App() {
   const isMobile = useIsMobile();
 
-  return isMobile ? <MobileNotice /> : (
+  return (
     <FarmProvider>
-      <AppShell />
+      {isMobile ? <MobileNotice /> : <AppShell />}
     </FarmProvider>
   );
 }
