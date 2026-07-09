@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import shellStyles from "./AppShell.module.css";
 import styles from "./ZonePopover.module.css";
 import { useFarm } from "../context/FarmContext";
-import type { RejectReason } from "../context/FarmContext";
+import type { RejectReason } from "../domain/contract";
 import { COMPATIBILITY_MATRIX } from "../domain/event";
 import type { EventType } from "../domain/event";
 import type { Location } from "../domain/zones";
