@@ -3,7 +3,7 @@ import shellStyles from "./AppShell.module.css";
 import styles from "./ZonePopover.module.css";
 import { useFarm } from "../context/FarmContext";
 import type { RejectReason } from "../domain/contract";
-import { COMPATIBILITY_MATRIX } from "../domain/event";
+import { getEventTypeOptions } from "../domain/event";
 import type { EventType } from "../domain/event";
 import type { Location } from "../domain/zones";
 import { DEFAULT_INTENSITY } from "../domain/config";
@@ -28,12 +28,10 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
   const { state, addEvent } = useFarm();
   const { dogInGarden } = state;
 
-  const allowedTypes = COMPATIBILITY_MATRIX[location] || [];
+  const eventTypeOptions = getEventTypeOptions(location, dogInGarden);
 
   // Determine initial event type (skip disabled ones like "Следы" when dog is in garden)
-  const initialType = allowedTypes.find(
-    (type) => !(dogInGarden && location === "Огород" && type === "Следы")
-  ) || "";
+  const initialType = eventTypeOptions.find((option) => !option.disabled)?.value ?? "";
 
   const [eventType, setEventType] = useState<EventType | "">(initialType as EventType | "");
   const [intensity, setIntensity] = useState<number>(DEFAULT_INTENSITY);
@@ -89,14 +87,11 @@ export function ZonePopover({ location, onClose }: ZonePopoverProps) {
             required
           >
             <option value="">Выберите тип...</option>
-            {allowedTypes.map((type) => {
-              const isDisabled = dogInGarden && location === "Огород" && type === "Следы";
-              return (
-                <option key={type} value={type} disabled={isDisabled}>
-                  {type} {isDisabled ? "(пёс в огороде)" : ""}
-                </option>
-              );
-            })}
+            {eventTypeOptions.map((option) => (
+              <option key={option.value} value={option.value} disabled={option.disabled}>
+                {option.disabled && option.hint ? `${option.label} (${option.hint})` : option.label}
+              </option>
+            ))}
           </select>
         </div>
 

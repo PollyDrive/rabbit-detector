@@ -8,8 +8,11 @@ export function renderWithFarmState(state: FarmState, children: React.ReactNode)
   const mockValue = {
     state,
     addEvent: () => {},
+    simulateEvent: () => {},
     seedEvents: () => {},
+    regenerateHistory: () => {},
     fastForward: () => {},
+    setRunning: () => {},
     toggleDog: () => {},
   };
   return render(

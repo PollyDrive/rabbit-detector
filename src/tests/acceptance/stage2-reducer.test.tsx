@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import App from '../../App.tsx'
@@ -15,6 +15,11 @@ describe('stage 2 append-only reducer', () => {
 
   it('keeps earlier log rows untouched when a second event is added', () => {
     render(<App />)
+
+    // Stage 4A seeds ~an hour of random history at mount (ТЗ 3.7), so the
+    // log is never empty and row ids/locations aren't predictable — assert
+    // on row count deltas and the two newly-appended rows, not literal #1/#2.
+    const rowsBefore = screen.getAllByRole('row').length // includes the header row
 
     fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
@@ -38,9 +43,11 @@ describe('stage 2 append-only reducer', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    expect(screen.getByText(/#1/)).toBeVisible()
-    expect(screen.getByText(/#2/)).toBeVisible()
-    expect(screen.getByText('Огород')).toBeVisible()
-    expect(screen.getByText('Теплица')).toBeVisible()
+    const dataRows = screen.getAllByRole('row').slice(1) // drop header
+    expect(dataRows).toHaveLength(rowsBefore - 1 + 2)
+
+    const [secondToLast, last] = dataRows.slice(-2)
+    expect(within(secondToLast).getByText('Огород')).toBeVisible()
+    expect(within(last).getByText('Теплица')).toBeVisible()
   })
 })

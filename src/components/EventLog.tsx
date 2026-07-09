@@ -1,4 +1,5 @@
 import { useFarm } from "../context/FarmContext";
+import { formatGameTime } from "../domain/runtime";
 import styles from "./EventLog.module.css";
 
 export function EventLog() {
@@ -26,7 +27,7 @@ export function EventLog() {
               <td className={styles.cell}>{event.location}</td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>{event.intensity}</td>
-              <td className={styles.cell}>{event.time}s</td>
+              <td className={styles.cell}>{formatGameTime(event.time)}</td>
               <td className={styles.cell}>{event.source}</td>
             </tr>
           ))}

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { EventType, EventSource } from './event';
 import type { Location } from './zones';
 
-export const CONTRACT_VERSION = '1.0.0';
+export const CONTRACT_VERSION = '1.1.0'; // 1.1.0: added FarmState.running (Stage 4A game clock/simulator)
 
 export interface FarmEvent {
   id: number;
@@ -18,6 +18,7 @@ export type RejectReason = 'anti-spam' | 'invalid-combination' | 'invalid-shape'
 export interface FarmState {
   events: FarmEvent[];
   gameTime: number; // in seconds
+  running: boolean; // Stage 4A: game clock / simulator on-off
   dogInGarden: boolean;
   lastDispatchTime: number; // Date.now()
   lastRejectedReason: RejectReason | null;

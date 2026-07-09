@@ -1,28 +1,30 @@
-import { LOG_LEVEL } from "./config";
-import type { LogLevel } from "./config";
+import { LOG_LEVEL, type LogLevel } from "./config";
 
-const LEVEL_ORDER: Record<LogLevel, number> = {
-  debug: 0,
-  info: 1,
-  warn: 2,
-  silent: 3,
+const ORDER: Record<LogLevel, number> = {
+  silent: 0,
+  warn: 1,
+  info: 2,
+  debug: 3,
 };
 
-function shouldLog(level: "debug" | "info" | "warn"): boolean {
-  return LEVEL_ORDER[level] >= LEVEL_ORDER[LOG_LEVEL];
-}
-
-/** Namespaced logger gated by LOG_LEVEL (ТЗ 9.2) — e.g. createLogger('reducer'). */
 export function createLogger(namespace: string) {
+  const currentLevel = ORDER[LOG_LEVEL];
+
   return {
     debug: (...args: unknown[]) => {
-      if (shouldLog("debug")) console.debug(`[${namespace}]`, ...args);
+      if (currentLevel >= ORDER.debug) {
+        console.debug(`[${namespace}]`, ...args);
+      }
     },
     info: (...args: unknown[]) => {
-      if (shouldLog("info")) console.info(`[${namespace}]`, ...args);
+      if (currentLevel >= ORDER.info) {
+        console.info(`[${namespace}]`, ...args);
+      }
     },
     warn: (...args: unknown[]) => {
-      if (shouldLog("warn")) console.warn(`[${namespace}]`, ...args);
+      if (currentLevel >= ORDER.warn) {
+        console.warn(`[${namespace}]`, ...args);
+      }
     },
   };
 }

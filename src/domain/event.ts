@@ -62,3 +62,32 @@ export function isValidEvent(
   }
   return true;
 }
+
+export interface EventTypeOption {
+  value: EventType;
+  label: string;
+  disabled?: boolean;
+  hint?: string;
+}
+
+export function getEventTypeOptions(
+  location: Location,
+  dogInGarden = false,
+): EventTypeOption[] {
+  const allowedTypes = COMPATIBILITY_MATRIX[location];
+  return allowedTypes.map((eventType) => {
+    if (dogInGarden && location === 'Огород' && eventType === 'Следы') {
+      return {
+        value: eventType,
+        label: eventType,
+        disabled: true,
+        hint: 'пёс в огороде',
+      };
+    }
+
+    return {
+      value: eventType,
+      label: eventType,
+    };
+  });
+}

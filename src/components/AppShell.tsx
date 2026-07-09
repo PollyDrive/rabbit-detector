@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import type { Location } from "../domain/zones";
@@ -9,14 +9,24 @@ import { EventLog } from "./EventLog";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { OverlayButtons } from "./panels/OverlayButtons";
+import { useFarm } from "../context/FarmContext";
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<Location | null>(null);
+  const { state } = useFarm();
   const scale = useCanvasScale();
 
   const handleZoneClick = (zone: Location) => {
-    setActivePopup(zone);
+    if (!state.running) {
+      setActivePopup(zone);
+    }
   };
+
+  useEffect(() => {
+    if (state.running) {
+      setActivePopup(null);
+    }
+  }, [state.running]);
 
   return (
     <main className={styles.container} data-testid="farm-shell" style={{ minWidth: MIN_DESKTOP_WIDTH }}>
