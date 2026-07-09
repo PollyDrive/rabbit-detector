@@ -44,12 +44,12 @@ describe('projection', () => {
     it('calculates presence correctly with multiple weak signals', () => {
       const e1 = { ...baseEvent, id: 1, time: 9000, intensity: 5, event_type: 'Шуршание' as const };
       const e2 = { ...baseEvent, id: 2, time: 9000, intensity: 5, event_type: 'Шуршание' as const };
-
+      
       const result = presenceByLocation([e1, e2], 10000, DEFAULT_ESTIMATOR_SETTINGS);
-
+      
       const expectedAvg = 0.2;
       const expectedPresence = expectedAvg * (1 - Math.exp(-2 / DEFAULT_ESTIMATOR_SETTINGS.k));
-
+      
       expect(result['Огород']).toBeCloseTo(expectedPresence);
     });
   });
