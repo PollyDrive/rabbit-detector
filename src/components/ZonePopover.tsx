@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./ZonePopover.module.css";
 import { useFarm } from "../context/FarmContext";
 import type { RejectReason } from "../domain/contract";
@@ -43,6 +43,19 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
   const [intensity, setIntensity] = useState<number>(DEFAULT_INTENSITY);
   const [error, setError] = useState<string | null>(null);
   const eventsCountBeforeSubmit = useRef<number | null>(null);
+  const popupRef = useRef<HTMLDialogElement>(null);
+  const [flipToLeft, setFlipToLeft] = useState(false);
+
+  // The popup opens anchored to the right of the click point by default —
+  // if that would push it past the right edge of the viewport, flip it to
+  // open to the left instead, so it always stays fully on screen.
+  useLayoutEffect(() => {
+    const el = popupRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    setFlipToLeft(rect.right > window.innerWidth);
+  }, [anchor.x, anchor.y]);
 
   // Only close once the reducer has actually accepted the event — a
   // rejected dispatch (anti-spam/guard/shape) must not silently vanish
@@ -87,15 +100,18 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
 
   return (
     <dialog
+      ref={popupRef}
       open
       aria-label="Ручной ввод"
-      className={styles.popup}
+      className={`${styles.popup} ${flipToLeft ? styles.popupFlipped : ""}`}
       style={{ left: anchor.x, top: anchor.y }}
     >
       <h2 className={styles.title}>{location}</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
-          <label htmlFor="event-type-select">Тип события</label>
+          <label htmlFor="event-type-select" className={styles.srOnly}>
+            Тип события
+          </label>
           <select
             id="event-type-select"
             value={eventType}
@@ -103,7 +119,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
             className={styles.select}
             required
           >
-            <option value="">Выберите тип...</option>
+            <option value="">Выберите тип события</option>
             {eventTypeOptions.map((option) => (
               <option key={option.value} value={option.value} disabled={option.disabled}>
                 {option.disabled && option.hint ? `${option.label} (${option.hint})` : option.label}
@@ -114,11 +130,6 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
 
         <div className={styles.field}>
           <label htmlFor="intensity-input">Интенсивность</label>
-          <div className={styles.sliderScaleNumbers}>
-            <span>1</span>
-            <span>5</span>
-            <span>10</span>
-          </div>
           <input
             id="intensity-input"
             type="range"
@@ -143,9 +154,6 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
         )}
 
         <div className={styles.actions}>
-          <button type="button" className={styles.secondaryButton} onClick={onClose}>
-            Закрыть
-          </button>
           <button type="submit" className={styles.primaryButton}>
             Добавить
           </button>

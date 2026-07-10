@@ -1,40 +1,71 @@
 .board {
   display: grid;
-  gap: 16px;
+  gap: 1rem;
   color: #1f2937;
 }
 
 .summary {
   display: grid;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.metricTile {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(31, 41, 55, 0.12);
+  text-align: center;
 }
 
 .metricLabel {
   display: block;
-  font-size: 12px;
+  font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #6b7280;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.metricValue {
+  font-size: 5rem;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .boardGrid {
   display: grid;
-  gap: 16px;
+  gap: 1rem;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 
 .zoneBoard,
 .recommendations {
   border: 1px solid rgba(31, 41, 55, 0.12);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: rgba(255, 255, 255, 0.82);
-  padding: 16px;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
 .table {
@@ -45,20 +76,20 @@
 .table th,
 .table td {
   text-align: left;
-  padding: 10px 0;
+  padding: 0.625rem 0;
   border-bottom: 1px solid rgba(31, 41, 55, 0.08);
 }
 
 .recommendationList {
   margin: 0;
-  padding-left: 18px;
+  padding-left: 1.125rem;
   display: grid;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .recommendationList li {
   display: grid;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .emptyState {

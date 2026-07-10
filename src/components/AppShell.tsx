@@ -5,7 +5,6 @@ import type { Location } from "../domain/zones";
 import { useCanvasScale } from "../hooks/useCanvasScale";
 import { FarmMap, type ClickAnchor } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
-import { EventLog } from "./EventLog";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { Legend } from "./Legend";
@@ -52,7 +51,6 @@ export default function AppShell() {
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area">
             <DashboardArea />
-            <EventLog />
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
