@@ -1,6 +1,7 @@
 import styles from "./RecommendationsPanel.module.css";
 import { DEFAULT_ESTIMATOR_SETTINGS } from "../domain/contract";
 import { useDashboardProjection } from "../context/DashboardProjectionContext";
+import { useEstimatorSettings } from "../context/EstimatorSettingsContext";
 import { EstimatorSettingsFields } from "./EstimatorSettingsFields";
 import {
   getRecommendationItems,
@@ -31,11 +32,15 @@ export default function RecommendationsPanel({ showSettings = true }: { showSett
   const projection = useDashboardProjection() as RecommendationsProjection | undefined;
   const recommendations = hasRecommendations(projection) ? getRecommendationItems(projection) : [];
 
+  const settingsCtx = useEstimatorSettings();
+  const settings = settingsCtx?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
+  const priorityHighThreshold = settings.priorityHighThreshold;
+
   const highPriority = recommendations.filter(
-    (item) => item.priority >= DEFAULT_ESTIMATOR_SETTINGS.priorityHighThreshold,
+    (item) => item.priority >= priorityHighThreshold,
   );
   const lowPriority = recommendations.filter(
-    (item) => item.priority < DEFAULT_ESTIMATOR_SETTINGS.priorityHighThreshold,
+    (item) => item.priority < priorityHighThreshold,
   );
 
   return (

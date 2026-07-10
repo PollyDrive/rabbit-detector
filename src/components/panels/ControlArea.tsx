@@ -2,7 +2,6 @@ import styles from "../AppShell.module.css";
 import { formatGameTime } from "../../domain/runtime";
 import { useFarm } from "../../context/FarmContext";
 import { shouldHideInteractiveElementsForZoneSmoke } from "../../domain/zoneSmokeTest";
-import { EstimatorSettingsFields } from "../EstimatorSettingsFields";
 
 function ControlAction({
   children,
@@ -59,7 +58,6 @@ export function ControlArea() {
           {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
         </ControlAction>
       </div>
-      <EstimatorSettingsFields />
     </div>
   );
 }

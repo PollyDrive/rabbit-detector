@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React from "react";
 import styles from "./RecommendationsPanel.module.css";
+import { useEstimatorSettings } from "../context/EstimatorSettingsContext";
 import { DEFAULT_ESTIMATOR_SETTINGS } from "../domain/contract";
 import { shouldHideInteractiveElementsForZoneSmoke } from "../domain/zoneSmokeTest";
 
@@ -30,31 +31,44 @@ function StepperButton({
 interface StepperFieldProps {
   label: string;
   ariaLabel: string;
-  defaultValue: number;
+  value: number;
+  onChange: (value: number) => void;
   step: number;
   min: number;
   max: number;
 }
 
-function StepperField({ label, ariaLabel, defaultValue, step, min, max }: StepperFieldProps) {
-  const [value, setValue] = useState(defaultValue);
+function StepperField({ label, ariaLabel, value, onChange, step, min, max }: StepperFieldProps) {
   const round = (n: number) => Math.round(n * 100) / 100;
+  const inputId = `input-${ariaLabel.replace(/\s+/g, '-').toLowerCase()}`;
 
-  // Deliberately not a <label> wrapping all three controls: testing-library's
-  // getByLabelText treats every descendant of a wrapping <label> as
-  // "labelled by" its text, regardless of the descendant's own aria-label —
-  // that turned the buttons into extra matches for the field's own
-  // getByLabelText(/k\b/i)-style query. A plain heading + explicit
-  // aria-label on just the input avoids that.
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valStr = e.target.value;
+    const parsed = parseFloat(valStr);
+    if (!isNaN(parsed)) {
+      const clamped = Math.max(min, Math.min(max, round(parsed)));
+      onChange(clamped);
+    }
+  };
+
   return (
     <div className={styles.field}>
-      <span className={styles.fieldLabel}>{label}</span>
+      <label htmlFor={inputId} className={styles.fieldLabel}>
+        {label}
+      </label>
       <div className={styles.stepper}>
-        <StepperButton ariaLabel="Уменьшить" onClick={() => setValue((v) => Math.max(min, round(v - step)))}>
+        <StepperButton ariaLabel="Уменьшить" onClick={() => onChange(Math.max(min, round(value - step)))}>
           −
         </StepperButton>
-        <input aria-label={ariaLabel} value={value} readOnly className={styles.stepperValue} />
-        <StepperButton ariaLabel="Увеличить" onClick={() => setValue((v) => Math.min(max, round(v + step)))}>
+        <input
+          id={inputId}
+          type="text"
+          aria-label={ariaLabel}
+          value={value}
+          onChange={handleInputChange}
+          className={styles.stepperValue}
+        />
+        <StepperButton ariaLabel="Увеличить" onClick={() => onChange(Math.min(max, round(value + step)))}>
           +
         </StepperButton>
       </div>
@@ -63,16 +77,37 @@ function StepperField({ label, ariaLabel, defaultValue, step, min, max }: Steppe
 }
 
 export function EstimatorSettingsFields() {
+  const context = useEstimatorSettings();
+  const settings = context?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
+  const updateSetting = context?.updateSetting ?? (() => {});
+
   return (
     <div className={styles.settingsShell}>
       <h3>Параметры estimator'а</h3>
       <div className={styles.settingsFields}>
-        <StepperField label="k" ariaLabel="k" defaultValue={DEFAULT_ESTIMATOR_SETTINGS.k} step={0.1} min={0} max={5} />
-        <StepperField label="τ" ariaLabel="τ" defaultValue={DEFAULT_ESTIMATOR_SETTINGS.tau} step={0.05} min={0} max={1} />
+        <StepperField
+          label="k"
+          ariaLabel="k"
+          value={settings.k}
+          onChange={(val) => updateSetting("k", val)}
+          step={0.1}
+          min={0}
+          max={5}
+        />
+        <StepperField
+          label="τ"
+          ariaLabel="τ"
+          value={settings.tau}
+          onChange={(val) => updateSetting("tau", val)}
+          step={0.05}
+          min={0}
+          max={1}
+        />
         <StepperField
           label="Окно одновременности"
           ariaLabel="Concurrency window"
-          defaultValue={DEFAULT_ESTIMATOR_SETTINGS.concurrencyWindowSeconds}
+          value={settings.concurrencyWindowSeconds}
+          onChange={(val) => updateSetting("concurrencyWindowSeconds", val)}
           step={1}
           min={0}
           max={60}
@@ -80,10 +115,29 @@ export function EstimatorSettingsFields() {
         <StepperField
           label="dogSuppression"
           ariaLabel="dogSuppression"
-          defaultValue={DEFAULT_ESTIMATOR_SETTINGS.dogSuppression}
+          value={settings.dogSuppression}
+          onChange={(val) => updateSetting("dogSuppression", val)}
           step={0.05}
           min={0}
           max={1}
+        />
+        <StepperField
+          label="Нижний порог приоритета"
+          ariaLabel="priorityLowThreshold"
+          value={settings.priorityLowThreshold}
+          onChange={(val) => updateSetting("priorityLowThreshold", val)}
+          step={1}
+          min={0}
+          max={10}
+        />
+        <StepperField
+          label="Верхний порог приоритета"
+          ariaLabel="priorityHighThreshold"
+          value={settings.priorityHighThreshold}
+          onChange={(val) => updateSetting("priorityHighThreshold", val)}
+          step={1}
+          min={0}
+          max={10}
         />
       </div>
       <div data-testid="dog-toggle-slot" className={styles.slot}>
