@@ -5,8 +5,9 @@ import RecommendationsPanel from '../RecommendationsPanel';
 export function DashboardArea() {
   return (
     <div className={styles.dashboardContent}>
+      <h2 className={styles.dashboardTitle}>Дашборд фермера</h2>
       <DashboardBoard />
-      <RecommendationsPanel />
+      <RecommendationsPanel showSettings={false} />
     </div>
   );
 }

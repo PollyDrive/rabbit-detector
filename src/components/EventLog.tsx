@@ -23,7 +23,7 @@ export function EventLog() {
             <th className={styles.cell}>Источник</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {events.map((event) => (
             <tr key={event.id} className={styles.row}>
               <td className={styles.cell}>#{event.id}</td>

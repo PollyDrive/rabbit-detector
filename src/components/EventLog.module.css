@@ -1,26 +1,38 @@
 .panel {
-  padding: 10px;
-  max-height: 300px;
+  padding: 0.625rem;
+  max-height: 42rem;
   overflow-y: auto;
   background: #000000;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   color: white;
+  font-size: 0.9rem;
 }
 
 .headerRow {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/*
+ * Visual-only newest-first order. Flipping tbody vertically reverses the
+ * row paint order, then flipping each row back undoes the upside-down
+ * content — DOM/accessibility order (and any index-based test assertions
+ * against it) stays exactly as rendered (oldest first).
+ */
+.tbody {
+  transform: scaleY(-1);
+}
+
 .row {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transform: scaleY(-1);
 }
 
 .cell {
   text-align: left;
-  padding: 5px;
+  padding: 0.3rem;
 }
