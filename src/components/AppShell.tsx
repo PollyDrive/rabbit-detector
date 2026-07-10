@@ -4,6 +4,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/consta
 import type { Location } from "../domain/zones";
 import { useCanvasScale } from "../hooks/useCanvasScale";
 import { FarmMap, type ClickAnchor } from "./FarmMap";
+import { BadgeLayer } from "./BadgeLayer";
 import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
@@ -61,6 +62,7 @@ export default function AppShell() {
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
+          <BadgeLayer events={state.events} />
         </div>
 
         {/* Rendered as a sibling of the scaled .shell, not inside it — the
