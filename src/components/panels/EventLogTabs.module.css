@@ -33,4 +33,5 @@
 .tabContent {
   flex: 1;
   overflow-y: auto;
+  max-height: 34rem;
 }
