@@ -22,11 +22,15 @@
   display: grid;
   gap: 0.5rem;
   align-content: start;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  height: 100%;
 }
 
 .priorityHeading {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.7);
@@ -58,7 +62,7 @@
 .recommendationItem {
   display: grid;
   gap: 0.25rem;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
 }
 
 .zone {
