@@ -3,11 +3,26 @@ import styles from "./Legend.module.css";
 import { shouldHideInteractiveElementsForZoneSmoke } from "../domain/zoneSmokeTest";
 import { ZonesArea } from "./panels/ZonesArea";
 
+const URL_PATTERN = /(https?:\/\/[^\s]+)/g;
+const IS_URL_PATTERN = /^https?:\/\/[^\s]+$/;
+
+function linkifyText(text: string) {
+  return text.split(URL_PATTERN).map((part, index) =>
+    IS_URL_PATTERN.test(part) ? (
+      <a key={index} href={part} target="_blank" rel="noreferrer noopener" className={styles.worklogLink}>
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
 const WORKLOG_STEPS = [
   {
     title: "Осознаю задачу, формулирую вопросы, догадки и идеи на борде.",
     body:
-      "Ничего не фильтрую на этом этапе. Вопросы вперемешку с полу идеями, что-то явно лишнее, что-то потом окажется важным. Порядок появится позже, сейчас важно вытащить все на поверхность.",
+      "Ничего не фильтрую на этом этапе. Вопросы вперемешку с полу идеями, что-то явно лишнее, что-то потом окажется важным. Порядок появится позже, сейчас важно вытащить все на поверхность. Вот сам борд, там можно посмотреть целиком весь этап брейншторма, проектирования и переписку с моделями https://excalidraw.com/#room=f72b1750d94fa24faab5,HAWB40wlGegwaCnJFi1Ogw",
   },
   {
     title: "Формулирую гипотезу на основе своих вопросов на борде",
@@ -130,6 +145,10 @@ export function Legend() {
               <li>В сарае не бывает следов и новых ям — только датчик, шуршание, пропажа моркови.</li>
               <li>На заборе никогда не пропадает морковка.</li>
               <li>В теплице возможны любые сигналы — датчик стоит внутри.</li>
+              <li>Кролики не покидают ферму, не плодятся и не умирают.</li>
+              <li>Система даёт <strong>оценку-диапазон</strong> и уверенность, а не точный подсчёт.</li>
+              <li>Данные существуют только в рамках одной сессии.</li>
+              <li>Выпуск пса в огород блокирует все действия в огороде.</li>
             </ul>
           </div>
 
@@ -182,7 +201,7 @@ export function Legend() {
                     <h3>{step.title}</h3>
                     <div className={`${styles.worklogSlot} ${step.body ? styles.worklogSlotFilled : styles.worklogSlotPlaceholder}`}>
                       {step.body ? (
-                        <p className={styles.worklogText}>{step.body}</p>
+                        <p className={styles.worklogText}>{linkifyText(step.body)}</p>
                       ) : (
                         <span>Место под текст</span>
                       )}
@@ -207,7 +226,7 @@ export function ConfidenceSection() {
           <p>
             Ползунками порога приоритета вы настраиваете "термометр" всей фермы: при каком градусе общей шкалы (от 1 до 10) система должна считать ситуацию нормой, а при каком — начинать паниковать.
           </p>
-          
+
           <h3>На чём строится уверенность модели</h3>
           <ul className={styles.assumptionList}>
             <li><strong>Достоверность события</strong> = вес типа сигнала × (интенсивность / 10).</li>
@@ -223,12 +242,16 @@ export function ConfidenceSection() {
             <li><strong>Уверенность, %</strong> — отношение нижней границы к верхней (чем уже диапазон, тем выше уверенность).</li>
           </ul>
         </div>
-
-        <div>
-          <h3>Зоны</h3>
-          <ZonesArea />
-        </div>
       </div>
     </section>
+  );
+}
+
+export function ZonesTile() {
+  return (
+    <div className={styles.zonesTile}>
+      <h3 className={styles.zonesTileHeading}>Зоны</h3>
+      <ZonesArea />
+    </div>
   );
 }

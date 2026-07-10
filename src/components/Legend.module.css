@@ -19,10 +19,30 @@
   width: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 28px;
   padding-top: 20px;
   border-top: 1px solid rgba(31, 41, 55, 0.1);
+}
+
+.zonesTile {
+  background: rgb(43 39 39 / 82%);
+  color: #ffffff;
+  border-radius: 0;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+}
+
+.zonesTile th,
+.zonesTile td {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.zonesTileHeading {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .confidenceContainer h3 {
@@ -228,6 +248,16 @@
   font-size: 0.88rem;
   line-height: 1.6;
   color: #2f3f33;
+}
+
+.worklogLink {
+  color: #35553b;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.worklogLink:hover {
+  color: #223a29;
 }
 
 .worklogSlot span {

@@ -152,7 +152,7 @@ export function EstimatorSettingsFields() {
           onChange={(val) => updateSetting("concurrencyWindowSeconds", val)}
           step={1}
           min={0}
-          max={60}
+          max={10}
           helperText="Интервал времени в секундах для объединения сигналов"
         />
       </div>

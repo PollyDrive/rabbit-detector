@@ -9,7 +9,7 @@ import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { EventLogTabs } from "./panels/EventLogTabs";
-import { Legend, ConfidenceSection } from "./Legend";
+import { Legend, ConfidenceSection, ZonesTile } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 
 // Mirrors .dashboardArea's width/right-offset in AppShell.module.css (in
@@ -69,6 +69,9 @@ export default function AppShell() {
         >
           <div className={styles.controlArea} data-testid="control-area">
             <ControlArea />
+            <div className={styles.zonesTileArea} data-testid="zones-tile-area">
+              <ZonesTile />
+            </div>
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area">
             <DashboardArea />
