@@ -63,15 +63,16 @@
 .eventType {
   font-weight: 600;
   color: #d1d5db;
+  font-size: 0.8rem;
 }
 
 .intensity {
   color: #9ca3af;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .time {
   color: #6b7280;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   margin-left: auto;
 }
