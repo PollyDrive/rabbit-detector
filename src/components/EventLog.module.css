@@ -1,9 +1,9 @@
 .panel {
   padding: 0.625rem;
-  max-height: 42rem;
-  overflow-y: auto;
   background: #000000;
   border-radius: 0.5rem;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .table {

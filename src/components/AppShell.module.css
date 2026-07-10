@@ -84,6 +84,8 @@
   box-sizing: border-box;
   background: #111827;
   padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboardTitle {
@@ -214,7 +216,7 @@
 
 .bottomLayout {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-between;
   gap: 2rem;
   padding: 1.25rem 0;
