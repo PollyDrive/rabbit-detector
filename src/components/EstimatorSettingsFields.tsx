@@ -36,9 +36,10 @@ interface StepperFieldProps {
   step: number;
   min: number;
   max: number;
+  helperText?: string;
 }
 
-function StepperField({ label, ariaLabel, value, onChange, step, min, max }: StepperFieldProps) {
+function StepperField({ label, ariaLabel, value, onChange, step, min, max, helperText }: StepperFieldProps) {
   const round = (n: number) => Math.round(n * 100) / 100;
   const inputId = `input-${ariaLabel.replace(/\s+/g, '-').toLowerCase()}`;
 
@@ -62,7 +63,10 @@ function StepperField({ label, ariaLabel, value, onChange, step, min, max }: Ste
         </StepperButton>
         <input
           id={inputId}
-          type="text"
+          type="number"
+          min={min}
+          max={max}
+          step={step}
           aria-label={ariaLabel}
           value={value}
           onChange={handleInputChange}
@@ -72,6 +76,7 @@ function StepperField({ label, ariaLabel, value, onChange, step, min, max }: Ste
           +
         </StepperButton>
       </div>
+      {helperText && <span className={styles.helperText}>{helperText}</span>}
     </div>
   );
 }
@@ -93,6 +98,7 @@ export function EstimatorSettingsFields() {
           step={0.1}
           min={0}
           max={5}
+          helperText="Коэффициент насыщения presence (скорость роста доверия)"
         />
         <StepperField
           label="τ"
@@ -102,6 +108,7 @@ export function EstimatorSettingsFields() {
           step={0.05}
           min={0}
           max={1}
+          helperText="Порог правдоподобия для подтверждения кролика"
         />
         <StepperField
           label="Окно одновременности"
@@ -111,6 +118,7 @@ export function EstimatorSettingsFields() {
           step={1}
           min={0}
           max={60}
+          helperText="Интервал времени в секундах для объединения сигналов"
         />
         <StepperField
           label="dogSuppression"
@@ -120,6 +128,7 @@ export function EstimatorSettingsFields() {
           step={0.05}
           min={0}
           max={1}
+          helperText="Коэффициент подавления сигналов при собаке"
         />
         <StepperField
           label="Нижний порог приоритета"
@@ -129,6 +138,7 @@ export function EstimatorSettingsFields() {
           step={1}
           min={0}
           max={10}
+          helperText="Порог перевода в среднюю срочность"
         />
         <StepperField
           label="Верхний порог приоритета"
@@ -138,6 +148,7 @@ export function EstimatorSettingsFields() {
           step={1}
           min={0}
           max={10}
+          helperText="Порог перевода в высокую срочность"
         />
       </div>
       <div data-testid="dog-toggle-slot" className={styles.slot}>
