@@ -132,3 +132,9 @@
 .emptyState {
   color: rgba(255, 255, 255, 0.6);
 }
+
+.helperText {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.125rem;
+}

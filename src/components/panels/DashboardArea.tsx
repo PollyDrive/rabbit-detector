@@ -9,7 +9,7 @@ export function DashboardArea() {
     <div className={styles.dashboardContent}>
       <h2 className={styles.dashboardTitle}>Дашборд фермера</h2>
       <DashboardBoard />
-      <RecommendationsPanel showSettings={false} />
+      <RecommendationsPanel showSettings={true} />
       <ZonesArea />
       <EventLog />
     </div>
