@@ -1,0 +1,25 @@
+services:
+  rabbit-detector:
+    container_name: ${APP_CONTAINER_NAME:-rabbit-detector}
+    image: ${APP_IMAGE_NAME:-rabbit-detector}:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "80"
+    volumes:
+      - ./deploy/secrets/.htpasswd:/etc/nginx/.htpasswd:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1/healthz >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - edge
+
+networks:
+  edge:
+    name: ${EDGE_NETWORK:-proxy}
+    external: true
