@@ -4,7 +4,7 @@ import type { Location } from "../domain/zones";
 import { ZONES } from "../domain/zones";
 import styles from "./BadgeLayer.module.css";
 
-const BADGE_VISIBLE_MS = 4000;
+const BADGE_VISIBLE_MS = 2000;
 
 interface BadgeStack {
   count: number;
