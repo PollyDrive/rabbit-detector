@@ -31,6 +31,39 @@ function ControlAction({
   );
 }
 
+function DogToggle({ checked, onToggle }: { checked: boolean; onToggle: () => void }) {
+  const hideButtons = shouldHideInteractiveElementsForZoneSmoke();
+  const switchClassName = [styles.switch, checked ? styles.switchOn : ""].join(" ");
+
+  return (
+    <label className={styles.switchRow}>
+      {hideButtons ? (
+        <span
+          role="switch"
+          aria-checked={checked}
+          aria-label="Пёс в огороде"
+          onClick={onToggle}
+          className={switchClassName}
+        >
+          <span className={styles.switchKnob} />
+        </span>
+      ) : (
+        <button
+          type="button"
+          role="switch"
+          aria-checked={checked}
+          aria-label="Пёс в огороде"
+          onClick={onToggle}
+          className={switchClassName}
+        >
+          <span className={styles.switchKnob} />
+        </button>
+      )}
+      <span>{checked ? "Пёс в огороде" : "Пёс на ферме"}</span>
+    </label>
+  );
+}
+
 export function ControlArea() {
   const { state, fastForward, regenerateHistory, setRunning, toggleDog } = useFarm();
   const runningLabel = state.running ? "Пауза" : "Запустить";
@@ -54,9 +87,7 @@ export function ControlArea() {
       </div>
       <div>
         <h3>Пёс</h3>
-        <ControlAction onClick={toggleDog}>
-          {state.dogInGarden ? "Пёс в огороде" : "Пёс на ферме"}
-        </ControlAction>
+        <DogToggle checked={state.dogInGarden} onToggle={toggleDog} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { COMPATIBILITY_MATRIX, type EventType, isValidEvent, farmEventSchema } from './event';
 import type { FarmEvent } from './contract';
 import type { Location } from './zones';
+import { CARROT_FIXED_INTENSITY } from './config';
 
 export const GAME_DAY_SECONDS = 3600;
 export const INITIAL_SEED_COUNT = 24;
@@ -28,7 +29,7 @@ export function pickRandomEventDetails(
 ): { location: Location; event_type: EventType; intensity: number } {
   const candidates = Object.entries(COMPATIBILITY_MATRIX).flatMap(([location, eventTypes]) =>
     eventTypes.flatMap((eventType) => {
-      if (dogInGarden && location === 'Огород' && eventType === 'Следы') {
+      if (dogInGarden && location === 'Огород') {
         return [];
       }
 
@@ -40,7 +41,7 @@ export function pickRandomEventDetails(
 
   return {
     ...picked,
-    intensity: randomInt(1, 10, random),
+    intensity: picked.event_type === 'Пропажа моркови' ? CARROT_FIXED_INTENSITY : randomInt(1, 10, random),
   };
 }
 

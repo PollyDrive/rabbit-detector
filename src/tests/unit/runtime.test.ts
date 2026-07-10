@@ -33,11 +33,11 @@ describe('runtime helpers', () => {
     expect(isValidEvent(event, false)).toBe(true);
   });
 
-  it('disables traces in the garden when the dog is active', () => {
+  it('disables all garden events when the dog is active', () => {
     const options = getEventTypeOptions('Огород', true);
 
     expect(options.some((option) => option.value === 'Следы' && option.disabled)).toBe(true);
-    expect(options.some((option) => option.value === 'Пропажа моркови' && !option.disabled)).toBe(true);
+    expect(options.every((option) => option.disabled)).toBe(true);
   });
 
   it('formats the clock as hh:mm:ss', () => {
@@ -46,15 +46,15 @@ describe('runtime helpers', () => {
 
   it('validates a seed batch dropping invalid events', () => {
     const batch: Omit<FarmEvent, 'id'>[] = [
-      { source: 'seed', time: 1000, location: 'Огород', event_type: 'Пропажа моркови', intensity: 5 }, // valid
-      { source: 'seed', time: 1100, location: 'Огород', event_type: 'Следы', intensity: 5 }, // invalid with dog
+      { source: 'seed', time: 1000, location: 'Сарай', event_type: 'Пропажа моркови', intensity: 5 }, // valid
+      { source: 'seed', time: 1100, location: 'Огород', event_type: 'Следы', intensity: 5 }, // invalid: dog in garden
       { source: 'seed', time: 1200, location: 'Сарай', event_type: 'Шуршание', intensity: 99 }, // invalid shape (intensity > 10)
     ];
 
     const result = validateSeedBatch(batch, true, 10);
-    
+
     expect(result.valid).toHaveLength(1);
-    expect(result.valid[0]).toMatchObject({ id: 10, source: 'seed', location: 'Огород', event_type: 'Пропажа моркови' });
+    expect(result.valid[0]).toMatchObject({ id: 10, source: 'seed', location: 'Сарай', event_type: 'Пропажа моркови' });
     expect(result.rejectedCount).toBe(2);
   });
 });

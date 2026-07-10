@@ -23,11 +23,11 @@ export default function DashboardBoard() {
           {safeProjection ? (
             <>
               <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Диапазон</span>
+                <span className={styles.metricLabel}>Кроликов (диапазон)</span>
                 <strong className={styles.metricValue}>{formatRange(safeProjection.low, safeProjection.high)}</strong>
               </div>
               <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Точка</span>
+                <span className={styles.metricLabel}>Кроликов (минимум)</span>
                 <strong className={styles.metricValue}>{safeProjection.pointEstimate}</strong>
               </div>
               <div className={styles.metricTile}>

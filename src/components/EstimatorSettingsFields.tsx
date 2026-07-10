@@ -98,17 +98,17 @@ export function EstimatorSettingsFields() {
           step={0.1}
           min={0}
           max={5}
-          helperText="Коэффициент насыщения presence (скорость роста доверия)"
+          helperText="Скорость роста presence от числа слабых сигналов (насыщение)"
         />
         <StepperField
-          label="τ"
+          label="τ (тау)"
           ariaLabel="τ"
           value={settings.tau}
           onChange={(val) => updateSetting("tau", val)}
           step={0.05}
           min={0}
           max={1}
-          helperText="Порог правдоподобия для подтверждения кролика"
+          helperText="Порог достоверности: событие с credibility ≥ τ сразу даёт presence = 1"
         />
         <StepperField
           label="Окно одновременности"
@@ -150,9 +150,6 @@ export function EstimatorSettingsFields() {
           max={10}
           helperText="Порог перевода в высокую срочность"
         />
-      </div>
-      <div data-testid="dog-toggle-slot" className={styles.slot}>
-        Слот под dog toggle
       </div>
     </div>
   );

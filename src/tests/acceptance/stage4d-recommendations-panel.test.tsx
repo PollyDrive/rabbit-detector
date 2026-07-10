@@ -21,10 +21,4 @@ describe('stage 4D recommendations block + estimator settings panel shell (mocke
     expect(screen.getByLabelText(/concurrency|окно одновременности/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/dogSuppression|подавление.*пс/i)).toBeInTheDocument()
   })
-
-  it('shows a dog toggle slot in the layout (non-functional at this stage — Stage 6 wires the logic)', () => {
-    renderWithMockedProjection(mockedDashboardProjection, <RecommendationsPanel />)
-
-    expect(screen.getByTestId('dog-toggle-slot')).toBeInTheDocument()
-  })
 })

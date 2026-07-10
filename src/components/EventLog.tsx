@@ -32,7 +32,7 @@ export function EventLog() {
                 {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
               <td className={styles.cell}>{event.event_type}</td>
-              <td className={styles.cell}>{event.intensity}</td>
+              <td className={styles.cell}>{event.event_type === "Пропажа моркови" ? "—" : event.intensity}</td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
               <td className={styles.cell}>{event.source}</td>
             </tr>
