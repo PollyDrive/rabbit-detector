@@ -7,6 +7,7 @@ import { FarmMap, type ClickAnchor } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
+import { EventLogTabs } from "./panels/EventLogTabs";
 import { Legend } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 
@@ -66,6 +67,10 @@ export default function AppShell() {
             onClose={() => setActivePopup(null)}
           />
         )}
+      </div>
+
+      <div className={styles.logsArea}>
+        <EventLogTabs />
       </div>
 
       <Legend />

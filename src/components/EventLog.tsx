@@ -11,7 +11,6 @@ export function EventLog() {
 
   return (
     <section aria-label="Лог событий" className={styles.panel}>
-      <h3>Лог событий</h3>
       <table className={styles.table}>
         <thead>
           <tr className={styles.headerRow}>

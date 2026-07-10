@@ -80,6 +80,15 @@
   gap: 1rem;
 }
 
+.logsArea {
+  width: 1302px;
+  max-width: 100%;
+  margin: 0 1.25rem 0 auto;
+  background: #111827;
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+
 .dashboardTitle {
   margin: 0;
   font-size: 1.75rem;

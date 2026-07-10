@@ -1,7 +1,6 @@
 import styles from '../AppShell.module.css';
 import DashboardBoard from '../DashboardBoard';
 import RecommendationsPanel from '../RecommendationsPanel';
-import { EventLog } from '../EventLog';
 
 export function DashboardArea() {
   return (
@@ -9,7 +8,6 @@ export function DashboardArea() {
       <h2 className={styles.dashboardTitle}>Дашборд фермера</h2>
       <DashboardBoard />
       <RecommendationsPanel showSettings={false} />
-      <EventLog />
     </div>
   );
 }
