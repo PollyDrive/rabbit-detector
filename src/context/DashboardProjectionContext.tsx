@@ -1,12 +1,9 @@
 import { createContext, useContext, useMemo } from 'react';
 import { FarmContext } from './FarmContext';
-import { computeEstimate } from '../domain/estimate';
-import { buildPerZoneBoard } from '../domain/projection';
-import { computeDominantSignal } from '../domain/signals';
-import { computeUrgencyLevel, computeRecommendationText } from '../domain/recommendations';
-import { DEFAULT_ESTIMATOR_SETTINGS, TIME_WINDOW_SPEC } from '../domain/contract';
+import { buildDashboardProjection } from '../domain/dashboardProjection';
+import { DEFAULT_ESTIMATOR_SETTINGS } from '../domain/contract';
 import { type FarmEvent } from '../domain/contract';
-import type { DashboardProjection, ZoneProjection } from '../components/dashboard-board-utils';
+import type { DashboardProjection } from '../components/dashboard-board-utils';
 
 export const DashboardProjectionContext = createContext<DashboardProjection | undefined>(undefined);
 
@@ -14,57 +11,16 @@ function computeRealProjection(
   events: FarmEvent[],
   gameTime: number,
 ): DashboardProjection {
-  const estimate = computeEstimate(events, gameTime, DEFAULT_ESTIMATOR_SETTINGS);
-  const boardEntries = buildPerZoneBoard(events, gameTime, DEFAULT_ESTIMATOR_SETTINGS);
-
-  const zones: Record<string, ZoneProjection> = {};
-  const recommendations: DashboardProjection['recommendations'] = [];
-
-  for (const entry of boardEntries) {
-    if (entry.presence === 0 && entry.priority === 0) {
-      continue;
-    }
-
-    const windowStart = gameTime - TIME_WINDOW_SPEC.durationSeconds;
-    const zoneEvents = events.filter((e) => e.location === entry.location && e.time >= windowStart && e.time <= gameTime);
-
-    const dominantSignal = computeDominantSignal(zoneEvents);
-    const urgencyLevel = computeUrgencyLevel(entry.priority, DEFAULT_ESTIMATOR_SETTINGS);
-
-    zones[entry.location] = {
-      presence: entry.presence,
-      priority: entry.priority,
-      dominantSignal: dominantSignal ?? 'Нет сигнала',
-      urgencyLevel,
-      evidence: [],
-      topSignals: [],
-    };
-
-    const recText = computeRecommendationText({
-      presence: entry.presence,
-      priority: entry.priority,
-      location: entry.location,
-      dominantSignal,
-    });
-
-    if (recText !== 'нет активности') {
-      recommendations.push({
-        zone: entry.location,
-        priority: entry.priority,
-        text: recText,
-      });
+  const full = buildDashboardProjection(events, gameTime, DEFAULT_ESTIMATOR_SETTINGS);
+  const activeZones: DashboardProjection['zones'] = {};
+  for (const [key, zone] of Object.entries(full.zones)) {
+    if (zone.presence !== 0 || zone.priority !== 0) {
+      activeZones[key] = zone;
     }
   }
-
-  recommendations.sort((a, b) => b.priority - a.priority);
-
   return {
-    low: estimate.low,
-    high: estimate.high,
-    pointEstimate: estimate.pointEstimate,
-    confidencePercent: estimate.confidencePercent,
-    recommendations,
-    zones,
+    ...full,
+    zones: activeZones,
   };
 }
 
