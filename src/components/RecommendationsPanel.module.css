@@ -35,7 +35,7 @@
 .settingsShell {
   border: 1px solid rgba(31, 41, 55, 0.12);
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgb(43 39 39 / 82%);
   padding: 1rem;
 }
 
@@ -72,6 +72,9 @@
 .fieldLabel {
   font-size: 0.85rem;
   font-weight: 600;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .fieldHint {
