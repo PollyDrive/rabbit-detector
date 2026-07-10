@@ -223,3 +223,7 @@
 .legendWrapper {
   flex: 1;
 }
+
+.bottomFullWidth {
+  padding: 0;
+}

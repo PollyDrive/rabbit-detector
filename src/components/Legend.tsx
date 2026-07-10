@@ -54,6 +54,34 @@ export function Legend() {
         </div>
       </div>
 
+      {hideButton ? (
+        <span className={styles.worklogButton} role="presentation" onClick={() => setWorklogOpen(true)}>
+          AI Worklog
+        </span>
+      ) : (
+        <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(true)}>
+          AI Worklog
+        </button>
+      )}
+
+      {worklogOpen && (
+        <div className={styles.worklogOverlay} role="dialog" aria-label="AI Worklog">
+          <div className={styles.worklogContent}>
+            <h2>AI Worklog</h2>
+            <p>Журнал разработки проекта появится здесь.</p>
+            <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(false)}>
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+export function ConfidenceSection() {
+  return (
+    <section className={styles.legend}>
       <div className={styles.confidenceContainer}>
         <div>
           <h3>На чём строится уверенность модели</h3>
@@ -77,28 +105,6 @@ export function Legend() {
           <ZonesArea />
         </div>
       </div>
-
-      {hideButton ? (
-        <span className={styles.worklogButton} role="presentation" onClick={() => setWorklogOpen(true)}>
-          AI Worklog
-        </span>
-      ) : (
-        <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(true)}>
-          AI Worklog
-        </button>
-      )}
-
-      {worklogOpen && (
-        <div className={styles.worklogOverlay} role="dialog" aria-label="AI Worklog">
-          <div className={styles.worklogContent}>
-            <h2>AI Worklog</h2>
-            <p>Журнал разработки проекта появится здесь.</p>
-            <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(false)}>
-              Закрыть
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
