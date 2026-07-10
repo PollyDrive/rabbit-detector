@@ -45,16 +45,21 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
   const eventsCountBeforeSubmit = useRef<number | null>(null);
   const popupRef = useRef<HTMLDialogElement>(null);
   const [flipToLeft, setFlipToLeft] = useState(false);
+  const [flipToBottom, setFlipToBottom] = useState(false);
 
-  // The popup opens anchored to the right of the click point by default —
+  // The popup opens anchored above-right of the click point by default —
   // if that would push it past the right edge of the viewport, flip it to
-  // open to the left instead, so it always stays fully on screen.
+  // open to the left; if it would push it above the top edge (zones near
+  // the top of the canvas, e.g. Сарай/Теплица/the top fence corners),
+  // flip it to open below the anchor instead. Either flip can apply on
+  // its own, so it always stays fully on screen.
   useLayoutEffect(() => {
     const el = popupRef.current;
     if (!el) return;
 
     const rect = el.getBoundingClientRect();
     setFlipToLeft(rect.right > window.innerWidth);
+    setFlipToBottom(rect.top < 0);
   }, [anchor.x, anchor.y]);
 
   // Only close once the reducer has actually accepted the event — a
@@ -103,7 +108,11 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
       ref={popupRef}
       open
       aria-label="Ручной ввод"
-      className={`${styles.popup} ${flipToLeft ? styles.popupFlipped : ""}`}
+      className={[
+        styles.popup,
+        flipToLeft ? styles.popupFlippedLeft : "",
+        flipToBottom ? styles.popupFlippedBottom : "",
+      ].join(" ")}
       style={{ left: anchor.x, top: anchor.y }}
     >
       <h2 className={styles.title}>{location}</h2>
