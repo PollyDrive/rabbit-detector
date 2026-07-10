@@ -84,6 +84,11 @@ export function ConfidenceSection() {
     <section className={styles.legend}>
       <div className={styles.confidenceContainer}>
         <div>
+          <h3>Настройки</h3>
+          <p>
+            Ползунками порога приоритета вы настраиваете "термометр" всей фермы: при каком градусе общей шкалы (от 1 до 10) система должна считать ситуацию нормой, а при каком — начинать паниковать.
+          </p>
+          
           <h3>На чём строится уверенность модели</h3>
           <ul className={styles.assumptionList}>
             <li><strong>Достоверность события</strong> = вес типа сигнала × (интенсивность / 10).</li>
