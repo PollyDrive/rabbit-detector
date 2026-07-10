@@ -88,7 +88,7 @@ export function EstimatorSettingsFields() {
 
   return (
     <div className={styles.settingsShell}>
-      <h3>Параметры estimator'а</h3>
+      <h3 className={styles.sectionTitle}>Параметры estimator'а</h3>
       <div className={styles.settingsFields}>
         <StepperField
           label="k"

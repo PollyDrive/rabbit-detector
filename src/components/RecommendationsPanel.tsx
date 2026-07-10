@@ -46,7 +46,7 @@ export default function RecommendationsPanel({ showSettings = true }: { showSett
   return (
     <section className={styles.panel} aria-label="Рекомендации и настройки">
       <div className={styles.recommendations}>
-        <h3>Рекомендации</h3>
+        <h3 className={styles.sectionTitle}>Рекомендации</h3>
         <div className={styles.priorityColumns}>
           <div className={styles.priorityColumn}>
             <h4 className={`${styles.priorityHeading} ${styles.highPriority}`}>Высокий приоритет</h4>

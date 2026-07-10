@@ -15,13 +15,26 @@ import { useFarm } from "../context/FarmContext";
 // Mirrors .dashboardArea's width/right-offset in AppShell.module.css (in
 // unscaled canvas px) — kept in sync by hand since that rule lives inside
 // the transform: scale()'d .shell and this value has to be applied outside it.
-const DASHBOARD_WIDTH_PX = 1302;
+const DASHBOARD_WIDTH_PX = 1200;
 const DASHBOARD_RIGHT_OFFSET_PX = 20;
+const DASHBOARD_TOP_PX = 980;
+const DASHBOARD_MIN_HEIGHT_REM = 40;
+
+function getRootFontSizePx() {
+  if (typeof window === "undefined") {
+    return 16;
+  }
+
+  const parsed = Number.parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+  return Number.isFinite(parsed) ? parsed : 16;
+}
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<{ location: Location; anchor: ClickAnchor } | null>(null);
   const { state } = useFarm();
   const scale = useCanvasScale();
+  const dashboardMinHeightPx = getRootFontSizePx() * DASHBOARD_MIN_HEIGHT_REM;
+  const scaleViewportHeight = Math.max(CANVAS_HEIGHT, DASHBOARD_TOP_PX + dashboardMinHeightPx) * scale;
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
     if (!state.running) {
@@ -41,7 +54,7 @@ export default function AppShell() {
         className={styles.scaleViewport}
         style={{
           width: CANVAS_WIDTH * scale,
-          height: CANVAS_HEIGHT * scale,
+          height: scaleViewportHeight,
         }}
       >
         <div
