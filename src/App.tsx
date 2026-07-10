@@ -1,9 +1,34 @@
-function App() {
-  return (
-    <div className="app">
-      <h1>Ферма невидимых кроликов</h1>
-    </div>
-  )
+import { useEffect, useState } from 'react';
+import AppShell from "./components/AppShell";
+import { MobileNotice } from "./components/MobileNotice";
+import { FarmProvider } from "./context/FarmContext";
+import { DashboardProjectionProvider } from "./context/DashboardProjectionContext";
+import { MOBILE_BREAKPOINT_PX } from "./domain/config";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => window.innerWidth < MOBILE_BREAKPOINT_PX,
+  );
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT_PX);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  return isMobile;
 }
 
-export default App
+function App() {
+  const isMobile = useIsMobile();
+
+  return (
+    <FarmProvider>
+      <DashboardProjectionProvider>
+        {isMobile ? <MobileNotice /> : <AppShell />}
+      </DashboardProjectionProvider>
+    </FarmProvider>
+  );
+}
+
+export default App;

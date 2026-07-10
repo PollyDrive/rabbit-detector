@@ -1,9 +1,13 @@
 :root {
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #ebecee;
+  --bg: #ffffff;
 
-  font: 16px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Base font size scales with viewport width so rem-based text grows on
+     larger screens instead of staying pinned at a fixed pixel size. */
+  font-size: clamp(15px, 0.85vw + 9px, 20px);
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.2;
   color-scheme: dark;
   color: var(--text);
   background: var(--bg);
