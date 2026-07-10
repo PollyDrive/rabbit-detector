@@ -27,10 +27,6 @@ export default function DashboardBoard() {
                 <strong className={styles.metricValue}>{formatRange(safeProjection.low, safeProjection.high)}</strong>
               </div>
               <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Кроликов (минимум)</span>
-                <strong className={styles.metricValue}>{safeProjection.pointEstimate}</strong>
-              </div>
-              <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Уверенность</span>
                 <strong className={styles.metricValue}>{formatConfidencePercent(safeProjection.confidencePercent)}</strong>
               </div>
