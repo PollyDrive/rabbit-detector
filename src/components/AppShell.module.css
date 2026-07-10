@@ -44,6 +44,15 @@
   z-index: 5;
 }
 
+.overlayTriggers {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 6;
+  display: flex;
+  gap: 0.75rem;
+}
+
 /*
  * Content that fills the positioned wrapper boxes above
  * (.controlArea / .dashboardArea / .overlayTriggers) — sized to 100%

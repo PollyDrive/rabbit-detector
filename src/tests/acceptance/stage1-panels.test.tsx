@@ -10,7 +10,7 @@ describe('stage 1 control panels', () => {
     expect(screen.getByText('Симулятор')).toBeVisible()
     expect(screen.getByRole('region', { name: 'Дашборд' })).toBeVisible()
     expect(screen.getByText("Параметры estimator'а")).toBeVisible()
-    expect(screen.getByText('Правила фермы')).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Legend' })).toBeVisible()
     expect(screen.getByRole('button', { name: 'AI Worklog' })).toBeVisible()
   })
 })

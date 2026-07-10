@@ -8,7 +8,7 @@ import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { EventLogTabs } from "./panels/EventLogTabs";
-import { Legend, ConfidenceSection } from "./Legend";
+import { AiWorklogTrigger, ConfidenceSection, LegendOverlay } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 
 // Mirrors .dashboardArea's width/right-offset in AppShell.module.css (in
@@ -61,6 +61,10 @@ export default function AppShell() {
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
+
+          <div className={styles.overlayTriggers}>
+            <LegendOverlay />
+          </div>
         </div>
 
         {/* Rendered as a sibling of the scaled .shell, not inside it — the
@@ -82,7 +86,7 @@ export default function AppShell() {
           hand instead of inheriting the transform. */}
       <div className={styles.bottomLayout}>
         <div className={styles.legendWrapper}>
-          <Legend />
+          <AiWorklogTrigger />
         </div>
         <div
           className={styles.logsArea}

@@ -75,10 +75,68 @@
   font-size: 0.875rem;
   font-weight: 600;
   border: none;
-  border-radius: 10px;
+  border-radius: 0;
   background: #1e3a5f;
   color: #ffffff;
   cursor: pointer;
+}
+
+.legendTrigger {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0;
+  background: #1e3a5f;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.legendTrigger:hover {
+  background: #16304d;
+}
+
+.legendOverlayBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+.legendDialog {
+  width: min(900px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  background: #ffffff;
+  color: #111827;
+  padding: 28px 32px;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.legendDialogHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.legendClose {
+  flex: 0 0 auto;
+  border: 1px solid rgba(31, 41, 55, 0.18);
+  background: #ffffff;
+  color: #111827;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.legendClose:hover {
+  background: #f3f4f6;
 }
 
 .worklogButton:hover {
@@ -88,17 +146,246 @@
 .worklogOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background:
+    radial-gradient(circle at top, rgb(194 214 235 / 22%), transparent 38%),
+    rgba(5, 8, 17, 0.82);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 200;
+  padding: 32px;
 }
 
 .worklogContent {
-  background: #ffffff;
+  width: min(1100px, 100%);
+  max-height: min(88vh, 980px);
+  overflow: auto;
+  background:
+    linear-gradient(180deg, #f8fafc 0%, #edf3f8 100%);
   color: #111827;
   padding: 32px;
-  border-radius: 16px;
-  max-width: 480px;
+  border-radius: 0;
+  border: 1px solid rgba(30, 58, 95, 0.12);
+  box-shadow:
+    0 28px 90px rgba(15, 23, 42, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.worklogHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.worklogEyebrow {
+  margin: 0 0 10px;
+  color: #1f4e79;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.worklogTitle {
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 1.1vw + 1.45rem, 2.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  max-width: 12ch;
+}
+
+.worklogIntro {
+  margin: 0;
+  max-width: 70ch;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.worklogClose {
+  flex: 0 0 auto;
+  border: 1px solid rgba(30, 58, 95, 0.16);
+  background: rgba(255, 255, 255, 0.75);
+  color: #16304d;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.worklogClose:hover {
+  background: #ffffff;
+}
+
+.worklogSummary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.summaryCard {
+  padding: 16px 18px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(30, 58, 95, 0.1);
+}
+
+.summaryCard p {
+  margin: 0 0 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.summaryCard strong {
+  color: #10253e;
+  font-size: 1rem;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 0;
+  display: grid;
+  gap: 20px;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.timelineMarker {
+  position: sticky;
+  top: 16px;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, #1f4e79 0%, #0f2942 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  box-shadow: 0 16px 36px rgba(15, 41, 66, 0.18);
+}
+
+.timelineCard {
+  padding: 22px 24px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(30, 58, 95, 0.1);
+  display: grid;
+  gap: 16px;
+}
+
+.timelineHeading p {
+  margin: 0 0 6px;
+  color: #1f4e79;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.timelineHeading h3 {
+  margin: 0;
+  font-size: 1.32rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.timelineSummary {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.timelineGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+
+.timelineGrid div {
+  min-width: 0;
+  padding: 14px 16px;
+  border-radius: 0;
+  background: rgba(232, 239, 246, 0.9);
+}
+
+.timelineGrid dt {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b6b81;
+}
+
+.timelineGrid dd {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: #243447;
+}
+
+.timelineOutput {
+  grid-column: 1 / -1;
+  background:
+    linear-gradient(135deg, rgba(31, 78, 121, 0.1), rgba(255, 255, 255, 0.85));
+}
+
+.worklogFooter {
+  margin-top: 24px;
+  padding: 18px 20px;
+  border-radius: 0;
+  background: #10253e;
+  color: #e5eef7;
+}
+
+.worklogFooter p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .worklogOverlay {
+    padding: 16px;
+  }
+
+  .worklogContent {
+    padding: 24px;
+    border-radius: 0;
+  }
+
+  .worklogHeader,
+  .timelineItem {
+    grid-template-columns: 1fr;
+  }
+
+  .worklogSummary,
+  .timelineGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineMarker {
+    position: static;
+    width: 56px;
+    height: 56px;
+  }
 }
