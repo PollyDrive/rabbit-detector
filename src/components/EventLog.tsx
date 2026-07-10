@@ -12,7 +12,7 @@ export function EventLog() {
   return (
     <section aria-label="Лог событий" className={styles.panel}>
       <table className={styles.table}>
-        <thead>
+        <thead className={styles.thead}>
           <tr className={styles.headerRow}>
             <th className={styles.cell}>ID</th>
             <th className={styles.cell}>Локация</th>

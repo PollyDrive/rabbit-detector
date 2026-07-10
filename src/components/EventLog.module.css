@@ -7,32 +7,37 @@
 }
 
 .table {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  border-collapse: collapse;
   color: white;
-  font-size: 0.85rem;
+  font-size: 0.5rem;
+}
+
+.thead {
+  display: flex;
+  flex-direction: column;
+}
+
+.tbody {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .headerRow {
+  display: grid;
+  grid-template-columns: 3rem 8rem 9rem 8rem 6rem 1fr;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/*
- * Visual-only newest-first order. Flipping tbody vertically reverses the
- * row paint order, then flipping each row back undoes the upside-down
- * content — DOM/accessibility order (and any index-based test assertions
- * against it) stays exactly as rendered (oldest first).
- */
-.tbody {
-  transform: scaleY(-1);
-}
-
 .row {
+  display: grid;
+  grid-template-columns: 3rem 8rem 9rem 8rem 6rem 1fr;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transform: scaleY(-1);
 }
 
 .cell {
   text-align: left;
   padding: 0.3rem;
+  box-sizing: border-box;
 }

@@ -3,7 +3,7 @@
   background: #000000;
   border-radius: 0.5rem;
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: 0.5rem;
 }
 
 .noData {
@@ -36,7 +36,7 @@
 
 .zoneGroupHeading {
   margin: 0.25rem 0;
-  font-size: 0.9rem;
+  font-size: 0.5rem;
   font-weight: 600;
   color: #60a5fa;
   text-transform: uppercase;
