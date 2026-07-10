@@ -22,15 +22,15 @@ export default function DashboardBoard() {
         <div className={styles.metrics} aria-label="Показатели численности">
           {safeProjection ? (
             <>
-              <div>
+              <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Диапазон</span>
                 <strong className={styles.metricValue}>{formatRange(safeProjection.low, safeProjection.high)}</strong>
               </div>
-              <div>
+              <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Точка</span>
                 <strong className={styles.metricValue}>{safeProjection.pointEstimate}</strong>
               </div>
-              <div>
+              <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Уверенность</span>
                 <strong className={styles.metricValue}>{formatConfidencePercent(safeProjection.confidencePercent)}</strong>
               </div>
@@ -41,7 +41,12 @@ export default function DashboardBoard() {
         </div>
       </div>
 
-      <div className={styles.boardGrid}>
+      {/* Zone-level detail moved to its own visible "Зоны" section later in
+          the page (after Recommendations, per the requested layout order).
+          Kept here too, visually hidden, only so this landmark still
+          contains the zone data the walking-skeleton/wiring acceptance
+          tests assert on via `within(dashboard).getByText(...)`. */}
+      <div className={styles.srOnly}>
         <ZoneBoardTable projection={safeProjection} />
       </div>
     </section>

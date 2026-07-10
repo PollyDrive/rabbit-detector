@@ -7,7 +7,6 @@ import { FarmMap, type ClickAnchor } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
-import { SettingsArea } from "./panels/SettingsArea";
 import { Legend } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 
@@ -85,7 +84,6 @@ export default function AppShell() {
           </div>
           <div className={styles.dashboardArea} data-testid="dashboard-area" ref={dashboardAreaRef}>
             <DashboardArea />
-            <SettingsArea />
           </div>
 
           <FarmMap onZoneClick={handleZoneClick} />
