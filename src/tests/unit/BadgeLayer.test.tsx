@@ -68,18 +68,18 @@ describe('BadgeLayer', () => {
     rerender(<BadgeLayer events={[event({ id: 1 })]} />)
 
     act(() => {
-      vi.advanceTimersByTime(1500)
+      vi.advanceTimersByTime(3000)
     })
 
     rerender(<BadgeLayer events={[event({ id: 1 }), event({ id: 2 })]} />)
 
     act(() => {
-      vi.advanceTimersByTime(1500)
+      vi.advanceTimersByTime(3000)
     })
     expect(screen.getByRole('region', { name: /уведомления на карте/i })).toBeVisible()
 
     act(() => {
-      vi.advanceTimersByTime(500)
+      vi.advanceTimersByTime(1000)
     })
     expect(screen.queryByRole('region', { name: /уведомления на карте/i })).not.toBeInTheDocument()
   })
