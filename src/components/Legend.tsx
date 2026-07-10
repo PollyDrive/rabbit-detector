@@ -1,11 +1,103 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Legend.module.css";
 import { shouldHideInteractiveElementsForZoneSmoke } from "../domain/zoneSmokeTest";
 import { ZonesArea } from "./panels/ZonesArea";
 
+const WORKLOG_STEPS = [
+  {
+    title: "Осознаю задачу, формулирую вопросы, догадки и идеи на борде.",
+    body:
+      "Ничего не фильтрую на этом этапе. Вопросы вперемешку с полу идеями, что-то явно лишнее, что-то потом окажется важным. Порядок появится позже, сейчас важно вытащить все на поверхность.",
+  },
+  {
+    title: "Формулирую гипотезу на основе своих вопросов на борде",
+    body:
+      "Собираю связную версию того, как задача может решаться и выглядеть. Пока как вектор.",
+  },
+  {
+    title:
+      "Прожариваю предложенное решение: ищу дыры в логике, переусложнения, риски, сверяюсь с первоначальным заданием. В диалоге корректирую план действий и механику",
+    body:
+      "Специально становлюсь критиком собственной идеи. Ищу места, где решение усложнено без нужды, где я подменила требование своим видением, а о чем просто не подумала.",
+  },
+  {
+    title: "Стартую каркас ТЗ по тем пунктам, которые понятны",
+    body:
+      "Фиксирую то, что уже не вызывает вопросов, и намеренно оставляю дыры там, где ясности нет. Буду прорабатывать в следующих этапах, может что-то нужно будет убрать.",
+  },
+  {
+    title:
+      "Продолжаю диалог по непонятным пунктам, ресерчу бест-практис механик антифрода, ищу что можно имплементировать.",
+    body:
+      "Вдохновляюсь паттернами решения подобных задач в интернете. Дыры из предыдущего шага в основном закрываются здесь, но мелочи могу и оставить.",
+  },
+  {
+    title: "Генерю финальное изображение, чтобы UI не расходился с механикой",
+    body:
+      "Визуал в данном случае нужен и для вдохновения и для проверки: если картинка не собирается логично, значит, где-то в механике осталась дыра, которую в ТЗ легко упустить.",
+  },
+  {
+    title: "Первую версию ТЗ отдаю модели-критику (gpt 5.4) на допрожарку и новые вопросы",
+    body:
+      "Свежий взгляд без моей привязанности к формулировкам. Задача модели цепляться к тому, что я уже перестала замечать, потому что смотрю на документ слишком давно.",
+  },
+  {
+    title:
+      "Документ ТЗ с критикой переношу в IDE, новой моделью поумнее (Opus 4.8) прорабатываем детали с помощью grill-me skill.",
+    body:
+      "Более предметная работа. Каждая слабая точка из критики разбирается отдельно, пока не останется мест, куда можно ткнуть пальцем и спросить \"а как это будет работать\".",
+  },
+  {
+    title: "Проработка канваса, дашборда, фронтенд-деталей",
+    body:
+      "Не до конца продумываю, потому что на такого объема задаче проще будет отталкиваться от реальной механики, но главные детали закладываю сразу.",
+  },
+  {
+    title: "Создаю репозиторий, старт с бойлерплейта.",
+    body:
+      "Стек, структура, собственные заготовки из своих проектов, проверенные скиллы и конфиги.",
+  },
+  {
+    title: "Распределяю и закрепляю агентные роли, агент планировщик составляет роадмап",
+    body:
+      "Каждому агенту своя роль и зона ответственности, чтобы не решали одну и ту же задачу параллельно и проверяли друг друга. Планировщик собирает из всего этого дорожную карту, я все аппрувлю и корректирую.",
+  },
+  {
+    title:
+      "Сначала последовательно, а потом параллельно делаем задачи, управление не автономное, я фиксирую каждый PR в preprod",
+    body:
+      "Первые этапы веду по очереди, чтобы самой лучше разобраться в проекте + оттестировать фреймворк ролей и их качество с этим стеком и задачей. Агенты работают не автономно: каждый PR проходит через меня в preprod, прежде чем двигаться дальше. После Stage2 перераспределяю работу на параллельные треки, но продолжаю контролировать.",
+  },
+  {
+    title: "После stage 6/7 ручное тестирование.",
+    body:
+      "На этом этапе все проверяю руками. Автотесты ловят логические ошибки и помогают не переделывать одно и то жде сто раз, но интерфейс надо сверять глазами.",
+  },
+  {
+    title: "Готово, вы великолепны.",
+    body:
+      "Финальный тест, подчистка хвостов, проверка, что все работает, написание чудесного текста для AI Workflow и билд проекта 😎",
+  },
+] as const;
+
 export function Legend() {
   const [worklogOpen, setWorklogOpen] = useState(false);
   const hideButton = shouldHideInteractiveElementsForZoneSmoke();
+
+  useEffect(() => {
+    if (!worklogOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setWorklogOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [worklogOpen]);
 
   return (
     <section className={styles.legend} aria-label="Правила мира">
@@ -65,13 +157,40 @@ export function Legend() {
       )}
 
       {worklogOpen && (
-        <div className={styles.worklogOverlay} role="dialog" aria-label="AI Worklog">
+        <div className={styles.worklogOverlay} role="dialog" aria-label="AI Worklog" aria-modal="true">
           <div className={styles.worklogContent}>
-            <h2>AI Worklog</h2>
-            <p>Журнал разработки проекта появится здесь.</p>
-            <button type="button" className={styles.worklogButton} onClick={() => setWorklogOpen(false)}>
-              Закрыть
-            </button>
+            <div className={styles.worklogHeader}>
+              <div>
+                <p className={styles.worklogKicker}>AI Worklog</p>
+                <h2 className={styles.worklogTitle}>Последовательный лог работы</h2>
+              </div>
+              <button
+                type="button"
+                className={styles.worklogClose}
+                aria-label="Закрыть AI Worklog"
+                onClick={() => setWorklogOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <ol className={styles.worklogList}>
+              {WORKLOG_STEPS.map((step, index) => (
+                <li key={step.title} className={styles.worklogItem}>
+                  <div className={styles.worklogStepNumber}>{index + 1}</div>
+                  <div className={styles.worklogStepBody}>
+                    <h3>{step.title}</h3>
+                    <div className={`${styles.worklogSlot} ${step.body ? styles.worklogSlotFilled : styles.worklogSlotPlaceholder}`}>
+                      {step.body ? (
+                        <p className={styles.worklogText}>{step.body}</p>
+                      ) : (
+                        <span>Место под текст</span>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       )}
