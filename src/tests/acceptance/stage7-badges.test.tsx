@@ -86,7 +86,7 @@ describe('stage 7 badge notifications', () => {
       />,
     )
 
-    appendEvent(setState as React.Dispatch<React.SetStateAction<FarmState>>, {
+    appendEvent(setState as unknown as React.Dispatch<React.SetStateAction<FarmState>>, {
       id: 1,
       event_type: 'Следы',
       location: 'Теплица',
@@ -111,7 +111,7 @@ describe('stage 7 badge notifications', () => {
       />,
     )
 
-    appendEvent(setState as React.Dispatch<React.SetStateAction<FarmState>>, {
+    appendEvent(setState as unknown as React.Dispatch<React.SetStateAction<FarmState>>, {
       id: 1,
       event_type: 'Следы',
       location: 'Теплица',
@@ -146,7 +146,7 @@ describe('stage 7 badge notifications', () => {
       />,
     )
 
-    appendEvent(setState as React.Dispatch<React.SetStateAction<FarmState>>, {
+    appendEvent(setState as unknown as React.Dispatch<React.SetStateAction<FarmState>>, {
       id: 1,
       event_type: 'Следы',
       location: 'Теплица',
@@ -155,7 +155,7 @@ describe('stage 7 badge notifications', () => {
       source: 'sim',
     })
 
-    appendEvent(setState as React.Dispatch<React.SetStateAction<FarmState>>, {
+    appendEvent(setState as unknown as React.Dispatch<React.SetStateAction<FarmState>>, {
       id: 2,
       event_type: 'Следы',
       location: 'Теплица',
