@@ -32,7 +32,7 @@
   left: 1.25rem;
   top: 1.25rem;
   width: 650px;
-  height: 430px;
+  height: auto;
   z-index: 5;
 }
 
@@ -94,8 +94,23 @@
 
 .buttonRow {
   display: flex;
-  gap: 8px;
+  gap: 0.625rem;
   flex-wrap: wrap;
+}
+
+.controlContent button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.625rem;
+  background: #556b2f;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.controlContent button:hover {
+  background: #445924;
 }
 
 .controlTextAction {
