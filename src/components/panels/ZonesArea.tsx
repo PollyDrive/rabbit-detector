@@ -49,7 +49,9 @@ export function ZonesArea() {
                     {events.map((event) => (
                       <li key={`evidence-${event.id}`} className={styles.eventItem}>
                         <span className={styles.eventType}>{event.event_type}</span>
-                        <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
+                        {event.event_type !== "Пропажа моркови" && (
+                          <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
+                        )}
                         <span className={styles.time}>Время: {event.time}с</span>
                       </li>
                     ))}
@@ -67,7 +69,9 @@ export function ZonesArea() {
                     {events.map((event) => (
                       <li key={`signal-${event.id}`} className={styles.eventItem}>
                         <span className={styles.eventType}>{event.event_type}</span>
-                        <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
+                        {event.event_type !== "Пропажа моркови" && (
+                          <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
+                        )}
                         <span className={styles.time}>Время: {event.time}с</span>
                       </li>
                     ))}

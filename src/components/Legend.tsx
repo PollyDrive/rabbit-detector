@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Legend.module.css";
 import { shouldHideInteractiveElementsForZoneSmoke } from "../domain/zoneSmokeTest";
+import { ZonesArea } from "./panels/ZonesArea";
 
 export function Legend() {
   const [worklogOpen, setWorklogOpen] = useState(false);
@@ -65,6 +66,10 @@ export function Legend() {
             <li><strong>Кроликов (диапазон)</strong> — низ: максимум одновременно занятых зон за час (кролик не телепортируется — сигналы из K разных зон одновременно ⇒ минимум K кроликов); верх: все зоны с любой активностью за час.</li>
             <li><strong>Уверенность, %</strong> — отношение нижней границы к верхней (чем уже диапазон, тем выше уверенность).</li>
           </ul>
+        </div>
+
+        <div>
+          <ZonesArea />
         </div>
       </div>
 
