@@ -57,8 +57,8 @@
 }
 
 .settingsFields {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   margin-top: 0.75rem;
 }
@@ -66,8 +66,12 @@
 .field {
   display: grid;
   gap: 0.375rem;
-  flex: 1 1 7.5rem;
-  min-width: 6.25rem;
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .field input {
@@ -76,6 +80,45 @@
   border: 1px solid rgba(31, 41, 55, 0.18);
   border-radius: 0.5rem;
   padding: 0.5rem 0.625rem;
+}
+
+.stepper {
+  display: flex;
+  align-items: stretch;
+  gap: 0.375rem;
+}
+
+/* Doubled up with .stepper to out-specificity `.controlContent button`
+   (a plain-tag rule), which would otherwise blow these up to full-size
+   simulator-button dimensions since ControlArea is where this renders. */
+.stepper .stepperButton {
+  flex: 0 0 auto;
+  width: 2.25rem;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid rgba(31, 41, 55, 0.18);
+  border-radius: 0.5rem;
+  background: #556b2f;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.stepper .stepperButton:hover {
+  background: #445924;
+}
+
+.stepperValue {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid rgba(31, 41, 55, 0.18);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.375rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .slot {

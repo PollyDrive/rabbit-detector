@@ -1,25 +1,33 @@
 .popup {
   position: absolute;
-  transform: translate(0.75rem, calc(-100% - 0.75rem));
-  width: 15rem;
-  max-width: calc(100vw - 1.5rem);
+  transform: translate(0.5rem, calc(-100% - 0.5rem));
+  width: 10rem;
+  max-width: calc(100vw - 1rem);
   margin: 0;
-  padding: 1rem;
+  padding: 0.65rem;
   border: none;
-  border-radius: 1rem;
+  border-radius: 0.67rem;
   background: #ffffff;
   color: #111827;
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.28);
   z-index: 100;
 }
 
-.popupFlipped {
-  transform: translate(calc(-100% - 0.75rem), calc(-100% - 0.75rem));
+.popupFlippedLeft {
+  transform: translate(calc(-100% - 0.5rem), calc(-100% - 0.5rem));
+}
+
+.popupFlippedBottom {
+  transform: translate(0.5rem, 0.5rem);
+}
+
+.popupFlippedLeft.popupFlippedBottom {
+  transform: translate(calc(-100% - 0.5rem), 0.5rem);
 }
 
 .title {
-  margin: 0 0 0.875rem;
-  font-size: 1.15rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.77rem;
   font-weight: 700;
   color: #111827;
 }
@@ -27,13 +35,13 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
+  gap: 0.58rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.33rem;
 }
 
 .srOnly {
@@ -49,17 +57,17 @@
 }
 
 .field > label {
-  font-size: 0.95rem;
+  font-size: 0.63rem;
   font-weight: 600;
   color: #111827;
 }
 
 .select {
   width: 100%;
-  padding: 0.5rem 0.625rem;
-  font-size: 0.9rem;
+  padding: 0.33rem 0.42rem;
+  font-size: 0.6rem;
   border: 1px solid #d1d5db;
-  border-radius: 0.625rem;
+  border-radius: 0.42rem;
   background: #ffffff;
   color: #111827;
 }
@@ -73,26 +81,26 @@
 .sliderScaleLabels {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: 0.53rem;
   color: #374151;
 }
 
 .error {
   color: #b00020;
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.57rem;
 }
 
 .actions {
-  margin-top: 0.25rem;
+  margin-top: 0.17rem;
 }
 
 .actions button {
   width: 100%;
-  padding: 0.7rem 1rem;
-  font-size: 0.95rem;
+  padding: 0.47rem 0.67rem;
+  font-size: 0.63rem;
   font-weight: 600;
-  border-radius: 0.625rem;
+  border-radius: 0.42rem;
   cursor: pointer;
   border: none;
 }

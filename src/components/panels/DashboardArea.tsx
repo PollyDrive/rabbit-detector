@@ -2,7 +2,6 @@ import styles from '../AppShell.module.css';
 import DashboardBoard from '../DashboardBoard';
 import RecommendationsPanel from '../RecommendationsPanel';
 import { ZonesArea } from './ZonesArea';
-import { SettingsArea } from './SettingsArea';
 import { EventLog } from '../EventLog';
 
 export function DashboardArea() {
@@ -12,7 +11,6 @@ export function DashboardArea() {
       <DashboardBoard />
       <RecommendationsPanel showSettings={false} />
       <ZonesArea />
-      <SettingsArea />
       <EventLog />
     </div>
   );
