@@ -1,6 +1,10 @@
 import styles from "./DashboardBoard.module.css";
 import { getZoneRows, type DashboardProjection } from "./dashboard-board-utils";
 
+function round2(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
 export function ZoneBoardTable({ projection }: { projection: DashboardProjection | undefined }) {
   const zoneRows = projection ? getZoneRows(projection) : [];
 
@@ -11,7 +15,6 @@ export function ZoneBoardTable({ projection }: { projection: DashboardProjection
         <thead>
           <tr>
             <th>Локация</th>
-            <th>Presence</th>
             <th>Priority</th>
           </tr>
         </thead>
@@ -19,8 +22,7 @@ export function ZoneBoardTable({ projection }: { projection: DashboardProjection
           {zoneRows.map((row) => (
             <tr key={row.location}>
               <td>{row.location}</td>
-              <td>{row.presence}</td>
-              <td>{row.priority}</td>
+              <td>{round2(row.priority)}</td>
             </tr>
           ))}
         </tbody>

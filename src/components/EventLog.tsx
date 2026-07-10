@@ -11,7 +11,6 @@ export function EventLog() {
 
   return (
     <section aria-label="Лог событий" className={styles.panel}>
-      <h3>Лог событий</h3>
       <table className={styles.table}>
         <thead>
           <tr className={styles.headerRow}>
@@ -32,7 +31,7 @@ export function EventLog() {
                 {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
               <td className={styles.cell}>{event.event_type}</td>
-              <td className={styles.cell}>{event.intensity}</td>
+              <td className={styles.cell}>{event.event_type === "Пропажа моркови" ? "—" : event.intensity}</td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
               <td className={styles.cell}>{event.source}</td>
             </tr>

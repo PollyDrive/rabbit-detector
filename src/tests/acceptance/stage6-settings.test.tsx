@@ -37,13 +37,15 @@ describe('stage 6 estimator settings panel + live recompute', () => {
 
     renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
-    const recommendations = screen.getByRole('region', { name: 'Рекомендации и настройки' })
+    // Estimator settings live in the Simulator panel (control-area), not the
+    // dashboard's Рекомендации region.
+    const controlArea = screen.getByTestId('control-area')
 
-    expect(within(recommendations).getByLabelText(/k\b/i)).toBeVisible()
-    expect(within(recommendations).getByLabelText(/τ|tau/i)).toBeVisible()
-    expect(within(recommendations).getByLabelText(/окно одновременности|concurrency/i)).toBeVisible()
-    expect(within(recommendations).getByLabelText(/нижн.*порог.*приоритет/i)).toBeVisible()
-    expect(within(recommendations).getByLabelText(/верхн.*порог.*приоритет/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/k\b/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/τ|tau/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/окно одновременности|concurrency/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/нижн.*порог.*приоритет/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/верхн.*порог.*приоритет/i)).toBeVisible()
   })
 
   it('reclassifies the same live recommendation when the high-priority threshold changes without mutating the log', () => {
@@ -62,6 +64,7 @@ describe('stage 6 estimator settings panel + live recompute', () => {
     renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
     const recommendations = screen.getByRole('region', { name: 'Рекомендации и настройки' })
+    const controlArea = screen.getByTestId('control-area')
     const logRegion = screen.getByRole('region', { name: 'Лог событий' })
     const highPriorityColumn = screen.getByRole('heading', { name: /высокий приоритет/i }).parentElement
     const lowPriorityColumn = screen.getByRole('heading', { name: /низкий приоритет/i }).parentElement
@@ -76,7 +79,7 @@ describe('stage 6 estimator settings panel + live recompute', () => {
     expect(within(logRegion).getByText('#1')).toBeVisible()
     expect(within(recommendations).getByText(/кролики подтверждены, урон маловероятен/i)).toBeVisible()
 
-    fireEvent.change(within(recommendations).getByLabelText(/верхн.*порог.*приоритет/i), {
+    fireEvent.change(within(controlArea).getByLabelText(/верхн.*порог.*приоритет/i), {
       target: { value: '4' },
     })
 

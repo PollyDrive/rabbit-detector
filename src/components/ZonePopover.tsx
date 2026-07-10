@@ -5,7 +5,7 @@ import type { RejectReason } from "../domain/contract";
 import { getEventTypeOptions } from "../domain/event";
 import type { EventType } from "../domain/event";
 import type { Location } from "../domain/zones";
-import { DEFAULT_INTENSITY } from "../domain/config";
+import { CARROT_FIXED_INTENSITY, DEFAULT_INTENSITY } from "../domain/config";
 
 export interface ZonePopoverProps {
   location: Location;
@@ -41,6 +41,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
 
   const [eventType, setEventType] = useState<EventType | "">(initialType as EventType | "");
   const [intensity, setIntensity] = useState<number>(DEFAULT_INTENSITY);
+  const isCarrotEvent = eventType === "Пропажа моркови";
   const [error, setError] = useState<string | null>(null);
   const eventsCountBeforeSubmit = useRef<number | null>(null);
   const popupRef = useRef<HTMLDialogElement>(null);
@@ -98,7 +99,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
     addEvent({
       event_type: eventType,
       location,
-      intensity,
+      intensity: isCarrotEvent ? CARROT_FIXED_INTENSITY : intensity,
       source: "manual",
     });
   };
@@ -137,24 +138,26 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
           </select>
         </div>
 
-        <div className={styles.field}>
-          <label htmlFor="intensity-input">Интенсивность</label>
-          <input
-            id="intensity-input"
-            type="range"
-            min="1"
-            max="10"
-            value={intensity}
-            onChange={(e) => setIntensity(Number(e.target.value))}
-            className={styles.slider}
-            required
-          />
-          <div className={styles.sliderScaleLabels}>
-            {INTENSITY_LABELS.map(({ value, label }) => (
-              <span key={value}>{label}</span>
-            ))}
+        {!isCarrotEvent && (
+          <div className={styles.field}>
+            <label htmlFor="intensity-input">Интенсивность</label>
+            <input
+              id="intensity-input"
+              type="range"
+              min="1"
+              max="10"
+              value={intensity}
+              onChange={(e) => setIntensity(Number(e.target.value))}
+              className={styles.slider}
+              required
+            />
+            <div className={styles.sliderScaleLabels}>
+              {INTENSITY_LABELS.map(({ value, label }) => (
+                <span key={value}>{label}</span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {error && (
           <p role="alert" className={styles.error}>

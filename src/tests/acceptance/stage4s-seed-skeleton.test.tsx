@@ -60,13 +60,14 @@ describe('stage 4S seed walking skeleton', () => {
 
     renderSkeleton(seededState, projectionFor('Огород'))
 
-    const shell = screen.getByTestId('app-shell')
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
     const eventLog = screen.getByRole('region', { name: 'Лог событий' })
 
-    expect(within(shell).getByText('Лог событий')).toBeVisible()
-    expect(within(shell).getByText('#1')).toBeVisible()
-    expect(within(shell).getByText('seed')).toBeVisible()
+    // The event log now lives below the farm canvas (not inside app-shell),
+    // next to the audit-log tab — scope to the log region itself.
+    expect(screen.getByText('Лог событий')).toBeVisible()
+    expect(within(eventLog).getByText('#1')).toBeVisible()
+    expect(within(eventLog).getByText('seed')).toBeVisible()
     // The location cell may carry a trailing zero-width space to disambiguate
     // it from the dashboard's own "Огород" text (see EventLog.tsx) — match
     // by substring, not exact string, and scope to the log so it can't
@@ -83,8 +84,9 @@ describe('stage 4S seed walking skeleton', () => {
     renderSkeleton(seededState, projectionFor('Теплица'))
 
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
+    const eventLog = screen.getByRole('region', { name: 'Лог событий' })
 
-    expect(within(screen.getByTestId('app-shell')).getByText('seed')).toBeVisible()
+    expect(within(eventLog).getByText('seed')).toBeVisible()
     expect(within(dashboard).getByText('Теплица')).toBeVisible()
     expect(within(dashboard).queryByText('Огород')).not.toBeInTheDocument()
   })

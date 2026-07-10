@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import AppShell from '../../components/AppShell'
@@ -51,9 +51,12 @@ describe('stage 6 explainability UI', () => {
 
     renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
-    const zonesArea = screen.getByRole('region', { name: 'Зоны' })
-    const evidenceSection = within(zonesArea).getByRole('heading', { name: /доказательство количества/i }).parentElement
-    const topSignalsSection = within(zonesArea).getByRole('heading', { name: /сильнейшие сигналы/i }).parentElement
+    // Explainability lives behind the "Журнал аудита" tab, next to the event log.
+    fireEvent.click(screen.getByRole('tab', { name: /журнал аудита/i }))
+
+    const auditLog = screen.getByRole('region', { name: 'Журнал аудита' })
+    const evidenceSection = within(auditLog).getByRole('heading', { name: /доказательство количества/i }).parentElement
+    const topSignalsSection = within(auditLog).getByRole('heading', { name: /сильнейшие сигналы/i }).parentElement
 
     expect(evidenceSection).not.toBeNull()
     expect(topSignalsSection).not.toBeNull()
@@ -73,8 +76,10 @@ describe('stage 6 explainability UI', () => {
 
     renderWithFarmState(state, <DashboardProjectionProvider><AppShell /></DashboardProjectionProvider>)
 
-    const zonesArea = screen.getByRole('region', { name: 'Зоны' })
+    fireEvent.click(screen.getByRole('tab', { name: /журнал аудита/i }))
 
-    expect(within(zonesArea).getByText(/нет данных для объяснения|нет объяснения/i)).toBeVisible()
+    const auditLog = screen.getByRole('region', { name: 'Журнал аудита' })
+
+    expect(within(auditLog).getByText(/нет данных для объяснения|нет объяснения/i)).toBeVisible()
   })
 })

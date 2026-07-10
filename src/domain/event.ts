@@ -54,7 +54,7 @@ export function isValidEvent(
   if (!allowedTypes || !allowedTypes.includes(event.event_type)) {
     return false;
   }
-  if (dogInGarden && event.location === 'Огород' && event.event_type === 'Следы') {
+  if (dogInGarden && event.location === 'Огород') {
     return false;
   }
   if (event.intensity < 1 || event.intensity > 10) {
@@ -76,7 +76,7 @@ export function getEventTypeOptions(
 ): EventTypeOption[] {
   const allowedTypes = COMPATIBILITY_MATRIX[location];
   return allowedTypes.map((eventType) => {
-    if (dogInGarden && location === 'Огород' && eventType === 'Следы') {
+    if (dogInGarden && location === 'Огород') {
       return {
         value: eventType,
         label: eventType,

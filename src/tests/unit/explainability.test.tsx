@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { ZonesArea } from '../../components/panels/ZonesArea';
+import { AuditLog } from '../../components/panels/AuditLog';
 import { DashboardProjectionContext } from '../../context/DashboardProjectionContext';
 import type { DashboardProjection } from '../../components/dashboard-board-utils';
 import type { FarmEvent } from '../../domain/contract';
@@ -39,14 +39,14 @@ describe('ZonesArea Explainability UI Unit Tests', () => {
 
     render(
       <DashboardProjectionContext.Provider value={mockProjection}>
-        <ZonesArea />
+        <AuditLog />
       </DashboardProjectionContext.Provider>
     );
 
-    const zonesArea = screen.getByRole('region', { name: 'Зоны' });
-    expect(within(zonesArea).getByText(/нет данных для объяснения|нет объяснения/i)).toBeInTheDocument();
-    expect(within(zonesArea).queryByRole('heading', { name: /доказательство количества/i })).not.toBeInTheDocument();
-    expect(within(zonesArea).queryByRole('heading', { name: /сильнейшие сигналы/i })).not.toBeInTheDocument();
+    const auditLog = screen.getByRole('region', { name: 'Журнал аудита' });
+    expect(within(auditLog).getByText(/нет данных для объяснения|нет объяснения/i)).toBeInTheDocument();
+    expect(within(auditLog).queryByRole('heading', { name: /доказательство количества/i })).not.toBeInTheDocument();
+    expect(within(auditLog).queryByRole('heading', { name: /сильнейшие сигналы/i })).not.toBeInTheDocument();
   });
 
   it('renders evidence and top signals lists grouped by location when data is present', () => {
@@ -81,21 +81,21 @@ describe('ZonesArea Explainability UI Unit Tests', () => {
 
     render(
       <DashboardProjectionContext.Provider value={mockProjection}>
-        <ZonesArea />
+        <AuditLog />
       </DashboardProjectionContext.Provider>
     );
 
-    const zonesArea = screen.getByRole('region', { name: 'Зоны' });
+    const auditLog = screen.getByRole('region', { name: 'Журнал аудита' });
 
     // Assert evidence section renders correctly
-    const evidenceSection = within(zonesArea).getByRole('heading', { name: /доказательство количества/i }).parentElement!;
+    const evidenceSection = within(auditLog).getByRole('heading', { name: /доказательство количества/i }).parentElement!;
     expect(evidenceSection).not.toBeNull();
     expect(within(evidenceSection).getByText('Сарай')).toBeInTheDocument();
     expect(within(evidenceSection).getByText('Следы')).toBeInTheDocument();
     expect(within(evidenceSection).queryByText('Шуршание')).not.toBeInTheDocument();
 
     // Assert top signals section renders correctly
-    const topSignalsSection = within(zonesArea).getByRole('heading', { name: /сильнейшие сигналы/i }).parentElement!;
+    const topSignalsSection = within(auditLog).getByRole('heading', { name: /сильнейшие сигналы/i }).parentElement!;
     expect(topSignalsSection).not.toBeNull();
     expect(within(topSignalsSection).getByText('Сарай')).toBeInTheDocument();
     expect(within(topSignalsSection).getByText('Следы')).toBeInTheDocument();

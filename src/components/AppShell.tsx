@@ -7,8 +7,15 @@ import { FarmMap, type ClickAnchor } from "./FarmMap";
 import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
+import { EventLogTabs } from "./panels/EventLogTabs";
 import { Legend } from "./Legend";
 import { useFarm } from "../context/FarmContext";
+
+// Mirrors .dashboardArea's width/right-offset in AppShell.module.css (in
+// unscaled canvas px) — kept in sync by hand since that rule lives inside
+// the transform: scale()'d .shell and this value has to be applied outside it.
+const DASHBOARD_WIDTH_PX = 1302;
+const DASHBOARD_RIGHT_OFFSET_PX = 20;
 
 export default function AppShell() {
   const [activePopup, setActivePopup] = useState<{ location: Location; anchor: ClickAnchor } | null>(null);
@@ -66,6 +73,18 @@ export default function AppShell() {
             onClose={() => setActivePopup(null)}
           />
         )}
+      </div>
+
+      {/* Matches the dashboard card's scaled width/right-offset exactly —
+          the card lives inside the transform: scale()'d .shell (1302px/
+          1.25rem in unscaled canvas units), while this section is a normal-
+          flow sibling below the canvas, so its width has to be scaled by
+          hand instead of inheriting the transform. */}
+      <div
+        className={styles.logsArea}
+        style={{ width: DASHBOARD_WIDTH_PX * scale, marginRight: DASHBOARD_RIGHT_OFFSET_PX * scale, marginLeft: "auto" }}
+      >
+        <EventLogTabs />
       </div>
 
       <Legend />

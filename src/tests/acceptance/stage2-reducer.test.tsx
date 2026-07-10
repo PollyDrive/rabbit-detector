@@ -19,7 +19,11 @@ describe('stage 2 append-only reducer', () => {
     // Stage 4A seeds ~an hour of random history at mount (ТЗ 3.7), so the
     // log is never empty and row ids/locations aren't predictable — assert
     // on row count deltas and the two newly-appended rows, not literal #1/#2.
-    const rowsBefore = screen.getAllByRole('row').length // includes the header row
+    // Scoped to the event log table specifically — the page also renders a
+    // per-zone "Зоны" table elsewhere on the dashboard, so an unscoped
+    // getAllByRole('row') would mix rows from both tables.
+    const eventLog = screen.getByRole('region', { name: /лог событий/i })
+    const rowsBefore = within(eventLog).getAllByRole('row').length // includes the header row
 
     fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
@@ -43,7 +47,7 @@ describe('stage 2 append-only reducer', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    const dataRows = screen.getAllByRole('row').slice(1) // drop header
+    const dataRows = within(eventLog).getAllByRole('row').slice(1) // drop header
     expect(dataRows).toHaveLength(rowsBefore - 1 + 2)
 
     const [secondToLast, last] = dataRows.slice(-2)
