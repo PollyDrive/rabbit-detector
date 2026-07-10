@@ -56,7 +56,7 @@
   height: 100%;
   background: rgb(43 39 39 / 82%);
   color: #ffffff;
-  border-radius: 0.75rem;
+  border-radius: 0;
   padding: 1.25rem;
   box-sizing: border-box;
   display: grid;
@@ -74,7 +74,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
   color: white;
-  border-radius: 0.875rem;
+  border-radius: 0;
   padding: 1rem 1rem 1.125rem;
   box-sizing: border-box;
   display: grid;
@@ -117,7 +117,7 @@
   font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 0.625rem;
+  border-radius: 0;
   background: #556b2f;
   color: #ffffff;
   cursor: pointer;

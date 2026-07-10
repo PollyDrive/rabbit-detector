@@ -99,7 +99,7 @@ describe('stage 7 badge notifications', () => {
     expect(within(badgeLayer).getByText(/^Следы$/)).toBeVisible()
   })
 
-  it('badges_auto_hide_after_two_seconds', () => {
+  it('badges_auto_hide_after_four_seconds', () => {
     let setState: React.Dispatch<React.SetStateAction<FarmState>> | null = null
 
     render(
@@ -124,7 +124,7 @@ describe('stage 7 badge notifications', () => {
     expect(within(badgeLayer).getByText(/^Следы$/)).toBeVisible()
 
     act(() => {
-      vi.advanceTimersByTime(1999)
+      vi.advanceTimersByTime(3999)
     })
     expect(screen.getByRole('region', { name: /уведомления на карте/i })).toBeVisible()
 

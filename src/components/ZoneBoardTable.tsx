@@ -10,7 +10,6 @@ export function ZoneBoardTable({ projection }: { projection: DashboardProjection
 
   return (
     <div className={styles.zoneBoard}>
-      <h3>Зоны</h3>
       <table className={styles.table}>
         <thead>
           <tr>

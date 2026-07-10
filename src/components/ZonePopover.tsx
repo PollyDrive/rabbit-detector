@@ -116,6 +116,9 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
       ].join(" ")}
       style={{ left: anchor.x, top: anchor.y }}
     >
+      <button type="button" aria-label="Закрыть" className={styles.closeButton} onClick={onClose}>
+        ×
+      </button>
       <h2 className={styles.title}>{location}</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
