@@ -18,8 +18,8 @@ export function EventLog() {
             <th className={styles.cell}>Локация</th>
             <th className={styles.cell}>Тип события</th>
             <th className={styles.cell}>Интенсивность</th>
-            <th className={styles.cell}>Время</th>
             <th className={styles.cell}>Источник</th>
+            <th className={styles.cell}>Время</th>
           </tr>
         </thead>
         <tbody className={styles.tbody}>
@@ -32,8 +32,8 @@ export function EventLog() {
               </td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>{event.event_type === "Пропажа моркови" ? "—" : event.intensity}</td>
-              <td className={styles.cell}>{formatGameTime(event.time)}</td>
               <td className={styles.cell}>{event.source}</td>
+              <td className={styles.cell}>{formatGameTime(event.time)}</td>
             </tr>
           ))}
         </tbody>

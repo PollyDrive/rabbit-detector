@@ -2,8 +2,10 @@
   padding: 0.625rem;
   background: #000000;
   border-radius: 0.5rem;
+  width: 100%;
   height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .table {
@@ -26,18 +28,23 @@
 
 .headerRow {
   display: grid;
-  grid-template-columns: 3rem 8rem 9rem 8rem 6rem 1fr;
+  grid-template-columns: 2rem 1.4fr 1.6fr 1fr 1fr 1fr;
+  column-gap: 0.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 3rem 8rem 9rem 8rem 6rem 1fr;
+  grid-template-columns: 2rem 1.4fr 1.6fr 1fr 1fr 1fr;
+  column-gap: 0.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cell {
   text-align: left;
-  padding: 0.3rem;
+  padding: 0.3rem 0.15rem;
   box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
