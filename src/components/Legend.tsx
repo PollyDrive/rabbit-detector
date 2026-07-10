@@ -21,17 +21,6 @@ export function Legend() {
         </div>
 
         <div>
-          <h3>Сигналы и их достоверность</h3>
-          <ul className={styles.signalList}>
-            <li><strong>Следы</strong> — 1.0, самый надёжный сигнал</li>
-            <li><strong>Пропажа моркови</strong> — 0.8</li>
-            <li><strong>Новая яма</strong> — 0.6</li>
-            <li><strong>Шуршание</strong> — 0.4</li>
-            <li><strong>Датчик движения</strong> — 0.2, самый слабый</li>
-          </ul>
-        </div>
-
-        <div>
           <h3>Как добавить событие</h3>
           <p>
             Остановите симулятор, кликните по зоне на карте, выберите тип
@@ -47,6 +36,17 @@ export function Legend() {
             <li>В сарае не бывает следов и новых ям — только датчик, шуршание, пропажа моркови.</li>
             <li>На заборе никогда не пропадает морковка.</li>
             <li>В теплице возможны любые сигналы — датчик стоит внутри.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Сигналы и их достоверность</h3>
+          <ul className={styles.signalList}>
+            <li><strong>Следы</strong> — 1.0, самый надёжный сигнал</li>
+            <li><strong>Пропажа моркови</strong> — 0.8</li>
+            <li><strong>Новая яма</strong> — 0.6</li>
+            <li><strong>Шуршание</strong> — 0.4</li>
+            <li><strong>Датчик движения</strong> — 0.2, самый слабый</li>
           </ul>
         </div>
       </div>
