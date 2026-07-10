@@ -80,14 +80,17 @@ export default function AppShell() {
           1.25rem in unscaled canvas units), while this section is a normal-
           flow sibling below the canvas, so its width has to be scaled by
           hand instead of inheriting the transform. */}
-      <div
-        className={styles.logsArea}
-        style={{ width: DASHBOARD_WIDTH_PX * scale, marginRight: DASHBOARD_RIGHT_OFFSET_PX * scale, marginLeft: "auto" }}
-      >
-        <EventLogTabs />
+      <div className={styles.bottomLayout}>
+        <div className={styles.legendWrapper}>
+          <Legend />
+        </div>
+        <div
+          className={styles.logsArea}
+          style={{ width: DASHBOARD_WIDTH_PX * scale, marginRight: DASHBOARD_RIGHT_OFFSET_PX * scale, flexShrink: 0 }}
+        >
+          <EventLogTabs />
+        </div>
       </div>
-
-      <Legend />
     </main>
   );
 }

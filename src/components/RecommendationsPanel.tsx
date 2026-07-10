@@ -49,11 +49,11 @@ export default function RecommendationsPanel({ showSettings = true }: { showSett
         <h3>Рекомендации</h3>
         <div className={styles.priorityColumns}>
           <div className={styles.priorityColumn}>
-            <h4 className={styles.priorityHeading}>Высокий приоритет</h4>
+            <h4 className={`${styles.priorityHeading} ${styles.highPriority}`}>Высокий приоритет</h4>
             <RecommendationList items={highPriority} emptyLabel="Нет срочных рекомендаций" />
           </div>
           <div className={styles.priorityColumn}>
-            <h4 className={styles.priorityHeading}>Низкий приоритет</h4>
+            <h4 className={`${styles.priorityHeading} ${styles.lowPriority}`}>Низкий приоритет</h4>
             <RecommendationList items={lowPriority} emptyLabel="Нет рекомендаций" />
           </div>
         </div>

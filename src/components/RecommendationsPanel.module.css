@@ -32,6 +32,14 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.highPriority {
+  color: #ef4444;
+}
+
+.lowPriority {
+  color: #22c55e;
+}
+
 .settingsShell {
   border: 1px solid rgba(31, 41, 55, 0.12);
   border-radius: 0.75rem;
@@ -50,6 +58,7 @@
 .recommendationItem {
   display: grid;
   gap: 0.25rem;
+  font-size: 0.9rem;
 }
 
 .zone {

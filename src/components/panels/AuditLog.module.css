@@ -1,0 +1,77 @@
+.panel {
+  padding: 0.625rem;
+  background: #000000;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.noData {
+  color: #9ca3af;
+  font-style: italic;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sectionBlock {
+}
+
+.sectionHeading {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.375rem;
+}
+
+.zoneGroup {
+  margin-bottom: 0.75rem;
+}
+
+.zoneGroupHeading {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #60a5fa;
+  text-transform: uppercase;
+}
+
+.eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.eventItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.eventType {
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.intensity {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.time {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-left: auto;
+}

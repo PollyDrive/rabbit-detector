@@ -1,4 +1,4 @@
-import styles from "./ZonesArea.module.css";
+import styles from "./AuditLog.module.css";
 import { useDashboardProjection } from "../../context/DashboardProjectionContext";
 import type { DashboardProjection } from "../dashboard-board-utils";
 import type { FarmEvent } from "../../domain/contract";
@@ -53,7 +53,7 @@ export function AuditLog() {
   const hasData = Object.keys(evidenceByLocation).length > 0 || Object.keys(topSignalsByLocation).length > 0;
 
   return (
-    <section aria-label="Журнал аудита" className={styles.explainabilityContainer}>
+    <section aria-label="Журнал аудита" className={styles.panel}>
       {!hasData ? (
         <div className={styles.noData}>Нет данных для объяснения</div>
       ) : (
