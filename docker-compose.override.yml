@@ -1,0 +1,4 @@
+services:
+  rabbit-detector:
+    volumes:
+      - ./deploy/local/htpasswd-dev:/etc/nginx/.htpasswd:ro
