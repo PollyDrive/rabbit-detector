@@ -72,7 +72,7 @@ export function ControlArea() {
   return (
     <div className={styles.controlContent}>
       <div>
-        <h2>Симулятор</h2>
+        <h2>Симулятор фермы</h2>
         <p className={styles.clock}>Игровое время: {formatGameTime(state.gameTime)}</p>
         <div className={styles.buttonRow}>
           <ControlAction onClick={() => setRunning(!state.running)}>
