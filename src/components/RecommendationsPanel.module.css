@@ -173,6 +173,16 @@
   border-radius: 0;
   padding: 0.45rem 0.375rem;
   font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Custom −/+ buttons already cover stepping — Safari's native spinner
+   duplicates them inside the input itself, so hide it. */
+.stepperValue::-webkit-inner-spin-button,
+.stepperValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .emptyState {

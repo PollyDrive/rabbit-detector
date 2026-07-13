@@ -1,12 +1,26 @@
 .area {
-  background: rgba(255, 255, 255, 0.85);
-  color: #1f2937;
+  background: rgb(43 39 39 / 82%);
+  color: #ffffff;
   border-radius: 0;
   padding: 1rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+/* ZoneBoardTable's own wrapper/table (DashboardBoard.module.css) is styled
+   for a light background elsewhere on the page — override it here so it
+   doesn't paint a white box on top of this dark panel. */
+.area > div {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.area th,
+.area td {
+  color: inherit;
+  border-bottom-color: rgba(255, 255, 255, 0.15);
 }
 
 .explainabilityContainer {
