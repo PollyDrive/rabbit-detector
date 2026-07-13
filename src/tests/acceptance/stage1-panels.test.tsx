@@ -7,7 +7,7 @@ describe('stage 1 control panels', () => {
   it('shows the control, dashboard, and legend panels', () => {
     render(<App />)
 
-    expect(screen.getByText('Симулятор')).toBeVisible()
+    expect(screen.getByText('Симулятор фермы')).toBeVisible()
     expect(screen.getByRole('region', { name: 'Дашборд' })).toBeVisible()
     expect(screen.getByText('Параметры сигналов')).toBeVisible()
     expect(screen.getByText('Правила фермы')).toBeVisible()
