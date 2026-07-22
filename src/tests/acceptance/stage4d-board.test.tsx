@@ -16,7 +16,7 @@ describe('stage 4D per-zone + estimate/confidence dashboard cards (mocked)', () 
     expect(screen.getByText('Диапазон')).toBeVisible()
     expect(screen.getByText(/1\s*-\s*3/)).toBeVisible()
     expect(screen.getByText('Подозрительные зоны')).toBeVisible()
-    expect(screen.getByText('1')).toBeVisible() // We need to verify what the suspicious zones count evaluates to, assume 1 based on mock
+    expect(screen.getByText('2')).toBeVisible()
     expect(screen.getByText('Уверенность')).toBeVisible()
   })
 
@@ -26,6 +26,7 @@ describe('stage 4D per-zone + estimate/confidence dashboard cards (mocked)', () 
       high: 4,
       pointEstimate: 4,
       confidencePercent: 100,
+      suspiciousZonesCount: 0,
       recommendations: [],
       zones: {
         Сарай: {

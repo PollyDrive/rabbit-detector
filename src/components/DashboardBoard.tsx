@@ -8,7 +8,7 @@ import {
 } from "./dashboard-board-utils";
 
 function isDashboardProjection(value: DashboardProjection | undefined): value is DashboardProjection {
-  return Boolean(value && value.zones && typeof value.low === "number" && typeof value.high === "number");
+  return Boolean(value && value.zones && typeof value.low === "number" && typeof value.high === "number" && typeof value.suspiciousZonesCount === "number");
 }
 
 export default function DashboardBoard() {
@@ -33,7 +33,7 @@ export default function DashboardBoard() {
               <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Подозрительные зоны</span>
                 <strong className={styles.metricValue}>
-                  {Object.values(safeProjection.zones).filter((z) => z.presence >= 0.5 && z.presence < 1.0).length}
+                  {safeProjection.suspiciousZonesCount}
                 </strong>
               </div>
               <div className={styles.metricTile}>

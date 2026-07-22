@@ -24,7 +24,7 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     expect(within(dashboard).getByText('Диапазон')).toBeVisible()
     expect(within(dashboard).getByText(/0\s*-\s*1/)).toBeVisible()
     expect(within(dashboard).getByText('Подозрительные зоны')).toBeVisible()
-    expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(2)
+    expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(1)
 
     fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
@@ -51,7 +51,7 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
 
     expect(screen.getAllByText(/manual/i).length).toBe(1)
     expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
-    expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(2)
+    expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(1)
     expect(within(dashboard).getByText(/0%/)).toBeVisible()
 
     act(() => {

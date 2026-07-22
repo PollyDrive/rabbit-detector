@@ -88,6 +88,7 @@ export const dashboardProjectionSchema = z.object({
   high: z.number(),
   pointEstimate: z.number(),
   confidencePercent: z.number(),
+  suspiciousZonesCount: z.number(),
   recommendations: z.array(z.any()),
 });
 
@@ -105,6 +106,7 @@ export const PROJECTION_CONTRACT = {
     high: 'number',
     pointEstimate: 'number',
     confidencePercent: 'number',
+    suspiciousZonesCount: 'number',
     recommendations: 'array',
   },
 } as const;

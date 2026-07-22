@@ -59,6 +59,46 @@ export const concurrentZonesScenario = {
       time: 301,
     },
     {
+      event_type: 'Шуршание' as const,
+      intensity: 6,
+      location: 'Сарай' as const,
+      source: 'seed' as const,
+      time: 302,
+    },
+    {
+      event_type: 'Новая яма' as const,
+      intensity: 5,
+      location: 'Огород' as const,
+      source: 'seed' as const,
+      time: 303,
+    },
+    {
+      event_type: 'Новая яма' as const,
+      intensity: 5,
+      location: 'Огород' as const,
+      source: 'seed' as const,
+      time: 304,
+    }
+  ]
+};
+
+export const signalsTestScenario = {
+  events: [
+    {
+      event_type: 'Следы' as const,
+      intensity: 7,
+      location: 'Теплица' as const,
+      source: 'seed' as const,
+      time: 300,
+    },
+    {
+      event_type: 'Шуршание' as const,
+      intensity: 6,
+      location: 'Сарай' as const,
+      source: 'seed' as const,
+      time: 301,
+    },
+    {
       event_type: 'Новая яма' as const,
       intensity: 5,
       location: 'Огород' as const,
@@ -94,6 +134,7 @@ export const mockedDashboardProjection = {
   high: 3,
   pointEstimate: 2,
   confidencePercent: 75,
+  suspiciousZonesCount: 2,
   recommendations: [
     {
       zone: 'Огород',

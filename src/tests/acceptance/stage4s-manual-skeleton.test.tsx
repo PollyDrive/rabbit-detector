@@ -57,7 +57,7 @@ function renderSkeleton(state: FarmState, projection: DashboardProjection) {
 describe('stage 4S manual walking skeleton', () => {
   it('manual_path_renders_event_row_and_dashboard_cell', () => {
     const manualState = buildState([
-      withIdAndManualSource(concurrentZonesScenario.events[2], 1),
+      withIdAndManualSource(concurrentZonesScenario.events[3], 1),
     ])
 
     renderSkeleton(manualState, projectionFor('Огород'))

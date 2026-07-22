@@ -6,10 +6,34 @@ export interface EstimateResult {
   high: number;
   pointEstimate: number;
   confidencePercent: number;
+  suspiciousZonesCount: number;
 }
 
-function countActiveLocations(events: FarmEvent[]): number {
-  return new Set(events.map((event) => event.location)).size;
+const SUSPICIOUS_ACTIVITY_WINDOW_SECONDS = 10;
+
+
+
+function countSignificantLocations(events: FarmEvent[], tau: number): number {
+  const byLocation: Record<string, FarmEvent[]> = {};
+  for (const event of events) {
+    if (!byLocation[event.location]) byLocation[event.location] = [];
+    byLocation[event.location].push(event);
+  }
+
+  let count = 0;
+  let suspiciousCount = 0;
+  for (const loc in byLocation) {
+    const isGuaranteed = byLocation[loc].some((e) => credibilityOf(e) >= tau);
+    const isSuspicious = !isGuaranteed && byLocation[loc].sort((a, b) => a.time - b.time).some((e, i, arr) => i < arr.length - 1 && arr[i + 1].time - e.time <= SUSPICIOUS_ACTIVITY_WINDOW_SECONDS);
+    
+    if (isGuaranteed || isSuspicious) {
+      count++;
+    }
+    if (isSuspicious) {
+      suspiciousCount++;
+    }
+  }
+  return { count, suspiciousCount };
 }
 
 function countOccupiedLocationsAt(events: FarmEvent[], currentTime: number, settings: EstimatorSettings): number {
@@ -43,10 +67,11 @@ export function computeEstimate(
       high: 0,
       pointEstimate: 0,
       confidencePercent: 0,
+      suspiciousZonesCount: 0,
     };
   }
 
-  const high = countActiveLocations(windowEvents);
+  const { count: high, suspiciousCount: suspiciousZonesCount } = countSignificantLocations(windowEvents, settings.tau);
   const strongEvents = windowEvents.filter((event) => credibilityOf(event) >= settings.tau);
 
   let low = 0;
@@ -65,5 +90,6 @@ export function computeEstimate(
     high,
     pointEstimate,
     confidencePercent,
+    suspiciousZonesCount,
   };
 }

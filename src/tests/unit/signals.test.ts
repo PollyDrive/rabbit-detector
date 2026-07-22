@@ -6,6 +6,7 @@ import {
   concurrentZonesScenario,
   defaultEstimatorSettings,
   emptyLogScenario,
+  signalsTestScenario,
   weakSignalsScenario,
 } from '../../testing/contractFixtures';
 
@@ -39,7 +40,7 @@ describe('signals', () => {
   });
 
   it('sorts top signals by credibility descending and stays deterministic', () => {
-    const topSignals = computeTopSignals(withIds(concurrentZonesScenario.events));
+    const topSignals = computeTopSignals(withIds(signalsTestScenario.events));
 
     expect(topSignals.map((event) => event.location)).toEqual(['Теплица', 'Огород', 'Сарай']);
   });

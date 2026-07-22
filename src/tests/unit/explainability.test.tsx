@@ -11,6 +11,7 @@ function createMockProjection(zones: DashboardProjection['zones']): DashboardPro
     high: 0,
     pointEstimate: 0,
     confidencePercent: 0,
+    suspiciousZonesCount: 0,
     recommendations: [],
     zones,
   };

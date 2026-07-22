@@ -6,6 +6,7 @@ import {
   concurrentZonesScenario,
   defaultEstimatorSettings,
   emptyLogScenario,
+  signalsTestScenario,
   weakSignalsScenario,
 } from '../../testing/contractFixtures'
 
@@ -46,7 +47,7 @@ describe('stage 4C dominant signal + evidence/top-signals (ТЗ 3.8, 5.2)', () =
   })
 
   it('topSignals is sorted by credibility descending', () => {
-    const events = withIds(concurrentZonesScenario.events)
+    const events = withIds(signalsTestScenario.events)
     const top = computeTopSignals(events)
 
     expect(top.map((event) => event.location)).toEqual(['Теплица', 'Огород', 'Сарай'])
