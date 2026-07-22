@@ -20,7 +20,7 @@ import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } fr
 // vertical anchor is computed here, since it has to track the farm art's
 // own continuous scale — DASHBOARD_TOP_PX is a canvas coordinate (below
 // the barn/greenhouse).
-const DASHBOARD_TOP_PX = 980;
+const DASHBOARD_TOP_PX = 600;
 const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {

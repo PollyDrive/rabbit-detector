@@ -31,11 +31,12 @@
   position: absolute;
   left: 1.25rem;
   top: 1.25rem;
-  width: 22rem;
+  width: auto;
   z-index: 5;
   display: flex;
-  flex-direction: column;
-  gap: 1em;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.25em;
   font-size: 1rem;
   transform-origin: top left;
 }
@@ -43,14 +44,14 @@
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  width: 28rem;
+  width: 44rem;
   z-index: 5;
   font-size: 1rem;
   transform-origin: top right;
 }
 
 .zonesTileArea {
-  width: 100%;
+  width: 17em;
   flex-shrink: 0;
 }
 
@@ -61,7 +62,7 @@
  * the offsets stack (see stage1_global_review fix).
  */
 .controlContent {
-  width: 100%;
+  width: 24em;
   height: 100%;
   background: var(--surface-dark-on-art);
   color: #ffffff;
