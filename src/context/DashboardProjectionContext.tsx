@@ -39,7 +39,8 @@ export function useDashboardProjection(): DashboardProjection | undefined {
   const settingsCtx = useEstimatorSettings();
   const settings = settingsCtx?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
 
-  const events = farmCtx?.state.events ?? [];
+  const emptyEvents = useMemo(() => [], []);
+  const events = farmCtx?.state.events ?? emptyEvents;
   const gameTime = farmCtx?.state.gameTime ?? 0;
 
   const real = useMemo(
@@ -73,7 +74,8 @@ function DashboardProjectionInnerProvider({ children }: { children: React.ReactN
   const farmCtx = useContext(FarmContext);
   const settingsCtx = useEstimatorSettings();
   const settings = settingsCtx?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
-  const state = farmCtx?.state || { events: [], gameTime: 0 };
+  const defaultState = useMemo(() => ({ events: [], gameTime: 0 }), []);
+  const state = farmCtx?.state || defaultState;
 
   const projection = useMemo(() => {
     const { events, gameTime } = state;

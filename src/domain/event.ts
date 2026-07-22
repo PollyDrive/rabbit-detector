@@ -12,6 +12,14 @@ export const EVENT_TYPES = [
 
 export type EventType = typeof EVENT_TYPES[number];
 
+export const EVENT_TYPE_CONFIDENCE: Record<EventType, number> = {
+  'Следы': 1.0,
+  'Пропажа моркови': 0.8,
+  'Новая яма': 0.6,
+  'Шуршание': 0.4,
+  'Датчик движения': 0.2,
+};
+
 export const EVENT_SOURCES = ['sim', 'manual', 'seed'] as const;
 export type EventSource = typeof EVENT_SOURCES[number];
 
