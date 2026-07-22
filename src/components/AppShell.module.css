@@ -44,10 +44,10 @@
 
 .zonesAreaContainer {
   position: absolute;
-  left: 23rem;
+  left: 1.25rem;
   bottom: 1.25rem;
   z-index: 5;
-  width: 26em;
+  width: 22em;
   font-size: 1rem;
   transform-origin: bottom left;
 }
@@ -55,7 +55,7 @@
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  width: 62rem;
+  width: 52rem;
   z-index: 5;
   font-size: 1rem;
   transform-origin: top right;
