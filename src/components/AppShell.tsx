@@ -20,7 +20,6 @@ import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } fr
 // vertical anchor is computed here, since it has to track the farm art's
 // own continuous scale — DASHBOARD_TOP_PX is a canvas coordinate (below
 // the barn/greenhouse).
-const DASHBOARD_TOP_PX = 600;
 const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {
@@ -48,12 +47,9 @@ export default function AppShell() {
   // constant — is what actually keeps the reserved space under the farm
   // art matching what's really there, at any viewport/content amount.
   const [controlRef, controlSize] = useElementSize<HTMLDivElement>();
-  const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
 
-  const dashboardTopPx = DASHBOARD_TOP_PX * scale;
   const controlBottomPx = panelMarginPx + controlSize.height * panelScale;
-  const dashboardBottomPx = dashboardTopPx + dashboardSize.height * panelScale;
-  const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx, dashboardBottomPx);
+  const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx);
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
     if (!state.running) {
@@ -118,14 +114,6 @@ export default function AppShell() {
         >
           <ZonesTile />
         </div>
-        <div
-          className={styles.dashboardArea}
-          data-testid="dashboard-area"
-          ref={dashboardRef}
-          style={{ top: dashboardTopPx, transform: `scale(${panelScale})` }}
-        >
-          <DashboardArea />
-        </div>
 
         {activePopup && (
           <ZonePopover
@@ -142,6 +130,7 @@ export default function AppShell() {
           <ConfidenceSection />
         </div>
         <div className={styles.logsArea}>
+          <DashboardArea />
           <EventLogTabs />
         </div>
       </div>
