@@ -21,6 +21,8 @@
 .area td {
   color: inherit;
   border-bottom-color: rgba(255, 255, 255, 0.15);
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
 }
 
 .explainabilityContainer {
