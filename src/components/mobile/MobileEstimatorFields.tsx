@@ -24,7 +24,7 @@ const GROUPS: Array<{ title: string; fields: FieldSpec[] }> = [
     title: "Присутствие",
     fields: [
       { key: "k", label: "k", step: 0.1, min: 0, max: 5 },
-      { key: "tau", label: "τ", step: 0.05, min: 0, max: 1 },
+      { key: "tau", label: "t", step: 0.05, min: 0, max: 1 },
     ],
   },
   {

@@ -13,7 +13,7 @@ export const FAST_FORWARD_STEP_S = 3600;
 /** Default intensity pre-filled in the manual input form. */
 export const DEFAULT_INTENSITY = 5;
 
-/** "Пропажа моркови" is binary (missing or not) — no intensity dial, always full weight. */
+/** "Пропажа морковки" is binary (missing or not) — no intensity dial, always full weight. */
 export const CARROT_FIXED_INTENSITY = 10;
 
 /**

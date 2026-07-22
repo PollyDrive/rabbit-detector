@@ -6,7 +6,7 @@ describe('projection', () => {
   describe('credibilityOf', () => {
     it('calculates credibility based on confidence matrix and intensity', () => {
       expect(credibilityOf({ event_type: 'Следы', intensity: 10 })).toBeCloseTo(1.0);
-      expect(credibilityOf({ event_type: 'Пропажа моркови', intensity: 5 })).toBeCloseTo(0.4);
+      expect(credibilityOf({ event_type: 'Пропажа морковки', intensity: 5 })).toBeCloseTo(0.4);
       expect(credibilityOf({ event_type: 'Новая яма', intensity: 10 })).toBeCloseTo(0.6);
       expect(credibilityOf({ event_type: 'Шуршание', intensity: 2 })).toBeCloseTo(0.08);
       expect(credibilityOf({ event_type: 'Датчик движения', intensity: 10 })).toBeCloseTo(0.2);
@@ -44,12 +44,12 @@ describe('projection', () => {
     it('calculates presence correctly with multiple weak signals', () => {
       const e1 = { ...baseEvent, id: 1, time: 9000, intensity: 5, event_type: 'Шуршание' as const };
       const e2 = { ...baseEvent, id: 2, time: 9000, intensity: 5, event_type: 'Шуршание' as const };
-      
+
       const result = presenceByLocation([e1, e2], 10000, DEFAULT_ESTIMATOR_SETTINGS);
-      
+
       const expectedAvg = 0.2;
       const expectedPresence = expectedAvg * (1 - Math.exp(-2 / DEFAULT_ESTIMATOR_SETTINGS.k));
-      
+
       expect(result['Огород']).toBeCloseTo(expectedPresence);
     });
   });

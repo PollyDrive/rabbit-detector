@@ -46,7 +46,7 @@ describe('runtime helpers', () => {
 
   it('validates a seed batch dropping invalid events', () => {
     const batch: Omit<FarmEvent, 'id'>[] = [
-      { source: 'seed', time: 1000, location: 'Сарай', event_type: 'Пропажа моркови', intensity: 5 }, // valid
+      { source: 'seed', time: 1000, location: 'Сарай', event_type: 'Пропажа морковки', intensity: 5 }, // valid
       { source: 'seed', time: 1100, location: 'Огород', event_type: 'Следы', intensity: 5 }, // invalid: dog in garden
       { source: 'seed', time: 1200, location: 'Сарай', event_type: 'Шуршание', intensity: 99 }, // invalid shape (intensity > 10)
     ];
@@ -54,7 +54,7 @@ describe('runtime helpers', () => {
     const result = validateSeedBatch(batch, true, 10);
 
     expect(result.valid).toHaveLength(1);
-    expect(result.valid[0]).toMatchObject({ id: 10, source: 'seed', location: 'Сарай', event_type: 'Пропажа моркови' });
+    expect(result.valid[0]).toMatchObject({ id: 10, source: 'seed', location: 'Сарай', event_type: 'Пропажа морковки' });
     expect(result.rejectedCount).toBe(2);
   });
 });

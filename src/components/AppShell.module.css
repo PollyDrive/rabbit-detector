@@ -31,7 +31,7 @@
   position: absolute;
   left: 1.25rem;
   top: 1.25rem;
-  width: 24rem;
+  width: clamp(18rem, 21vw, 23rem);
   height: auto;
   z-index: 5;
   display: flex;
@@ -42,9 +42,8 @@
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  top: 980px;
-  width: 1200px;
-  height: 40rem;
+  width: clamp(22rem, 32vw, 34rem);
+  min-height: 26rem;
   z-index: 5;
 }
 
@@ -103,6 +102,7 @@
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .dashboardTitle {
@@ -261,19 +261,25 @@
   margin-bottom: 16px;
 }
 
-.bottomLayout {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1.25rem 0;
+/* Natural heights on both sides (no align-items: stretch) — forcing the
+   short text column to match the tall log column used to leave a big
+   empty gap in whichever one was shorter. */
+.belowCanvas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1.5rem 1.25rem 2.5rem;
 }
 
-.legendWrapper {
-  flex: 1;
+.belowCanvasLeft {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
 }
 
-.bottomFullWidth {
-  width: 70%;
-  padding: 0;
+@media (max-width: 68.75rem) {
+  .belowCanvas {
+    grid-template-columns: 1fr;
+  }
 }

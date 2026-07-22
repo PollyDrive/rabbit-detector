@@ -17,7 +17,7 @@ function EventGroupList({ groups }: { groups: Record<string, FarmEvent[]> }) {
             {events.map((event) => (
               <li key={`event-${event.id}`} className={styles.eventItem}>
                 <span className={styles.eventType}>{event.event_type}</span>
-                {event.event_type !== "Пропажа моркови" && (
+                {event.event_type !== "Пропажа морковки" && (
                   <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
                 )}
                 <span className={styles.time}>Время: {event.time}с</span>

@@ -33,7 +33,7 @@ export function EventLog({ mobile = false }: { mobile?: boolean }) {
               </td>
               <td className={styles.cell}>{event.event_type}</td>
               <td className={styles.cell}>
-                {event.event_type === "Пропажа моркови" ? (
+                {event.event_type === "Пропажа морковки" ? (
                   "—"
                 ) : (
                   <span className={styles.intensityCell}>
@@ -47,7 +47,9 @@ export function EventLog({ mobile = false }: { mobile?: boolean }) {
                   </span>
                 )}
               </td>
-              <td className={styles.cell}>{EVENT_SOURCE_LABELS[event.source]}</td>
+              <td className={styles.cell} title={EVENT_SOURCE_LABELS[event.source]}>
+                {EVENT_SOURCE_LABELS[event.source]}
+              </td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
             </tr>
           ))}

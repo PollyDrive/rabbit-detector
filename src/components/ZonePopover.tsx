@@ -48,7 +48,7 @@ export function ZonePopover({ location, anchor, onClose, compact = false }: Zone
 
   const [eventType, setEventType] = useState<EventType | "">(initialType as EventType | "");
   const [intensity, setIntensity] = useState<number>(DEFAULT_INTENSITY);
-  const isCarrotEvent = eventType === "Пропажа моркови";
+  const isCarrotEvent = eventType === "Пропажа морковки";
   const [error, setError] = useState<string | null>(null);
   const eventsCountBeforeSubmit = useRef<number | null>(null);
   const popupRef = useRef<HTMLDialogElement>(null);

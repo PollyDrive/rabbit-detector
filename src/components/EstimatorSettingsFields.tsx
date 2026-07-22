@@ -154,24 +154,24 @@ export function EstimatorSettingsFields() {
       <h3 className={styles.sectionTitle}>Параметры сигналов</h3>
       <div className={styles.settingsFields}>
         <StepperField
-          label="k"
+          label="k (накопление)"
           ariaLabel="k"
           value={settings.k}
           onChange={(val) => updateSetting("k", val)}
           step={0.1}
-          min={0}
+          min={0.1}
           max={5}
-          helperText="Скорость роста presence от числа слабых сигналов (насыщение)"
+          helperText="Чем больше k, тем больше нужно слабых сигналов для уверенности."
         />
         <StepperField
-          label="τ (тау)"
-          ariaLabel="τ"
+          label="t (порог)"
+          ariaLabel="t (порог)"
           value={settings.tau}
           onChange={(val) => updateSetting("tau", val)}
           step={0.05}
           min={0}
           max={1}
-          helperText="Порог достоверности: событие с credibility ≥ τ сразу даёт presence = 1"
+          helperText="Чем ниже t, тем больше система верит одиночным сигналам."
         />
         {/* Visually hidden, not removed — dogSuppression has no effect yet
             (dog toggle doesn't feed into the estimator), but the acceptance

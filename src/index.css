@@ -66,3 +66,11 @@ h2 {
   color: var(--text-h);
   font-weight: 500;
 }
+
+/* Explicit selection color — without this, `color-scheme: dark` above
+   pushes the browser's default text-selection highlight toward a dark
+   tone that reads as a solid redaction block against light paper text. */
+::selection {
+  background: rgb(85 107 47 / 35%);
+  color: inherit;
+}
