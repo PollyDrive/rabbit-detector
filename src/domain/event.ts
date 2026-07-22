@@ -23,6 +23,12 @@ export const EVENT_TYPE_CONFIDENCE: Record<EventType, number> = {
 export const EVENT_SOURCES = ['sim', 'manual', 'seed'] as const;
 export type EventSource = typeof EVENT_SOURCES[number];
 
+export const EVENT_SOURCE_LABELS: Record<EventSource, string> = {
+  sim: 'симуляция',
+  manual: 'вручную',
+  seed: 'стартовые данные',
+};
+
 export const COMPATIBILITY_MATRIX: Record<Location, readonly EventType[]> = {
   'Огород': ['Следы', 'Пропажа моркови', 'Новая яма'],
   'Теплица': ['Следы', 'Пропажа моркови', 'Новая яма', 'Шуршание', 'Датчик движения'],

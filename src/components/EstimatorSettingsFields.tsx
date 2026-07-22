@@ -81,6 +81,69 @@ function StepperField({ label, ariaLabel, value, onChange, step, min, max, helpe
   );
 }
 
+const THRESHOLD_MIN = 0;
+const THRESHOLD_MAX = 10;
+
+function PriorityThresholdSlider({
+  low,
+  high,
+  onLowChange,
+  onHighChange,
+}: {
+  low: number;
+  high: number;
+  onLowChange: (value: number) => void;
+  onHighChange: (value: number) => void;
+}) {
+  const span = THRESHOLD_MAX - THRESHOLD_MIN;
+  const lowPct = ((low - THRESHOLD_MIN) / span) * 100;
+  const highPct = ((high - THRESHOLD_MIN) / span) * 100;
+
+  return (
+    <div className={styles.field}>
+      <span className={styles.fieldLabel}>Пороги приоритета</span>
+      <div className={styles.thresholdTrackWrap}>
+        <div className={styles.thresholdTrack}>
+          <div className={styles.thresholdSegmentLow} style={{ width: `${lowPct}%` }} />
+          <div
+            className={styles.thresholdSegmentMid}
+            style={{ left: `${lowPct}%`, width: `${highPct - lowPct}%` }}
+          />
+          <div
+            className={styles.thresholdSegmentHigh}
+            style={{ left: `${highPct}%`, width: `${100 - highPct}%` }}
+          />
+        </div>
+        <input
+          type="range"
+          min={THRESHOLD_MIN}
+          max={THRESHOLD_MAX}
+          step={1}
+          value={low}
+          aria-label="Нижний порог приоритета"
+          onChange={(e) => onLowChange(Math.min(Number(e.target.value), high))}
+          className={[styles.thresholdRange, styles.thresholdRangeLow].join(" ")}
+        />
+        <input
+          type="range"
+          min={THRESHOLD_MIN}
+          max={THRESHOLD_MAX}
+          step={1}
+          value={high}
+          aria-label="Верхний порог приоритета"
+          onChange={(e) => onHighChange(Math.max(Number(e.target.value), low))}
+          className={[styles.thresholdRange, styles.thresholdRangeHigh].join(" ")}
+        />
+      </div>
+      <div className={styles.thresholdLabels}>
+        <span className={styles.lowPriority}>Низкий &lt; {low}</span>
+        <span>Средний {low}–{high}</span>
+        <span className={styles.highPriority}>Высокий &gt; {high}</span>
+      </div>
+    </div>
+  );
+}
+
 export function EstimatorSettingsFields() {
   const context = useEstimatorSettings();
   const settings = context?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
@@ -110,26 +173,6 @@ export function EstimatorSettingsFields() {
           max={1}
           helperText="Порог достоверности: событие с credibility ≥ τ сразу даёт presence = 1"
         />
-        <StepperField
-          label="Нижний порог приоритета"
-          ariaLabel="priorityLowThreshold"
-          value={settings.priorityLowThreshold}
-          onChange={(val) => updateSetting("priorityLowThreshold", val)}
-          step={1}
-          min={0}
-          max={10}
-          helperText="Порог перевода в среднюю срочность"
-        />
-        <StepperField
-          label="Верхний порог приоритета"
-          ariaLabel="priorityHighThreshold"
-          value={settings.priorityHighThreshold}
-          onChange={(val) => updateSetting("priorityHighThreshold", val)}
-          step={1}
-          min={0}
-          max={10}
-          helperText="Порог перевода в высокую срочность"
-        />
         {/* Visually hidden, not removed — dogSuppression has no effect yet
             (dog toggle doesn't feed into the estimator), but the acceptance
             suite still asserts the control exists in the DOM. */}
@@ -154,6 +197,14 @@ export function EstimatorSettingsFields() {
           min={0}
           max={10}
           helperText="Интервал времени в секундах для объединения сигналов"
+        />
+      </div>
+      <div className={styles.thresholdFieldWrap}>
+        <PriorityThresholdSlider
+          low={settings.priorityLowThreshold}
+          high={settings.priorityHighThreshold}
+          onLowChange={(val) => updateSetting("priorityLowThreshold", val)}
+          onHighChange={(val) => updateSetting("priorityHighThreshold", val)}
         />
       </div>
     </div>

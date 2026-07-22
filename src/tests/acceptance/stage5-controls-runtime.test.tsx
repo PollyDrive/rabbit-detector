@@ -35,7 +35,7 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
+    expect(screen.getAllByText(/вручную/i).length).toBe(1)
     expect(within(dashboard).queryByText(/0\s*-\s*1/)).not.toBeInTheDocument()
     expect(within(dashboard).getByText('Огород')).toBeVisible()
 
@@ -49,8 +49,8 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/вручную/i).length).toBe(1)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(0)
     expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(1)
     expect(within(dashboard).getByText(/0%/)).toBeVisible()
 
@@ -59,8 +59,8 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /пересоздать историю/i }))
 
-    expect(screen.getAllByText(/manual/i).length).toBe(1)
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/вручную/i).length).toBe(1)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(0)
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -71,7 +71,7 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
       vi.advanceTimersByTime(5000)
     })
 
-    expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/симуляция/i).length).toBeGreaterThan(0)
   })
 
   it('simulator_run_updates_the_same_session_as_other_controls', () => {
@@ -87,6 +87,6 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
       vi.advanceTimersByTime(5000)
     })
 
-    expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/симуляция/i).length).toBeGreaterThan(0)
   })
 })

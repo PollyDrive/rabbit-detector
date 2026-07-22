@@ -1,7 +1,7 @@
 .panel {
   padding: 0.625rem;
-  background: #000000;
-  border-radius: 0;
+  background: var(--surface-dark-solid);
+  border-radius: 3px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -28,14 +28,14 @@
 
 .headerRow {
   display: grid;
-  grid-template-columns: 2rem 1.4fr 1.6fr 1fr 1fr 1fr;
+  grid-template-columns: 2rem 1.3fr 1.4fr 1.5fr 1.3fr 1fr;
   column-gap: 0.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 2rem 1.4fr 1.6fr 1fr 1fr 1fr;
+  grid-template-columns: 2rem 1.3fr 1.4fr 1.5fr 1.3fr 1fr;
   column-gap: 0.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -47,6 +47,33 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.headerRow .cell {
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.intensityCell {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.intensityBarTrack {
+  flex: 1 1 2rem;
+  max-width: 2.5rem;
+  height: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.intensityBarFill {
+  display: block;
+  height: 100%;
+  background: var(--tone-mid);
+  border-radius: 999px;
 }
 
 .mobile .table {

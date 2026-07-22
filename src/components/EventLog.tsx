@@ -1,5 +1,6 @@
 import { useFarm } from "../context/FarmContext";
 import { formatGameTime } from "../domain/runtime";
+import { EVENT_SOURCE_LABELS } from "../domain/event";
 import { useMockedProjection } from "../testing/contractTestHelpers";
 import styles from "./EventLog.module.css";
 
@@ -31,8 +32,22 @@ export function EventLog({ mobile = false }: { mobile?: boolean }) {
                 {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
               <td className={styles.cell}>{event.event_type}</td>
-              <td className={styles.cell}>{event.event_type === "Пропажа моркови" ? "—" : event.intensity}</td>
-              <td className={styles.cell}>{event.source}</td>
+              <td className={styles.cell}>
+                {event.event_type === "Пропажа моркови" ? (
+                  "—"
+                ) : (
+                  <span className={styles.intensityCell}>
+                    <span className={styles.intensityBarTrack}>
+                      <span
+                        className={styles.intensityBarFill}
+                        style={{ width: `${(event.intensity / 10) * 100}%` }}
+                      />
+                    </span>
+                    {event.intensity}
+                  </span>
+                )}
+              </td>
+              <td className={styles.cell}>{EVENT_SOURCE_LABELS[event.source]}</td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
             </tr>
           ))}

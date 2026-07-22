@@ -13,7 +13,7 @@ const SUSPICIOUS_ACTIVITY_WINDOW_SECONDS = 10;
 
 
 
-function countSignificantLocations(events: FarmEvent[], tau: number): number {
+function countSignificantLocations(events: FarmEvent[], tau: number): { count: number; suspiciousCount: number } {
   const byLocation: Record<string, FarmEvent[]> = {};
   for (const event of events) {
     if (!byLocation[event.location]) byLocation[event.location] = [];

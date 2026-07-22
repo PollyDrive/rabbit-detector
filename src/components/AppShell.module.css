@@ -62,9 +62,9 @@
 .controlContent {
   width: 100%;
   height: 100%;
-  background: rgb(43 39 39 / 82%);
+  background: var(--surface-dark-on-art);
   color: #ffffff;
-  border-radius: 0;
+  border-radius: 4px;
   padding: 1.25rem;
   box-sizing: border-box;
   display: grid;
@@ -84,9 +84,9 @@
 .dashboardContent {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--surface-dark-on-art);
   color: white;
-  border-radius: 0;
+  border-radius: 4px;
   padding: 1rem 1rem 1.125rem;
   box-sizing: border-box;
   display: grid;
@@ -98,7 +98,8 @@
 
 .logsArea {
   box-sizing: border-box;
-  background: #111827;
+  background: var(--surface-dark-solid);
+  border-radius: 4px;
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
@@ -128,15 +129,43 @@
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
   font-weight: 600;
-  border: none;
-  border-radius: 0;
-  background: #556b2f;
-  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.controlContent button:hover {
-  background: #445924;
+/* Compound with .controlContent to out-specificity the plain `.controlContent
+   button` rule above (both target border-color) — see .stepper .stepperButton
+   for the same pattern elsewhere in this codebase. */
+.controlContent .actionPrimary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.controlContent .actionPrimary:hover {
+  background: var(--accent-hover);
+}
+
+.controlContent .actionSecondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.controlContent .actionSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.controlContent .actionDanger {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.controlContent .actionDanger:hover {
+  background: rgb(var(--surface-dark) / 40%);
+  border-color: var(--tone-danger);
+  color: #ffffff;
 }
 
 .switchRow {

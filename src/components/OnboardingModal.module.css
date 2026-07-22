@@ -2,8 +2,8 @@
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at top, rgb(162 194 164 / 20%), transparent 38%),
-    rgba(5, 8, 17, 0.82);
+    radial-gradient(circle at top, rgb(197 157 90 / 16%), transparent 38%),
+    rgba(15, 11, 8, 0.82);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,14 +15,14 @@
   width: min(760px, 100%);
   max-height: min(88vh, 900px);
   overflow: auto;
-  background: linear-gradient(180deg, #f8fbf8 0%, #edf3ed 100%);
-  color: #111827;
+  background: linear-gradient(180deg, var(--paper-bg) 0%, var(--paper-bg-2) 100%);
+  color: var(--paper-text);
   padding: 32px;
-  border-radius: 0;
-  border: 1px solid rgba(46, 74, 54, 0.12);
+  border-radius: 4px;
+  border: 1px solid rgba(43, 36, 32, 0.14);
   box-shadow:
-    0 28px 90px rgba(15, 23, 42, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    0 28px 90px rgba(15, 12, 8, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .header {
@@ -35,7 +35,7 @@
 
 .kicker {
   margin: 0 0 10px;
-  color: #35553b;
+  color: var(--accent-hover);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -51,9 +51,9 @@
 
 .close {
   flex: 0 0 auto;
-  border: 1px solid rgba(46, 74, 54, 0.16);
-  background: rgba(255, 255, 255, 0.75);
-  color: #223a29;
+  border: 1px solid rgba(43, 36, 32, 0.18);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--paper-text);
   border-radius: 999px;
   padding: 10px 16px;
   font-size: 0.875rem;
@@ -68,7 +68,7 @@
 .body {
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #2f3f33;
+  color: var(--paper-text-muted);
 }
 
 .body > p {
@@ -78,7 +78,7 @@
 .body h3 {
   margin: 0 0 12px;
   font-size: 1rem;
-  color: #102317;
+  color: var(--paper-text);
 }
 
 .body ul {
@@ -93,7 +93,7 @@
 }
 
 .body strong {
-  color: #223a29;
+  color: var(--paper-text);
 }
 
 .cta {
@@ -103,14 +103,14 @@
   font-size: 0.95rem;
   font-weight: 700;
   border: none;
-  border-radius: 0;
-  background: #2e4a36;
+  border-radius: 3px;
+  background: var(--accent);
   color: #ffffff;
   cursor: pointer;
 }
 
 .cta:hover {
-  background: #223a29;
+  background: var(--accent-hover);
 }
 
 .helpButton {
@@ -122,16 +122,16 @@
   height: 2.25rem;
   border-radius: 999px;
   border: none;
-  background: #2e4a36;
+  background: var(--accent);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(34, 58, 41, 0.22);
+  box-shadow: 0 10px 24px rgba(43, 36, 32, 0.28);
 }
 
 .helpButton:hover {
-  background: #223a29;
+  background: var(--accent-hover);
 }
 
 @media (max-width: 860px) {

@@ -67,7 +67,7 @@ describe('stage 4S seed walking skeleton', () => {
     // next to the audit-log tab — scope to the log region itself.
     expect(screen.getByText('Лог событий')).toBeVisible()
     expect(within(eventLog).getByText('#1')).toBeVisible()
-    expect(within(eventLog).getByText('seed')).toBeVisible()
+    expect(within(eventLog).getByText('стартовые данные')).toBeVisible()
     // The location cell may carry a trailing zero-width space to disambiguate
     // it from the dashboard's own "Огород" text (see EventLog.tsx) — match
     // by substring, not exact string, and scope to the log so it can't
@@ -86,7 +86,7 @@ describe('stage 4S seed walking skeleton', () => {
     const dashboard = screen.getByRole('region', { name: 'Дашборд' })
     const eventLog = screen.getByRole('region', { name: 'Лог событий' })
 
-    expect(within(eventLog).getByText('seed')).toBeVisible()
+    expect(within(eventLog).getByText('стартовые данные')).toBeVisible()
     expect(within(dashboard).getByText('Теплица')).toBeVisible()
     expect(within(dashboard).queryByText('Огород')).not.toBeInTheDocument()
   })

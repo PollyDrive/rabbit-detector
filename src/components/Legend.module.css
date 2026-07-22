@@ -2,9 +2,9 @@
   width: 100%;
   margin: 0;
   padding: 24px 28px;
-  background: #ffffff;
-  border-radius: 0;
-  color: #111827;
+  background: var(--paper-bg);
+  border-radius: 4px;
+  color: var(--paper-text);
   box-sizing: border-box;
   display: grid;
   gap: 28px;
@@ -21,13 +21,13 @@
   display: grid;
   gap: 28px;
   padding-top: 20px;
-  border-top: 1px solid rgba(31, 41, 55, 0.1);
+  border-top: 1px solid rgba(43, 36, 32, 0.12);
 }
 
 .zonesTile {
-  background: rgb(43 39 39 / 82%);
+  background: var(--surface-dark-on-art);
   color: #ffffff;
-  border-radius: 0;
+  border-radius: 4px;
   padding: 0.75rem;
   box-sizing: border-box;
   font-size: 0.75rem;
@@ -54,7 +54,7 @@
   margin: 0 0 16px;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
 .heading {
@@ -77,7 +77,7 @@
   margin: 0;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
 .signalList,
@@ -86,6 +86,30 @@
   padding: 0 0 0 16px;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #374151;
+  color: var(--paper-text-muted);
+}
+
+.formulaDetails {
+  margin-top: 4px;
+}
+
+.formulaSummary {
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-hover);
+  padding: 4px 0;
+}
+
+.formulaSummary::marker {
+  color: var(--accent);
+}
+
+.formulaDetails[open] .formulaSummary {
+  margin-bottom: 10px;
+}
+
+.formulaDetails .assumptionList {
+  padding-left: 16px;
 }
 

@@ -7,11 +7,18 @@ import { EstimatorSettingsFields } from "../EstimatorSettingsFields";
 function ControlAction({
   children,
   onClick,
+  variant = "primary",
 }: {
   children: React.ReactNode;
   onClick: () => void;
+  variant?: "primary" | "secondary" | "danger";
 }) {
   const hideButtons = shouldHideInteractiveElementsForZoneSmoke();
+  const variantClass = {
+    primary: styles.actionPrimary,
+    secondary: styles.actionSecondary,
+    danger: styles.actionDanger,
+  }[variant];
 
   if (hideButtons) {
     return (
@@ -26,7 +33,7 @@ function ControlAction({
   }
 
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" className={variantClass} onClick={onClick}>
       {children}
     </button>
   );
@@ -75,13 +82,13 @@ export function ControlArea() {
         <h2>Симулятор фермы</h2>
         <p className={styles.clock}>Игровое время: {formatGameTime(state.gameTime)}</p>
         <div className={styles.buttonRow}>
-          <ControlAction onClick={() => setRunning(!state.running)}>
+          <ControlAction variant="primary" onClick={() => setRunning(!state.running)}>
             {runningLabel}
           </ControlAction>
-          <ControlAction onClick={fastForward}>
+          <ControlAction variant="secondary" onClick={fastForward}>
             Промотать час
           </ControlAction>
-          <ControlAction onClick={regenerateHistory}>
+          <ControlAction variant="danger" onClick={regenerateHistory}>
             Пересоздать историю
           </ControlAction>
         </div>

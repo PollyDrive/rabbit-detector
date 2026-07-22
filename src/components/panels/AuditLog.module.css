@@ -1,7 +1,7 @@
 .panel {
   padding: 0.625rem;
-  background: #000000;
-  border-radius: 0;
+  background: var(--surface-dark-solid);
+  border-radius: 3px;
   color: #ffffff;
   font-size: 0.5rem;
   height: 100%;
@@ -40,7 +40,7 @@
   margin: 0.25rem 0;
   font-size: 0.5rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--tone-mid);
   text-transform: uppercase;
 }
 

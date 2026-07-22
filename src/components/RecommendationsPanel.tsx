@@ -13,18 +13,28 @@ function hasRecommendations(value: RecommendationsProjection | undefined): value
   return Boolean(value && Array.isArray(value.recommendations));
 }
 
+const COLLAPSE_AFTER = 3;
+
 function RecommendationList({ items, emptyLabel }: { items: MockedRecommendation[]; emptyLabel: string }) {
-  return items.length ? (
-    <ul className={styles.recommendationList}>
-      {items.map((item) => (
-        <li key={item.zone} className={styles.recommendationItem}>
-          <strong className={styles.zone}>{item.zone}</strong>
-          <span>{item.text}</span>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className={styles.emptyState}>{emptyLabel}</p>
+  if (!items.length) {
+    return <p className={styles.emptyState}>{emptyLabel}</p>;
+  }
+
+  const visible = items.slice(0, COLLAPSE_AFTER);
+  const hiddenCount = items.length - visible.length;
+
+  return (
+    <>
+      <ul className={styles.recommendationList}>
+        {visible.map((item) => (
+          <li key={item.zone} className={styles.recommendationItem}>
+            <strong className={styles.zone}>{item.zone}</strong>
+            <span>{item.text}</span>
+          </li>
+        ))}
+      </ul>
+      {hiddenCount > 0 && <p className={styles.moreItem}>+{hiddenCount} ещё в этой зоне срочности</p>}
+    </>
   );
 }
 
