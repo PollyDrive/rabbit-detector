@@ -28,14 +28,14 @@
 
 .headerRow {
   display: grid;
-  grid-template-columns: 2.75rem 1.2fr 1.3fr 1.2fr 1.4fr 1fr;
+  grid-template-columns: 2.75rem 1.1fr 1.2fr 1.6fr 1.3fr 0.9fr;
   column-gap: 0.6rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 2.75rem 1.2fr 1.3fr 1.2fr 1.4fr 1fr;
+  grid-template-columns: 2.75rem 1.1fr 1.2fr 1.6fr 1.3fr 0.9fr;
   column-gap: 0.6rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -51,12 +51,11 @@
 
 .headerRow .cell {
   white-space: normal;
+  overflow: visible;
   line-height: 1.2;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.65);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 
 .intensityCell {

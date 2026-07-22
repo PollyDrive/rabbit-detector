@@ -128,18 +128,45 @@ export function ZonePopover({ location, anchor, onClose, compact = false }: Zone
         ×
       </button>
       <h2 className={styles.title}>{location}</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <label htmlFor="event-type-select" className={styles.srOnly}>
-            Тип события
-          </label>
-          <select
-            id="event-type-select"
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value as EventType)}
-            className={styles.select}
-            required
-          >
+      
+      {dogInGarden && location === "Огород" ? (
+        <div className={styles.form} style={{ padding: "0 16px 16px" }}>
+          <p role="alert" className={styles.error} style={{ marginBottom: "16px", textAlign: "center", fontWeight: 500 }}>
+            Пёс в огороде, невозможно добавить событие
+          </p>
+          <div className={styles.field}>
+            <select className={styles.select} disabled>
+              <option>Выберите тип события</option>
+            </select>
+          </div>
+          <div className={styles.field}>
+            <label>Интенсивность</label>
+            <input type="range" className={styles.slider} disabled />
+            <div className={styles.sliderScaleLabels}>
+              {(compact ? INTENSITY_LABELS_NUMERIC : INTENSITY_LABELS).map(({ value, label }) => (
+                <span key={value} style={{ opacity: 0.5 }}>{label}</span>
+              ))}
+            </div>
+          </div>
+          <div className={styles.actions}>
+            <button type="button" className={styles.primaryButton} disabled>
+              Добавить
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label htmlFor="event-type-select" className={styles.srOnly}>
+              Тип события
+            </label>
+            <select
+              id="event-type-select"
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value as EventType)}
+              className={styles.select}
+              required
+            >
             <option value="">Выберите тип события</option>
             {eventTypeOptions.map((option) => (
               <option key={option.value} value={option.value} disabled={option.disabled}>
@@ -182,6 +209,7 @@ export function ZonePopover({ location, anchor, onClose, compact = false }: Zone
           </button>
         </div>
       </form>
+      )}
     </dialog>
   );
 }

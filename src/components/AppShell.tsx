@@ -19,7 +19,7 @@ import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } fr
 // where they'd sit relative to the farm scene. DASHBOARD_TOP_PX is a canvas
 // coordinate (below the barn/greenhouse); scaled to screen px at render time.
 const DASHBOARD_TOP_PX = 980;
-const DASHBOARD_MIN_HEIGHT_REM = 26;
+const DASHBOARD_MIN_HEIGHT_REM = 34;
 
 function getRootFontSizePx() {
   if (typeof window === "undefined") {
@@ -92,7 +92,11 @@ export default function AppShell() {
             <ZonesTile />
           </div>
         </div>
-        <div className={styles.dashboardArea} data-testid="dashboard-area" style={{ top: dashboardTopPx }}>
+        <div
+          className={styles.dashboardArea}
+          data-testid="dashboard-area"
+          style={{ top: dashboardTopPx, height: dashboardMinHeightPx }}
+        >
           <DashboardArea />
         </div>
 
