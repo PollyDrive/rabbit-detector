@@ -78,3 +78,20 @@
   font-size: 0.6rem;
   margin-left: auto;
 }
+
+.mobile .zoneGroupHeading {
+  font-size: 0.68rem;
+}
+
+.mobile .eventType {
+  font-size: 0.8rem;
+}
+
+.mobile .intensity,
+.mobile .time {
+  font-size: 0.68rem;
+}
+
+.mobile .sectionHeading {
+  font-size: 0.85rem;
+}

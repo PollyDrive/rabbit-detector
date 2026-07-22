@@ -37,6 +37,49 @@
   color: #111827;
 }
 
+.popupCompact {
+  width: 10.5rem;
+  padding: 0.6rem;
+}
+
+.popupCompact .closeButton {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.popupCompact .title {
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+}
+
+.popupCompact .form {
+  gap: 0.5rem;
+}
+
+.popupCompact .field {
+  gap: 0.28rem;
+}
+
+.popupCompact .field > label {
+  font-size: 0.65rem;
+}
+
+.popupCompact .select {
+  padding: 0.3rem 0.35rem;
+  font-size: 0.62rem;
+  min-height: 1.9rem;
+}
+
+.popupCompact .sliderScaleLabels {
+  font-size: 0.6rem;
+}
+
+.popupCompact .actions button {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.64rem;
+  min-height: 1.9rem;
+}
+
 .popupFlippedLeft {
   transform: translate(calc(-100% - 0.5rem), calc(-100% - 0.5rem));
 }

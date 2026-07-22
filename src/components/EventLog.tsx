@@ -3,14 +3,14 @@ import { formatGameTime } from "../domain/runtime";
 import { useMockedProjection } from "../testing/contractTestHelpers";
 import styles from "./EventLog.module.css";
 
-export function EventLog() {
+export function EventLog({ mobile = false }: { mobile?: boolean }) {
   const { state } = useFarm();
   const { events } = state;
   const mockedProjection = useMockedProjection();
   const mockedZones = mockedProjection?.zones;
 
   return (
-    <section aria-label="Лог событий" className={styles.panel}>
+    <section aria-label="Лог событий" className={[styles.panel, mobile ? styles.mobile : ""].join(" ")}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.headerRow}>

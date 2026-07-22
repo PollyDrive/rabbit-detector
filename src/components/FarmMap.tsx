@@ -9,16 +9,18 @@ export interface ClickAnchor {
 
 interface FarmMapProps {
   onZoneClick?: (location: Location, anchor: ClickAnchor) => void;
+  /** Touch has no hover — without it a zone reads as unclickable decoration. */
+  touchHint?: boolean;
 }
 
-export function FarmMap({ onZoneClick }: FarmMapProps) {
+export function FarmMap({ onZoneClick, touchHint = false }: FarmMapProps) {
   return (
     <div className={styles.mapContainer}>
       <img src="/assets/canvas.png" alt="Ферма" className={styles.mapImage} />
       {Object.values(ZONES).map((zone) => (
         <div
           key={zone.location}
-          className={styles.hitbox}
+          className={[styles.hitbox, touchHint ? styles.hitboxTouchHint : ""].join(" ")}
           style={{
             left: `${zone.hitbox.x[0]}px`,
             top: `${zone.hitbox.y[0]}px`,

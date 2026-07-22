@@ -30,7 +30,7 @@ function EventGroupList({ groups }: { groups: Record<string, FarmEvent[]> }) {
   );
 }
 
-export function AuditLog() {
+export function AuditLog({ mobile = false }: { mobile?: boolean }) {
   const projection = useDashboardProjection();
   const safeProjection = isDashboardProjection(projection) ? projection : undefined;
 
@@ -53,7 +53,7 @@ export function AuditLog() {
   const hasData = Object.keys(evidenceByLocation).length > 0 || Object.keys(topSignalsByLocation).length > 0;
 
   return (
-    <section aria-label="Журнал аудита" className={styles.panel}>
+    <section aria-label="Журнал аудита" className={[styles.panel, mobile ? styles.mobile : ""].join(" ")}>
       {!hasData ? (
         <div className={styles.noData}>Нет данных для объяснения</div>
       ) : (

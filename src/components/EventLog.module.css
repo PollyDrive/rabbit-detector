@@ -48,3 +48,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.mobile .table {
+  font-size: 0.68rem;
+}
+
+.mobile .cell {
+  padding: 0.4rem 0.25rem;
+}

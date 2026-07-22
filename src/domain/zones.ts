@@ -25,7 +25,10 @@ export interface ZoneConfig {
 export const ZONES: Record<Location, ZoneConfig> = {
   'Огород': {
     location: 'Огород',
-    hitbox: { x: [790, 1500], y: [515, 780] },
+    // Shifted up+right off its previous bounds, which dipped into the
+    // Забор — Юго-Запад sensor box below and sat close to the Забор — Запад
+    // sensor to the left.
+    hitbox: { x: [830, 1500], y: [515, 755] },
     badgeAnchor: { x: 1500, y: 515 },
   },
   'Теплица': {
@@ -35,27 +38,30 @@ export const ZONES: Record<Location, ZoneConfig> = {
   },
   'Сарай': {
     location: 'Сарай',
-    hitbox: { x: [1660, 2200], y: [90, 500] },
-    badgeAnchor: { x: 2200, y: 90 },
+    hitbox: { x: [1660, 2200], y: [60, 470] },
+    badgeAnchor: { x: 2200, y: 60 },
   },
+  // Fence sensor hitboxes below are measured directly off the sensor box
+  // artwork (device body only, +/- a few px), not the old room-sized
+  // rectangles around them.
   'Забор — Запад': {
     location: 'Забор — Запад',
-    hitbox: { x: [690, 780], y: [420, 560] },
-    badgeAnchor: { x: 780, y: 420 },
+    hitbox: { x: [716, 774], y: [431, 508] },
+    badgeAnchor: { x: 774, y: 431 },
   },
   'Забор — Юго-Запад': {
     location: 'Забор — Юго-Запад',
-    hitbox: { x: [1180, 1290], y: [760, 870] },
-    badgeAnchor: { x: 1290, y: 760 },
+    hitbox: { x: [1216, 1288], y: [763, 836] },
+    badgeAnchor: { x: 1288, y: 763 },
   },
   'Забор — Юго-Восток': {
     location: 'Забор — Юго-Восток',
-    hitbox: { x: [2385, 2470], y: [695, 890] },
-    badgeAnchor: { x: 2470, y: 695 },
+    hitbox: { x: [2405, 2473], y: [766, 843] },
+    badgeAnchor: { x: 2473, y: 766 },
   },
   'Забор — Восток': {
     location: 'Забор — Восток',
-    hitbox: { x: [2600, 2700], y: [420, 520] },
-    badgeAnchor: { x: 2700, y: 420 },
+    hitbox: { x: [2656, 2716], y: [442, 523] },
+    badgeAnchor: { x: 2716, y: 442 },
   },
 };

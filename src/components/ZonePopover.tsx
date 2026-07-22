@@ -11,6 +11,7 @@ export interface ZonePopoverProps {
   location: Location;
   anchor: { x: number; y: number };
   onClose: () => void;
+  compact?: boolean;
 }
 
 function rejectionMessage(reason: RejectReason): string {
@@ -30,7 +31,13 @@ const INTENSITY_LABELS: Array<{ value: number; label: string }> = [
   { value: 10, label: "Высокая" },
 ];
 
-export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
+const INTENSITY_LABELS_NUMERIC: Array<{ value: number; label: string }> = [
+  { value: 1, label: "0" },
+  { value: 5, label: "5" },
+  { value: 10, label: "10" },
+];
+
+export function ZonePopover({ location, anchor, onClose, compact = false }: ZonePopoverProps) {
   const { state, addEvent } = useFarm();
   const { dogInGarden } = state;
 
@@ -111,6 +118,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
       aria-label="Ручной ввод"
       className={[
         styles.popup,
+        compact ? styles.popupCompact : "",
         flipToLeft ? styles.popupFlippedLeft : "",
         flipToBottom ? styles.popupFlippedBottom : "",
       ].join(" ")}
@@ -155,7 +163,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
               required
             />
             <div className={styles.sliderScaleLabels}>
-              {INTENSITY_LABELS.map(({ value, label }) => (
+              {(compact ? INTENSITY_LABELS_NUMERIC : INTENSITY_LABELS).map(({ value, label }) => (
                 <span key={value}>{label}</span>
               ))}
             </div>

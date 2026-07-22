@@ -26,3 +26,12 @@
 .hitbox:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+.hitboxTouchHint {
+  border: 1.5px dashed rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hitboxTouchHint:active {
+  background: rgba(255, 255, 255, 0.16);
+}

@@ -16,8 +16,12 @@ export const DEFAULT_INTENSITY = 5;
 /** "Пропажа моркови" is binary (missing or not) — no intensity dial, always full weight. */
 export const CARROT_FIXED_INTENSITY = 10;
 
-/** Below this viewport width, the app shows the desktop-only notice. */
-export const MOBILE_BREAKPOINT_PX = 768;
+/**
+ * Below this viewport width, the app switches to the mobile shell (bottom
+ * tabs + portrait gate) instead of the scaled desktop canvas — matches
+ * MIN_DESKTOP_WIDTH, the floor the desktop layout stops shrinking past.
+ */
+export const MOBILE_BREAKPOINT_PX = 1024;
 
 export type LogLevel = "debug" | "info" | "warn" | "silent";
 
