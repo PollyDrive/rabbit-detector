@@ -19,7 +19,7 @@ import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } fr
 // wide-desktop media queries), NOT from a JS-computed transform. Only their
 // vertical anchor is computed here, since it has to track the farm art's
 // own continuous scale — DASHBOARD_TOP_PX is a canvas coordinate (below
-// the barn/greenhouse).
+const DASHBOARD_TOP_PX = 1050;
 const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {
@@ -47,9 +47,18 @@ export default function AppShell() {
   // constant — is what actually keeps the reserved space under the farm
   // art matching what's really there, at any viewport/content amount.
   const [controlRef, controlSize] = useElementSize<HTMLDivElement>();
+  const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
 
+  const dashboardTopPx = DASHBOARD_TOP_PX * scale;
   const controlBottomPx = panelMarginPx + controlSize.height * panelScale;
+  const dashboardBottomPx = dashboardTopPx + dashboardSize.height * panelScale;
+  
+  // Keep the viewport height bounded by the canvas and control area.
+  // The dashboard will intentionally overhang the bottom of the map if it's tall enough.
   const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx);
+  
+  // Calculate how much the dashboard overhangs the canvas to push the logs down
+  const overhangPx = Math.max(0, dashboardBottomPx - (CANVAS_HEIGHT * scale));
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
     if (!state.running) {
@@ -114,6 +123,15 @@ export default function AppShell() {
         >
           <ZonesTile />
         </div>
+        
+        <div
+          className={styles.dashboardArea}
+          data-testid="dashboard-area"
+          ref={dashboardRef}
+          style={{ top: dashboardTopPx, transform: `scale(${panelScale})` }}
+        >
+          <DashboardArea />
+        </div>
 
         {activePopup && (
           <ZonePopover
@@ -129,8 +147,7 @@ export default function AppShell() {
           <Legend />
           <ConfidenceSection />
         </div>
-        <div className={styles.logsArea}>
-          <DashboardArea />
+        <div className={styles.logsArea} style={{ marginTop: overhangPx }}>
           <EventLogTabs />
         </div>
       </div>
