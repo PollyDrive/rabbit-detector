@@ -27,11 +27,16 @@
   background: rgba(255, 0, 0, 0.3);
 }
 
+/* Widths are plain rem per breakpoint tier — not vw, not a JS-computed
+   transform — so panel text is always native/readable size; only which
+   rem value applies changes with viewport. Tiers: tablet (< 1280px, our
+   MIN_DESKTOP_WIDTH floor lives here), desktop (1280–1919px), wide
+   desktop (≥ 1920px). */
 .controlArea {
   position: absolute;
   left: 1.25rem;
   top: 1.25rem;
-  transform-origin: top left;
+  width: 19rem;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -41,8 +46,30 @@
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  transform-origin: top right;
+  width: 22rem;
   z-index: 5;
+}
+
+@media (min-width: 80rem) {
+  /* desktop: 1280px */
+  .controlArea {
+    width: 21rem;
+  }
+
+  .dashboardArea {
+    width: 26rem;
+  }
+}
+
+@media (min-width: 120rem) {
+  /* wide desktop: 1920px */
+  .controlArea {
+    width: 23rem;
+  }
+
+  .dashboardArea {
+    width: 30rem;
+  }
 }
 
 .zonesTileArea {

@@ -14,17 +14,13 @@ import { Legend, ConfidenceSection, ZonesTile } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } from "./OnboardingModal";
 
-// Симулятор/Дашборд scale together with the farm art (same as before) so
-// they still read as part of the scene — but never below PANEL_SCALE_FLOOR,
-// or their real text becomes illegible (~8px on a 14" laptop, where the art
-// itself scales to ~0.52x). Below that floor they simply cover a bit more
-// of the art than strict proportion would — a small aesthetic trade for
-// staying readable. DASHBOARD_TOP_PX is a canvas coordinate (below the
-// barn/greenhouse); its vertical anchor still tracks the art's own scale.
-const PANEL_SCALE_FLOOR = 0.85;
+// Симулятор/Дашборд render at native size — width/padding/font come from
+// plain rem in AppShell.module.css, tuned per breakpoint (tablet/desktop/
+// wide-desktop media queries), NOT from a JS-computed transform. Only their
+// vertical anchor is computed here, since it has to track the farm art's
+// own continuous scale — DASHBOARD_TOP_PX is a canvas coordinate (below
+// the barn/greenhouse).
 const DASHBOARD_TOP_PX = 980;
-const CONTROL_WIDTH_REM = 24;
-const DASHBOARD_WIDTH_REM = 30;
 const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {
@@ -41,19 +37,18 @@ export default function AppShell() {
   const [onboardingOpen, setOnboardingOpen] = useState(() => !hasSeenOnboarding());
   const { state } = useFarm();
   const scale = useCanvasScale();
-  const panelScale = Math.max(scale, PANEL_SCALE_FLOOR);
   const rootFontPx = getRootFontSizePx();
   const panelMarginPx = PANEL_MARGIN_REM * rootFontPx;
 
-  // Measuring each panel's own (pre-transform) natural height — rather than
-  // assuming a constant — is what actually keeps the reserved space under
-  // the farm art matching what's really there, at any zoom/content amount.
-  const [controlRef, controlNaturalSize] = useElementSize<HTMLDivElement>();
-  const [dashboardRef, dashboardNaturalSize] = useElementSize<HTMLDivElement>();
+  // Measuring each panel's own rendered height — rather than assuming a
+  // constant — is what actually keeps the reserved space under the farm
+  // art matching what's really there, at any viewport/content amount.
+  const [controlRef, controlSize] = useElementSize<HTMLDivElement>();
+  const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
 
   const dashboardTopPx = DASHBOARD_TOP_PX * scale;
-  const controlBottomPx = panelMarginPx + controlNaturalSize.height * panelScale;
-  const dashboardBottomPx = dashboardTopPx + dashboardNaturalSize.height * panelScale;
+  const controlBottomPx = panelMarginPx + controlSize.height;
+  const dashboardBottomPx = dashboardTopPx + dashboardSize.height;
   const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx, dashboardBottomPx);
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
@@ -98,15 +93,12 @@ export default function AppShell() {
           <BadgeLayer events={state.events} />
         </div>
 
-        {/* Rendered as siblings of the scaled .shell, not inside it, so each
-            can carry its OWN scale (panelScale) instead of the art's raw
-            one — see PANEL_SCALE_FLOOR above. */}
-        <div
-          className={styles.controlArea}
-          data-testid="control-area"
-          ref={controlRef}
-          style={{ width: `${CONTROL_WIDTH_REM}rem`, transform: `scale(${panelScale})` }}
-        >
+        {/* Rendered as siblings of the scaled .shell, not inside it — real
+            rem-based size at any viewport instead of shrinking together
+            with the farm art (was unreadable ~8px text on 14" laptops,
+            where the art scales down to ~0.52x). Only their position
+            tracks the art's scale; their own layout doesn't. */}
+        <div className={styles.controlArea} data-testid="control-area" ref={controlRef}>
           <ControlArea />
           <div className={styles.zonesTileArea} data-testid="zones-tile-area">
             <ZonesTile />
@@ -116,7 +108,7 @@ export default function AppShell() {
           className={styles.dashboardArea}
           data-testid="dashboard-area"
           ref={dashboardRef}
-          style={{ top: dashboardTopPx, width: `${DASHBOARD_WIDTH_REM}rem`, transform: `scale(${panelScale})` }}
+          style={{ top: dashboardTopPx }}
         >
           <DashboardArea />
         </div>
