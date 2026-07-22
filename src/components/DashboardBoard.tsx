@@ -23,8 +23,12 @@ export default function DashboardBoard() {
           {safeProjection ? (
             <>
               <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Кроликов (диапазон)</span>
-                <strong className={styles.metricValue}>{formatRange(safeProjection.low, safeProjection.high)}</strong>
+                <span className={styles.metricLabel}>Гарантированно кроликов</span>
+                <strong className={styles.metricValue}>{safeProjection.low}</strong>
+              </div>
+              <div className={styles.metricTile}>
+                <span className={styles.metricLabel}>Подозреваемых зон</span>
+                <strong className={styles.metricValue}>{safeProjection.high}</strong>
               </div>
               <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Уверенность</span>
