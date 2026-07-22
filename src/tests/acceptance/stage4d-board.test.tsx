@@ -11,7 +11,10 @@ describe('stage 4D per-zone + estimate/confidence dashboard cards (mocked)', () 
 
     expect(screen.getByText('Огород')).toBeVisible()
     expect(screen.getByText(/75\s*%/)).toBeVisible() // confidencePercent
-    expect(screen.getByText(/1.*3/)).toBeVisible() // low-high range "1-3" / "1 – 3" / etc
+    expect(screen.getByText('Гарантированно кроликов')).toBeVisible()
+    expect(screen.getByText('1')).toBeVisible()
+    expect(screen.getByText('Подозреваемых зон')).toBeVisible()
+    expect(screen.getByText('3')).toBeVisible()
   })
 
   it('re-renders different numbers when the mocked projection changes, proving it reads the data and is not hardcoded', () => {
