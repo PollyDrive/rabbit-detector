@@ -2,6 +2,7 @@ import styles from "./DashboardBoard.module.css";
 import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import { ZoneBoardTable } from "./ZoneBoardTable";
 import {
+  formatRange,
   formatConfidencePercent,
   type DashboardProjection,
 } from "./dashboard-board-utils";
@@ -26,8 +27,14 @@ export default function DashboardBoard() {
                 <strong className={styles.metricValue}>{safeProjection.low}</strong>
               </div>
               <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Подозреваемых зон</span>
-                <strong className={styles.metricValue}>{safeProjection.high}</strong>
+                <span className={styles.metricLabel}>Диапазон</span>
+                <strong className={styles.metricValue}>{formatRange(safeProjection.low, Math.max(safeProjection.low, safeProjection.high))}</strong>
+              </div>
+              <div className={styles.metricTile}>
+                <span className={styles.metricLabel}>Подозрительные зоны</span>
+                <strong className={styles.metricValue}>
+                  {Object.values(safeProjection.zones).filter((z) => z.presence >= 0.5 && z.presence < 1.0).length}
+                </strong>
               </div>
               <div className={styles.metricTile}>
                 <span className={styles.metricLabel}>Уверенность</span>

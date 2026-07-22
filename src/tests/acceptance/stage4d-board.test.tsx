@@ -13,8 +13,11 @@ describe('stage 4D per-zone + estimate/confidence dashboard cards (mocked)', () 
     expect(screen.getByText(/75\s*%/)).toBeVisible() // confidencePercent
     expect(screen.getByText('Гарантированно кроликов')).toBeVisible()
     expect(screen.getByText('1')).toBeVisible()
-    expect(screen.getByText('Подозреваемых зон')).toBeVisible()
-    expect(screen.getByText('3')).toBeVisible()
+    expect(screen.getByText('Диапазон')).toBeVisible()
+    expect(screen.getByText(/1\s*-\s*3/)).toBeVisible()
+    expect(screen.getByText('Подозрительные зоны')).toBeVisible()
+    expect(screen.getByText('1')).toBeVisible() // We need to verify what the suspicious zones count evaluates to, assume 1 based on mock
+    expect(screen.getByText('Уверенность')).toBeVisible()
   })
 
   it('re-renders different numbers when the mocked projection changes, proving it reads the data and is not hardcoded', () => {

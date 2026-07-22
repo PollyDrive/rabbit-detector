@@ -21,8 +21,10 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
 
     expect(within(dashboard).getByText('Гарантированно кроликов')).toBeVisible()
     expect(within(dashboard).getAllByText('0')[0]).toBeVisible()
-    expect(within(dashboard).getByText('Подозреваемых зон')).toBeVisible()
-    expect(within(dashboard).getAllByText('1')[0]).toBeVisible()
+    expect(within(dashboard).getByText('Диапазон')).toBeVisible()
+    expect(within(dashboard).getByText(/0\s*-\s*1/)).toBeVisible()
+    expect(within(dashboard).getByText('Подозрительные зоны')).toBeVisible()
+    expect(within(dashboard).getAllByText('0').length).toBeGreaterThanOrEqual(2)
 
     fireEvent.click(screen.getByRole('button', { name: 'Огород' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
