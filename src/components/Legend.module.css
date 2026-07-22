@@ -30,9 +30,9 @@
   background: var(--surface-dark-on-art);
   color: #ffffff;
   border-radius: 4px;
-  padding: 0.75rem;
+  padding: 0.75em;
   box-sizing: border-box;
-  font-size: 0.75rem;
+  font-size: 0.9em;
 }
 
 .zonesTile th,
@@ -41,8 +41,8 @@
 }
 
 .zonesTileHeading {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
+  margin: 0 0 0.5em;
+  font-size: 0.85em;
   font-weight: 600;
   color: #ffffff;
 }

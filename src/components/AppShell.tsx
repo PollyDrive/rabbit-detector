@@ -39,6 +39,10 @@ export default function AppShell() {
   const scale = useCanvasScale();
   const rootFontPx = getRootFontSizePx();
   const panelMarginPx = PANEL_MARGIN_REM * rootFontPx;
+  
+  // We scale the panels proportionally with the canvas, but boost their native
+  // size by 35% so they stay readable when scaled down to small screens.
+  const panelScale = scale * 1.35;
 
   // Measuring each panel's own rendered height — rather than assuming a
   // constant — is what actually keeps the reserved space under the farm
@@ -47,8 +51,8 @@ export default function AppShell() {
   const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
 
   const dashboardTopPx = DASHBOARD_TOP_PX * scale;
-  const controlBottomPx = panelMarginPx + controlSize.height;
-  const dashboardBottomPx = dashboardTopPx + dashboardSize.height;
+  const controlBottomPx = panelMarginPx + controlSize.height * panelScale;
+  const dashboardBottomPx = dashboardTopPx + dashboardSize.height * panelScale;
   const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx, dashboardBottomPx);
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
@@ -98,7 +102,12 @@ export default function AppShell() {
             with the farm art (was unreadable ~8px text on 14" laptops,
             where the art scales down to ~0.52x). Only their position
             tracks the art's scale; their own layout doesn't. */}
-        <div className={styles.controlArea} data-testid="control-area" ref={controlRef}>
+        <div 
+          className={styles.controlArea} 
+          data-testid="control-area" 
+          ref={controlRef}
+          style={{ transform: `scale(${panelScale})` }}
+        >
           <ControlArea />
           <div className={styles.zonesTileArea} data-testid="zones-tile-area">
             <ZonesTile />
@@ -108,7 +117,7 @@ export default function AppShell() {
           className={styles.dashboardArea}
           data-testid="dashboard-area"
           ref={dashboardRef}
-          style={{ top: dashboardTopPx }}
+          style={{ top: dashboardTopPx, transform: `scale(${panelScale})` }}
         >
           <DashboardArea />
         </div>

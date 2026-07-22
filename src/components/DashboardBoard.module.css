@@ -1,29 +1,29 @@
 .board {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.75em;
   color: var(--paper-text);
 }
 
 .summary {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.5em;
 }
 
 .metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.875rem;
+  gap: 0.875em;
   width: 100%;
   align-items: stretch;
 }
 
 .metricTile {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.25em;
   align-content: center;
   justify-items: center;
-  min-height: 4.25rem;
-  padding: 0.75rem 1.125rem 0.8rem;
+  min-height: 4.25em;
+  padding: 0.75em 1.125em 0.8em;
   border-radius: 3px;
   background: rgb(var(--paper-bg-rgb) / 88%);
   border: 1px solid rgba(43, 36, 32, 0.14);
@@ -33,7 +33,7 @@
 
 .metricLabel {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.85em;
   letter-spacing: 0.01em;
   line-height: 1.15;
   color: var(--paper-text-muted);
@@ -41,7 +41,7 @@
 }
 
 .metricValue {
-  font-size: clamp(1.6rem, 1.8vw, 1.9rem);
+  font-size: 1.75em;
   line-height: 1;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
@@ -49,8 +49,8 @@
 
 .heroTile {
   display: grid;
-  gap: 0.625rem;
-  padding: 1rem 1.25rem 1.125rem;
+  gap: 0.625em;
+  padding: 1em 1.25em 1.125em;
   border-radius: 3px;
   background: rgb(var(--paper-bg-rgb) / 88%);
   border: 1px solid rgba(43, 36, 32, 0.14);
@@ -61,23 +61,23 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.75em;
 }
 
 .heroConfidence {
   display: flex;
   align-items: baseline;
-  gap: 0.375rem;
+  gap: 0.375em;
 }
 
 .heroConfidenceValue {
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .heroValue {
-  font-size: clamp(2.4rem, 3vw, 3rem);
+  font-size: 2.6em;
   line-height: 1;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
@@ -85,7 +85,7 @@
 
 .rangeBar {
   display: flex;
-  height: 0.5rem;
+  height: 0.5em;
   border-radius: 999px;
   overflow: hidden;
   background: rgba(43, 36, 32, 0.12);
@@ -115,7 +115,7 @@
 
 .boardGrid {
   display: grid;
-  gap: 1rem;
+  gap: 1em;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 
@@ -124,33 +124,33 @@
   border: 1px solid rgba(43, 36, 32, 0.14);
   border-radius: 0;
   background: rgb(var(--paper-bg-rgb) / 82%);
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 1em;
+  font-size: 1em;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.8em;
 }
 
 .table th,
 .table td {
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 0.5em 0;
   border-bottom: 1px solid rgba(31, 41, 55, 0.08);
 }
 
 .priorityCell {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  min-width: 9rem;
+  gap: 0.625em;
+  min-width: 9em;
 }
 
 .priorityBarTrack {
-  flex: 1 1 4rem;
-  height: 0.375rem;
+  flex: 1 1 4em;
+  height: 0.375em;
   border-radius: 999px;
   background: rgba(127, 127, 127, 0.25);
   overflow: hidden;
@@ -175,21 +175,21 @@
 
 .priorityValue {
   flex: 0 0 auto;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   white-space: nowrap;
   opacity: 0.85;
 }
 
 .recommendationList {
   margin: 0;
-  padding-left: 1.125rem;
+  padding-left: 1.125em;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.5em;
 }
 
 .recommendationList li {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.25em;
 }
 
 .emptyState {
