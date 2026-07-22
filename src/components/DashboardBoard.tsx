@@ -3,7 +3,6 @@ import { useDashboardProjection } from "../context/DashboardProjectionContext";
 import { ZoneBoardTable } from "./ZoneBoardTable";
 import {
   formatConfidencePercent,
-  formatRange,
   type DashboardProjection,
 } from "./dashboard-board-utils";
 
