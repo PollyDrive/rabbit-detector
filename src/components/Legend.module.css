@@ -1,5 +1,6 @@
 .legend {
   width: 100%;
+  height: 100%;
   margin: 0;
   padding: 24px 28px;
   background: var(--paper-bg);
@@ -7,6 +8,7 @@
   color: var(--paper-text);
   box-sizing: border-box;
   display: grid;
+  align-content: start;
   gap: 28px;
 }
 
