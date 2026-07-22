@@ -180,3 +180,8 @@
 .primaryButton:hover {
   background: var(--accent-hover);
 }
+
+.primaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
