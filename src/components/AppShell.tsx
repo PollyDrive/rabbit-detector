@@ -109,9 +109,14 @@ export default function AppShell() {
           style={{ transform: `scale(${panelScale})` }}
         >
           <ControlArea />
-          <div className={styles.zonesTileArea} data-testid="zones-tile-area">
-            <ZonesTile />
-          </div>
+        </div>
+        
+        <div 
+          className={styles.zonesAreaContainer}
+          data-testid="zones-tile-area"
+          style={{ transform: `scale(${panelScale})` }}
+        >
+          <ZonesTile />
         </div>
         <div
           className={styles.dashboardArea}

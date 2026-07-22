@@ -50,9 +50,14 @@
   transform-origin: top right;
 }
 
-.zonesTileArea {
+.zonesAreaContainer {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 5;
   width: 17em;
-  flex-shrink: 0;
+  font-size: 1rem;
+  transform-origin: bottom left;
 }
 
 /*
