@@ -13,7 +13,7 @@ describe('stage 2 location/type guard', () => {
     // all yet, these fail loudly instead of the negative checks below
     // passing vacuously on an empty/missing list.
     expect(screen.getByRole('option', { name: 'Следы' })).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: 'Пропажа моркови' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'Пропажа морковки' })).toBeInTheDocument()
     expect(screen.getByRole('option', { name: 'Новая яма' })).toBeInTheDocument()
 
     expect(screen.queryByRole('option', { name: 'Шуршание' })).not.toBeInTheDocument()

@@ -14,7 +14,11 @@ function hasRecommendations(value: RecommendationsProjection | undefined): value
 }
 
 function RecommendationList({ items, emptyLabel }: { items: MockedRecommendation[]; emptyLabel: string }) {
-  return items.length ? (
+  if (!items.length) {
+    return <p className={styles.emptyState}>{emptyLabel}</p>;
+  }
+
+  return (
     <ul className={styles.recommendationList}>
       {items.map((item) => (
         <li key={item.zone} className={styles.recommendationItem}>
@@ -23,8 +27,6 @@ function RecommendationList({ items, emptyLabel }: { items: MockedRecommendation
         </li>
       ))}
     </ul>
-  ) : (
-    <p className={styles.emptyState}>{emptyLabel}</p>
   );
 }
 

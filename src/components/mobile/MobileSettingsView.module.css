@@ -1,0 +1,111 @@
+.scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  background: #0c0a08;
+  color: #ffffff;
+}
+
+.title {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.buttonsCol {
+  flex: 0 0 auto;
+  width: 46%;
+}
+
+.zonesCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Same voice as MobileEstimatorFields' .groupTitle — this is the sibling
+   column of the same screen, not a separate widget. */
+.zonesTitle {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.zonesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow-y: auto;
+}
+
+/* Same pill as the stepper chips on the left (radius, border, fill) —
+   quiet by default. Priority coloring below is the only thing that makes
+   a row stand out, echoing the high/low split already used on Дашборд. */
+.zoneRow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.12rem 0.5rem;
+}
+
+.zoneRowHigh {
+  border-color: #d1451f;
+  background: #d1451f;
+}
+
+.zoneName {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.zoneRowHigh .zoneName {
+  color: #ffffff;
+}
+
+.zoneValue {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.hints {
+  margin-top: 0.75rem;
+}
+
+.hintsSummary {
+  cursor: pointer;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hints[open] .hintsSummary {
+  border-radius: 0.6rem 0.6rem 0 0;
+  margin-bottom: 0.5rem;
+}

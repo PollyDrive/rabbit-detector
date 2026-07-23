@@ -1,17 +1,9 @@
 import { type EstimatorSettings, type FarmEvent, TIME_WINDOW_SPEC } from './contract';
 import { type Location, LOCATIONS } from './zones';
-import type { EventType } from './event';
-
-const CONFIDENCE_MATRIX: Record<EventType, number> = {
-  'Следы': 1.0,
-  'Пропажа моркови': 0.8,
-  'Новая яма': 0.6,
-  'Шуршание': 0.4,
-  'Датчик движения': 0.2,
-};
+import { EVENT_TYPE_CONFIDENCE } from './event';
 
 export function credibilityOf(event: Pick<FarmEvent, 'event_type' | 'intensity'>): number {
-  const confidence = CONFIDENCE_MATRIX[event.event_type] ?? 0;
+  const confidence = EVENT_TYPE_CONFIDENCE[event.event_type] ?? 0;
   return confidence * (event.intensity / 10);
 }
 

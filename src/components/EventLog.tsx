@@ -1,16 +1,17 @@
 import { useFarm } from "../context/FarmContext";
 import { formatGameTime } from "../domain/runtime";
+import { EVENT_SOURCE_LABELS } from "../domain/event";
 import { useMockedProjection } from "../testing/contractTestHelpers";
 import styles from "./EventLog.module.css";
 
-export function EventLog() {
+export function EventLog({ mobile = false }: { mobile?: boolean }) {
   const { state } = useFarm();
   const { events } = state;
   const mockedProjection = useMockedProjection();
   const mockedZones = mockedProjection?.zones;
 
   return (
-    <section aria-label="Лог событий" className={styles.panel}>
+    <section aria-label="Лог событий" className={[styles.panel, mobile ? styles.mobile : ""].join(" ")}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.headerRow}>
@@ -26,13 +27,29 @@ export function EventLog() {
           {events.map((event) => (
             <tr key={event.id} className={styles.row}>
               <td className={styles.cell}>#{event.id}</td>
-              <td className={styles.cell}>
+              <td className={styles.cell} title={event.location}>
                 {event.location}
                 {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
-              <td className={styles.cell}>{event.event_type}</td>
-              <td className={styles.cell}>{event.event_type === "Пропажа моркови" ? "—" : event.intensity}</td>
-              <td className={styles.cell}>{event.source}</td>
+              <td className={styles.cell} title={event.event_type}>{event.event_type}</td>
+              <td className={styles.cell}>
+                {event.event_type === "Пропажа морковки" ? (
+                  "—"
+                ) : (
+                  <span className={styles.intensityCell}>
+                    <span className={styles.intensityBarTrack}>
+                      <span
+                        className={styles.intensityBarFill}
+                        style={{ width: `${(event.intensity / 10) * 100}%` }}
+                      />
+                    </span>
+                    {event.intensity}
+                  </span>
+                )}
+              </td>
+              <td className={styles.cell} title={EVENT_SOURCE_LABELS[event.source]}>
+                {EVENT_SOURCE_LABELS[event.source]}
+              </td>
               <td className={styles.cell}>{formatGameTime(event.time)}</td>
             </tr>
           ))}

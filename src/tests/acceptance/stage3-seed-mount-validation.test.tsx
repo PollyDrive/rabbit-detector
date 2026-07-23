@@ -21,6 +21,6 @@ describe('stage 3 initial seed mount validation (issue #95)', () => {
 
     // mocked createSeedBatch returns 3 events, one with intensity=99 (invalid shape) —
     // only the 2 valid ones should reach the log on mount, same as SEED_BULK/regenerate already does.
-    expect(screen.getAllByText(/seed/i).length).toBe(2)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBe(2)
   })
 })

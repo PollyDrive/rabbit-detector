@@ -25,6 +25,8 @@ export interface DashboardProjection {
   high: number;
   pointEstimate: number;
   confidencePercent: number;
+  suspiciousZonesCount: number;
+  suspiciousZoneNames: string[];
   zones: Record<string, DashboardZoneProjection>;
   recommendations: DashboardRecommendation[];
 }
@@ -37,7 +39,7 @@ export function buildDashboardProjection(
   const windowStart = now - TIME_WINDOW_SPEC.durationSeconds;
   const windowEvents = events.filter(e => e.time >= windowStart && e.time <= now);
   
-  const estimate = computeEstimate(events, now, settings);
+  const estimate = computeEstimate(windowEvents, now, settings);
   const board = buildPerZoneBoard(events, now, settings);
   
   const zones: Record<string, DashboardZoneProjection> = {};
@@ -47,7 +49,7 @@ export function buildDashboardProjection(
     const locEvents = windowEvents.filter(e => e.location === entry.location);
     const dominantSignal = computeDominantSignal(locEvents);
     const urgencyLevel = computeUrgencyLevel(entry.priority, settings);
-    const evidence = computeEvidence(events.filter(e => e.location === entry.location), now, settings);
+    const evidence = computeEvidence(locEvents, now, settings);
     const topSignals = computeTopSignals(locEvents);
 
     zones[entry.location] = {

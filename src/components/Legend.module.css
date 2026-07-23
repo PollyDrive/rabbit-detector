@@ -1,12 +1,14 @@
 .legend {
   width: 100%;
+  height: 100%;
   margin: 0;
   padding: 24px 28px;
-  background: #ffffff;
-  border-radius: 0;
-  color: #111827;
+  background: var(--paper-bg);
+  border-radius: 4px;
+  color: var(--paper-text);
   box-sizing: border-box;
   display: grid;
+  align-content: start;
   gap: 28px;
 }
 
@@ -21,16 +23,19 @@
   display: grid;
   gap: 28px;
   padding-top: 20px;
-  border-top: 1px solid rgba(31, 41, 55, 0.1);
+  border-top: 1px solid rgba(43, 36, 32, 0.12);
 }
 
+/* Matched to .recommendations (RecommendationsPanel.module.css) — same
+   card chrome and heading scale, so the two panels read as a pair. */
 .zonesTile {
-  background: rgb(43 39 39 / 82%);
+  background: var(--surface-dark-on-art);
   color: #ffffff;
-  border-radius: 0;
-  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 0.95em 1em 1em;
   box-sizing: border-box;
-  font-size: 0.75rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .zonesTile th,
@@ -39,8 +44,10 @@
 }
 
 .zonesTileHeading {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
+  margin: 0 0 0.9em;
+  font-size: 1.3em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   font-weight: 600;
   color: #ffffff;
 }
@@ -54,7 +61,7 @@
   margin: 0 0 16px;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
 .heading {
@@ -77,7 +84,7 @@
   margin: 0;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
 .signalList,
@@ -86,207 +93,30 @@
   padding: 0 0 0 16px;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
-.worklogButton {
-  width: 10rem;
-  justify-self: start;
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0;
-  background: #2e4a36;
-  color: #ffffff;
+.formulaDetails {
+  margin-top: 4px;
+}
+
+.formulaSummary {
   cursor: pointer;
-}
-
-.worklogButton:hover {
-  background: #223a29;
-}
-
-.worklogOverlay {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at top, rgb(162 194 164 / 20%), transparent 38%),
-    rgba(5, 8, 17, 0.82);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  padding: 32px;
-}
-
-.worklogContent {
-  width: min(1100px, 100%);
-  max-height: min(88vh, 980px);
-  overflow: auto;
-  background:
-    linear-gradient(180deg, #f8fbf8 0%, #edf3ed 100%);
-  color: #111827;
-  padding: 32px;
-  border-radius: 0;
-  border: 1px solid rgba(46, 74, 54, 0.12);
-  box-shadow:
-    0 28px 90px rgba(15, 23, 42, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
-}
-
-.worklogHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  align-items: flex-start;
-  margin-bottom: 24px;
-}
-
-.worklogKicker {
-  margin: 0 0 10px;
-  color: #35553b;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.worklogTitle {
-  margin: 0 0 12px;
-  font-size: clamp(1.8rem, 1.1vw + 1.45rem, 2.5rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  max-width: 12ch;
-}
-
-.worklogClose {
-  flex: 0 0 auto;
-  border: 1px solid rgba(46, 74, 54, 0.16);
-  background: rgba(255, 255, 255, 0.75);
-  color: #223a29;
-  border-radius: 999px;
-  padding: 12px 18px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.worklogClose:hover {
-  background: #ffffff;
-}
-
-.worklogList {
-  list-style: none;
-  margin: 0;
-  padding: 8px 0 0;
-  display: grid;
-  gap: 20px;
-}
-
-.worklogItem {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.worklogStepNumber {
-  position: sticky;
-  top: 16px;
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 0;
-  background:
-    linear-gradient(135deg, #35553b 0%, #223a29 100%);
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  box-shadow: 0 16px 36px rgba(34, 58, 41, 0.18);
-}
-
-.worklogStepBody {
-  padding: 18px 20px;
-  border-radius: 0;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(46, 74, 54, 0.1);
-  display: grid;
-  gap: 12px;
-}
-
-.worklogStepBody h3 {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.35;
-  color: #102317;
-}
-
-.worklogSlot {
-  border-radius: 0;
-  border: 1px dashed rgba(53, 85, 59, 0.35);
-  background:
-    linear-gradient(180deg, rgba(244, 248, 244, 0.92), rgba(234, 241, 234, 0.9));
-  padding: 14px 16px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.worklogSlotFilled {
-  min-height: 0;
-}
-
-.worklogSlotPlaceholder {
-  min-height: 4.25rem;
-  align-items: center;
-}
-
-.worklogText {
-  margin: 0;
-  max-width: 72ch;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: #2f3f33;
-}
-
-.worklogLink {
-  color: #35553b;
+  font-size: 0.8125rem;
   font-weight: 600;
-  text-decoration: underline;
+  color: var(--accent-hover);
+  padding: 4px 0;
 }
 
-.worklogLink:hover {
-  color: #223a29;
+.formulaSummary::marker {
+  color: var(--accent);
 }
 
-.worklogSlot span {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: #5e6f61;
+.formulaDetails[open] .formulaSummary {
+  margin-bottom: 10px;
 }
 
-@media (max-width: 860px) {
-  .worklogOverlay {
-    padding: 16px;
-  }
-
-  .worklogContent {
-    padding: 24px;
-    border-radius: 0;
-  }
-
-  .worklogHeader,
-  .worklogItem {
-    grid-template-columns: 1fr;
-  }
-
-  .worklogStepNumber {
-    position: static;
-    width: 56px;
-    height: 56px;
-  }
+.formulaDetails .assumptionList {
+  padding-left: 16px;
 }
+

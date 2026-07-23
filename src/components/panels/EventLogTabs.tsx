@@ -37,7 +37,7 @@ function TabButton({
   );
 }
 
-export function EventLogTabs() {
+export function EventLogTabs({ mobile = false }: { mobile?: boolean }) {
   const [activeTab, setActiveTab] = useState<Tab>("log");
 
   return (
@@ -51,7 +51,7 @@ export function EventLogTabs() {
       </div>
 
       <div className={styles.tabContent}>
-        {activeTab === "log" ? <EventLog /> : <AuditLog />}
+        {activeTab === "log" ? <EventLog mobile={mobile} /> : <AuditLog mobile={mobile} />}
       </div>
     </section>
   );

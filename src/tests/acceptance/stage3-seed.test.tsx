@@ -8,7 +8,7 @@ describe('stage 3 seed history', () => {
     render(<App />)
 
     expect(screen.getAllByText(/^#\d+$/).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(1)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(1)
   })
 
   it('regenerating history replaces only seed rows and keeps manual rows intact', () => {
@@ -23,12 +23,12 @@ describe('stage 3 seed history', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    const manualRowsBefore = screen.getAllByText(/manual/i).length
+    const manualRowsBefore = screen.getAllByText(/вручную/i).length
 
     fireEvent.click(screen.getByRole('button', { name: /пересоздать историю/i }))
 
-    const seedRowsAfter = screen.getAllByText(/seed/i).length
-    const manualRowsAfter = screen.getAllByText(/manual/i).length
+    const seedRowsAfter = screen.getAllByText(/стартовые данные/i).length
+    const manualRowsAfter = screen.getAllByText(/вручную/i).length
 
     expect(manualRowsAfter).toBe(manualRowsBefore)
     expect(seedRowsAfter).toBeGreaterThan(0)

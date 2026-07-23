@@ -3,9 +3,41 @@
   --text-h: #08060d;
   --bg: #ffffff;
 
+  /* Единая тёмная поверхность для всех оверлеев на канвасе (Симулятор,
+     Зоны, Дашборд, Рекомендации) — раньше три разных «чёрных»
+     (rgb(43 39 39), rgba(0,0,0,.8), #111827/#000). Полупрозрачный вариант
+     ложится на арт, непрозрачный — на панели без арта под ними (лог). */
+  --surface-dark: 43 39 39;
+  --surface-dark-on-art: rgb(var(--surface-dark) / 82%);
+  --surface-dark-solid: rgb(var(--surface-dark) / 100%);
+
+  /* Единый акцент действия по всему приложению — оливковый уже был
+     цветом кнопок симулятора, теперь это единственный акцент (кнопки,
+     CTA онбординга, лонгрид, ползунки, активные табы). */
+  --accent: #556b2f;
+  --accent-hover: #445924;
+
+  /* Приглушённые версии светофорных цветов рекомендаций/ошибок —
+     неоновые red/green спорили с закатной палитрой арта. */
+  --tone-high: #b5432a;
+  --tone-mid: #c9a227;
+  --tone-low: #6f8a3f;
+  --tone-danger: #8a3b2b;
+
+  /* Тёплая бумага — общая светлая поверхность для лонгрида, онбординга,
+     попапа добавления события И дашборда/тайлов-плашек поверх канваса.
+     Раньше дашборд был отдельным бело-серым (rgba(255,255,255,.85)),
+     не в тон остальным светлым поверхностям. RGB-триплет — чтобы можно
+     было подмешивать альфу (полупрозрачные плашки поверх арта). */
+  --paper-bg-rgb: 250 246 236;
+  --paper-bg: rgb(var(--paper-bg-rgb));
+  --paper-bg-2: #f2e9d8;
+  --paper-text: #2b2420;
+  --paper-text-muted: #5b5045;
+
   /* Base font size scales with viewport width so rem-based text grows on
      larger screens instead of staying pinned at a fixed pixel size. */
-  font-size: clamp(15px, 0.85vw + 9px, 20px);
+  font-size: clamp(14px, 0.5vw + 10px, 22px);
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.2;
   color-scheme: dark;
@@ -33,4 +65,12 @@ h1,
 h2 {
   color: var(--text-h);
   font-weight: 500;
+}
+
+/* Explicit selection color — without this, `color-scheme: dark` above
+   pushes the browser's default text-selection highlight toward a dark
+   tone that reads as a solid redaction block against light paper text. */
+::selection {
+  background: rgb(85 107 47 / 35%);
+  color: inherit;
 }

@@ -11,6 +11,7 @@ export interface ZonePopoverProps {
   location: Location;
   anchor: { x: number; y: number };
   onClose: () => void;
+  compact?: boolean;
 }
 
 function rejectionMessage(reason: RejectReason): string {
@@ -30,7 +31,13 @@ const INTENSITY_LABELS: Array<{ value: number; label: string }> = [
   { value: 10, label: "Высокая" },
 ];
 
-export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
+const INTENSITY_LABELS_NUMERIC: Array<{ value: number; label: string }> = [
+  { value: 1, label: "0" },
+  { value: 5, label: "5" },
+  { value: 10, label: "10" },
+];
+
+export function ZonePopover({ location, anchor, onClose, compact = false }: ZonePopoverProps) {
   const { state, addEvent } = useFarm();
   const { dogInGarden } = state;
 
@@ -41,7 +48,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
 
   const [eventType, setEventType] = useState<EventType | "">(initialType as EventType | "");
   const [intensity, setIntensity] = useState<number>(DEFAULT_INTENSITY);
-  const isCarrotEvent = eventType === "Пропажа моркови";
+  const isCarrotEvent = eventType === "Пропажа морковки";
   const [error, setError] = useState<string | null>(null);
   const eventsCountBeforeSubmit = useRef<number | null>(null);
   const popupRef = useRef<HTMLDialogElement>(null);
@@ -111,6 +118,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
       aria-label="Ручной ввод"
       className={[
         styles.popup,
+        compact ? styles.popupCompact : "",
         flipToLeft ? styles.popupFlippedLeft : "",
         flipToBottom ? styles.popupFlippedBottom : "",
       ].join(" ")}
@@ -120,18 +128,45 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
         ×
       </button>
       <h2 className={styles.title}>{location}</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <label htmlFor="event-type-select" className={styles.srOnly}>
-            Тип события
-          </label>
-          <select
-            id="event-type-select"
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value as EventType)}
-            className={styles.select}
-            required
-          >
+      
+      {dogInGarden && location === "Огород" ? (
+        <div className={styles.form} style={{ padding: "0 16px 16px" }}>
+          <p role="alert" className={styles.error} style={{ marginBottom: "16px", textAlign: "center", fontWeight: 500 }}>
+            Пёс в огороде, невозможно добавить событие
+          </p>
+          <div className={styles.field}>
+            <select className={styles.select} disabled>
+              <option>Выберите тип события</option>
+            </select>
+          </div>
+          <div className={styles.field}>
+            <label>Интенсивность</label>
+            <input type="range" className={styles.slider} disabled />
+            <div className={styles.sliderScaleLabels}>
+              {(compact ? INTENSITY_LABELS_NUMERIC : INTENSITY_LABELS).map(({ value, label }) => (
+                <span key={value} style={{ opacity: 0.5 }}>{label}</span>
+              ))}
+            </div>
+          </div>
+          <div className={styles.actions}>
+            <button type="button" className={styles.primaryButton} disabled>
+              Добавить
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label htmlFor="event-type-select" className={styles.srOnly}>
+              Тип события
+            </label>
+            <select
+              id="event-type-select"
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value as EventType)}
+              className={styles.select}
+              required
+            >
             <option value="">Выберите тип события</option>
             {eventTypeOptions.map((option) => (
               <option key={option.value} value={option.value} disabled={option.disabled}>
@@ -155,7 +190,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
               required
             />
             <div className={styles.sliderScaleLabels}>
-              {INTENSITY_LABELS.map(({ value, label }) => (
+              {(compact ? INTENSITY_LABELS_NUMERIC : INTENSITY_LABELS).map(({ value, label }) => (
                 <span key={value}>{label}</span>
               ))}
             </div>
@@ -174,6 +209,7 @@ export function ZonePopover({ location, anchor, onClose }: ZonePopoverProps) {
           </button>
         </div>
       </form>
+      )}
     </dialog>
   );
 }

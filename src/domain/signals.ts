@@ -2,13 +2,7 @@ import { TIME_WINDOW_SPEC, type EstimatorSettings, type FarmEvent } from './cont
 import { credibilityOf } from './projection';
 import type { EventType } from './event';
 
-const EVENT_TYPE_CONFIDENCE: Record<EventType, number> = {
-  'Следы': 1.0,
-  'Пропажа моркови': 0.8,
-  'Новая яма': 0.6,
-  'Шуршание': 0.4,
-  'Датчик движения': 0.2,
-};
+import { EVENT_TYPE_CONFIDENCE } from './event';
 
 function getEventTypeConfidence(eventType: EventType): number {
   return EVENT_TYPE_CONFIDENCE[eventType];

@@ -168,7 +168,7 @@ describe('farmReducer (live write path via FarmContext)', () => {
 
     act(() => {
       result.current.seedEvents([
-        { location: 'Сарай', event_type: 'Пропажа моркови', intensity: 6, time: 30, source: 'seed' },
+        { location: 'Сарай', event_type: 'Пропажа морковки', intensity: 6, time: 30, source: 'seed' },
       ])
     })
 

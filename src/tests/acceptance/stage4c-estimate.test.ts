@@ -26,8 +26,9 @@ describe('stage 4C concurrency window & numeric estimate (ТЗ 3.4)', () => {
 
     expect(result.low).toBe(1)
     expect(result.high).toBe(3)
-    expect(result.pointEstimate).toBe(result.low)
+    expect(result.pointEstimate).toBe(1)
     expect(result.confidencePercent).toBe(33) // round(1/3*100)
+    expect(result.suspiciousZonesCount).toBe(2)
   })
 
   it('returns 0% confidence on an empty window, not 100% (ТЗ 3.4 explicit exception)', () => {
@@ -37,5 +38,6 @@ describe('stage 4C concurrency window & numeric estimate (ТЗ 3.4)', () => {
     expect(result.high).toBe(0)
     expect(result.pointEstimate).toBe(0)
     expect(result.confidencePercent).toBe(0)
+    expect(result.suspiciousZonesCount).toBe(0)
   })
 })

@@ -1,0 +1,55 @@
+.gate {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 24px;
+  background: var(--bg);
+  color: inherit;
+  text-align: center;
+  z-index: 1000;
+}
+
+.icon {
+  color: currentColor;
+  opacity: 0.85;
+}
+
+.arrow {
+  animation: nudge 1.4s ease-in-out infinite;
+  transform-origin: 44px 40px;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(6px);
+    opacity: 1;
+  }
+}
+
+.text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.hint {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  margin: 0;
+  max-width: 22rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    animation: none;
+  }
+}
