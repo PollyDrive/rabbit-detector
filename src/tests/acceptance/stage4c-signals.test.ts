@@ -6,6 +6,7 @@ import {
   concurrentZonesScenario,
   defaultEstimatorSettings,
   emptyLogScenario,
+  signalsTestScenario,
   weakSignalsScenario,
 } from '../../testing/contractFixtures'
 
@@ -22,11 +23,11 @@ describe('stage 4C dominant signal + evidence/top-signals (ТЗ 3.8, 5.2)', () =
   })
 
   it('breaks a true aggregate-credibility tie by confidence desc, then by latest event id desc (ТЗ 3.8)', () => {
-    // Пропажа моркови(conf 0.8) int10 -> credibility 0.80
+    // Пропажа морковки(conf 0.8) int10 -> credibility 0.80
     // Следы(conf 1.0)           int8  -> credibility 0.80
     // equal aggregate credibility -> tie-break on type confidence desc -> Следы (1.0 > 0.8) wins
     const tied: FarmEvent[] = [
-      { id: 1, event_type: 'Пропажа моркови', location: 'Огород', intensity: 10, time: 10, source: 'seed' },
+      { id: 1, event_type: 'Пропажа морковки', location: 'Огород', intensity: 10, time: 10, source: 'seed' },
       { id: 2, event_type: 'Следы', location: 'Огород', intensity: 8, time: 11, source: 'seed' },
     ]
 
@@ -46,7 +47,7 @@ describe('stage 4C dominant signal + evidence/top-signals (ТЗ 3.8, 5.2)', () =
   })
 
   it('topSignals is sorted by credibility descending', () => {
-    const events = withIds(concurrentZonesScenario.events)
+    const events = withIds(signalsTestScenario.events)
     const top = computeTopSignals(events)
 
     expect(top.map((event) => event.location)).toEqual(['Теплица', 'Огород', 'Сарай'])

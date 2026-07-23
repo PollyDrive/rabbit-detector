@@ -31,6 +31,8 @@ export const estimatorSettingsSchema = z.object({
   priorityLowThreshold: z.number().nonnegative(),
   priorityHighThreshold: z.number().nonnegative(),
   dogSuppression: z.number().min(0).max(1),
+  suspiciousActivityWindowSeconds: z.number().nonnegative(),
+  suspiciousActivityMinEvents: z.number().int().min(2),
 });
 
 export type EstimatorSettings = z.infer<typeof estimatorSettingsSchema>;
@@ -42,6 +44,8 @@ export const DEFAULT_ESTIMATOR_SETTINGS: EstimatorSettings = {
   priorityLowThreshold: 3,
   priorityHighThreshold: 6,
   dogSuppression: 0.2,
+  suspiciousActivityWindowSeconds: 10,
+  suspiciousActivityMinEvents: 3,
 };
 
 export const TIME_WINDOW_SPEC = {
@@ -88,6 +92,7 @@ export const dashboardProjectionSchema = z.object({
   high: z.number(),
   pointEstimate: z.number(),
   confidencePercent: z.number(),
+  suspiciousZonesCount: z.number(),
   recommendations: z.array(z.any()),
 });
 
@@ -105,6 +110,7 @@ export const PROJECTION_CONTRACT = {
     high: 'number',
     pointEstimate: 'number',
     confidencePercent: 'number',
+    suspiciousZonesCount: 'number',
     recommendations: 'array',
   },
 } as const;

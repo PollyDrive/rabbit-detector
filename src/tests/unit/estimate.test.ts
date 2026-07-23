@@ -25,6 +25,7 @@ describe('estimate', () => {
       high: 3,
       pointEstimate: 1,
       confidencePercent: 33,
+      suspiciousZonesCount: 2,
     });
   });
 
@@ -36,6 +37,7 @@ describe('estimate', () => {
       high: 0,
       pointEstimate: 0,
       confidencePercent: 0,
+      suspiciousZonesCount: 0,
     });
   });
 
@@ -62,5 +64,6 @@ describe('estimate', () => {
     expect(result.low).toBe(2);
     expect(result.high).toBe(2);
     expect(result.confidencePercent).toBe(100);
+    expect(result.suspiciousZonesCount).toBe(0);
   });
 });

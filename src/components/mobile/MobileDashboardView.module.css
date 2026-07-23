@@ -1,0 +1,130 @@
+.view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  box-sizing: border-box;
+  background: #0c0a08;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.metrics {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.metricTile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1f2937;
+}
+
+.metricLabel {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+}
+
+.metricValue {
+  font-size: 1.15rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.emptyState {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.columns {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.column {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.45rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.columnTitle {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.highPriority {
+  color: #e2725b;
+}
+
+.lowPriority {
+  color: #7fa85a;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.zone {
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.text {
+  font-size: 0.6rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.empty {
+  font-size: 0.62rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.4);
+}

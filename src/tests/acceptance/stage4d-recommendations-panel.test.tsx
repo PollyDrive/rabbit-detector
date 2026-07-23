@@ -17,7 +17,7 @@ describe('stage 4D recommendations block + estimator settings panel shell (mocke
     renderWithMockedProjection(mockedDashboardProjection, <RecommendationsPanel />)
 
     expect(screen.getByLabelText(/k\b/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/τ|tau/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/t \(порог\)/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/concurrency|окно одновременности/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/dogSuppression|подавление.*пс/i)).toBeInTheDocument()
   })

@@ -42,7 +42,7 @@ describe('stage 6 estimator settings panel + live recompute', () => {
     const controlArea = screen.getByTestId('control-area')
 
     expect(within(controlArea).getByLabelText(/k\b/i)).toBeVisible()
-    expect(within(controlArea).getByLabelText(/τ|tau/i)).toBeVisible()
+    expect(within(controlArea).getByLabelText(/t \(порог\)/i)).toBeVisible()
     expect(within(controlArea).getByLabelText(/окно одновременности|concurrency/i)).toBeVisible()
     expect(within(controlArea).getByLabelText(/нижн.*порог.*приоритет/i)).toBeVisible()
     expect(within(controlArea).getByLabelText(/верхн.*порог.*приоритет/i)).toBeVisible()

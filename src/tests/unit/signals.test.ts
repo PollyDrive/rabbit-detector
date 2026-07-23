@@ -6,6 +6,7 @@ import {
   concurrentZonesScenario,
   defaultEstimatorSettings,
   emptyLogScenario,
+  signalsTestScenario,
   weakSignalsScenario,
 } from '../../testing/contractFixtures';
 
@@ -20,7 +21,7 @@ describe('signals', () => {
 
   it('breaks a true aggregate tie by confidence and then by latest event id', () => {
     const tied: FarmEvent[] = [
-      { id: 1, event_type: 'Пропажа моркови', location: 'Огород', intensity: 10, time: 10, source: 'seed' },
+      { id: 1, event_type: 'Пропажа морковки', location: 'Огород', intensity: 10, time: 10, source: 'seed' },
       { id: 2, event_type: 'Следы', location: 'Огород', intensity: 8, time: 11, source: 'seed' },
     ];
 
@@ -39,7 +40,7 @@ describe('signals', () => {
   });
 
   it('sorts top signals by credibility descending and stays deterministic', () => {
-    const topSignals = computeTopSignals(withIds(concurrentZonesScenario.events));
+    const topSignals = computeTopSignals(withIds(signalsTestScenario.events));
 
     expect(topSignals.map((event) => event.location)).toEqual(['Теплица', 'Огород', 'Сарай']);
   });

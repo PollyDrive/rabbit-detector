@@ -1,0 +1,129 @@
+.bar {
+  flex-shrink: 0;
+  width: 8.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  background: rgb(43 39 39 / 92%);
+  color: #ffffff;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.5rem;
+  padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.playRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.playButton {
+  flex-shrink: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  background: #d1451f;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.clock {
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.chip {
+  min-height: 2.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  border-radius: 0.6rem;
+  padding: 0.28rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Persistent state toggle (dog in/out) — outlined, not filled like the
+   one-shot action chips above, so it doesn't read as another command. */
+.toggleChip {
+  min-height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 0.6rem;
+  padding: 0.28rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.toggleDot {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.toggleChipOn {
+  border-style: solid;
+  border-color: #556b2f;
+  background: rgba(85, 107, 47, 0.25);
+  color: #ffffff;
+}
+
+.toggleChipOn .toggleDot {
+  background: #7fa85a;
+}
+
+.metrics {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.metricTile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metricLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.metricValue {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

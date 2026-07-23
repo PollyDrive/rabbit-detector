@@ -3,29 +3,23 @@ import styles from "./AppShell.module.css";
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MIN_DESKTOP_WIDTH } from "../domain/constants";
 import type { Location } from "../domain/zones";
 import { useCanvasScale } from "../hooks/useCanvasScale";
+import { useElementSize } from "../hooks/useElementSize";
 import { FarmMap, type ClickAnchor } from "./FarmMap";
 import { BadgeLayer } from "./BadgeLayer";
 import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { EventLogTabs } from "./panels/EventLogTabs";
-import { Legend, ConfidenceSection, ZonesTile } from "./Legend";
+import { Legend, ConfidenceSection } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } from "./OnboardingModal";
 
-// Mirrors .dashboardArea's width/right-offset in AppShell.module.css (in
-// unscaled canvas px) — kept in sync by hand since that rule lives inside
-// the transform: scale()'d .shell and this value has to be applied outside it.
-const DASHBOARD_WIDTH_PX = 1200;
-const DASHBOARD_RIGHT_OFFSET_PX = 20;
-const DASHBOARD_TOP_PX = 980;
-const DASHBOARD_MIN_HEIGHT_REM = 40;
-
-// Legend tucks up under the canvas's bottom edge — but only as far as the
-// blank strip below the farm artwork actually allows, or on narrow/short
-// viewports it climbs into the picture itself and covers the heading.
-const LEGEND_PULLUP_CANVAS_PX = 140;
-const LEGEND_PULLUP_BUFFER_PX = 8;
+// Симулятор/Дашборд render at native size — width/padding/font come from
+// plain rem in AppShell.module.css, tuned per breakpoint (tablet/desktop/
+// wide-desktop media queries), NOT from a JS-computed transform. Only their
+// vertical anchor is computed here, since it has to track the farm art's
+const DASHBOARD_TOP_PX = 900;
+const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {
   if (typeof window === "undefined") {
@@ -41,10 +35,32 @@ export default function AppShell() {
   const [onboardingOpen, setOnboardingOpen] = useState(() => !hasSeenOnboarding());
   const { state } = useFarm();
   const scale = useCanvasScale();
-  const dashboardMinHeightPx = getRootFontSizePx() * DASHBOARD_MIN_HEIGHT_REM;
-  const scaleViewportHeight = Math.max(CANVAS_HEIGHT, DASHBOARD_TOP_PX + dashboardMinHeightPx) * scale;
-  const legendGapPx = Math.max(0, scaleViewportHeight - CANVAS_HEIGHT * scale - LEGEND_PULLUP_BUFFER_PX);
-  const legendPullUpPx = Math.min(LEGEND_PULLUP_CANVAS_PX * scale, legendGapPx);
+  const rootFontPx = getRootFontSizePx();
+  const panelMarginPx = PANEL_MARGIN_REM * rootFontPx;
+
+  // Measuring each panel's own rendered height — rather than assuming a
+  // constant — is what actually keeps the reserved space under the farm
+  // art matching what's really there, at any viewport/content amount.
+  const [controlRef, controlSize] = useElementSize<HTMLDivElement>();
+  const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
+  const [logsRef, logsSize] = useElementSize<HTMLDivElement>();
+
+  const dashboardTopPx = DASHBOARD_TOP_PX * scale;
+  const controlBottomPx = panelMarginPx + controlSize.height;
+  const dashboardBottomPx = dashboardTopPx + dashboardSize.height;
+
+  // Match the dashboard's rendered width to the event log below it —
+  // undefined (falls back to the CSS default) until the log has painted once.
+  // On screens <= 1100px, the log spans the full width, so we fall back to CSS default.
+  const isSingleColumn = typeof window !== 'undefined' ? window.innerWidth <= 1100 : false;
+  const dashboardWidthPx = !isSingleColumn && logsSize.width > 0 ? logsSize.width : undefined;
+
+  // Keep the viewport height bounded by the canvas and control area.
+  // The dashboard will intentionally overhang the bottom of the map if it's tall enough.
+  const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx);
+
+  // Calculate how much the dashboard overhangs the canvas to push the logs down
+  const overhangPx = Math.max(0, dashboardBottomPx - (CANVAS_HEIGHT * scale));
 
   const handleZoneClick = (zone: Location, anchor: ClickAnchor) => {
     if (!state.running) {
@@ -84,23 +100,32 @@ export default function AppShell() {
             transformOrigin: "top left",
           }}
         >
-          <div className={styles.controlArea} data-testid="control-area">
-            <ControlArea />
-            <div className={styles.zonesTileArea} data-testid="zones-tile-area">
-              <ZonesTile />
-            </div>
-          </div>
-          <div className={styles.dashboardArea} data-testid="dashboard-area">
-            <DashboardArea />
-          </div>
-
-          <FarmMap onZoneClick={handleZoneClick} />
+          <FarmMap onZoneClick={handleZoneClick} disabled={state.running} />
           <BadgeLayer events={state.events} />
         </div>
 
-        {/* Rendered as a sibling of the scaled .shell, not inside it — the
-            popup positions itself in already-scaled screen pixels, so it
-            isn't stretched/squished by the canvas's transform: scale(). */}
+        {/* Rendered as siblings of the scaled .shell, not inside it — real
+            rem-based size at any viewport instead of shrinking together
+            with the farm art (was unreadable ~8px text on 14" laptops,
+            where the art scales down to ~0.52x). Only their position
+            tracks the art's scale; their own layout doesn't. */}
+        <div 
+          className={styles.controlArea} 
+          data-testid="control-area" 
+          ref={controlRef}
+        >
+          <ControlArea />
+        </div>
+        
+        <div
+          className={styles.dashboardArea}
+          data-testid="dashboard-area"
+          ref={dashboardRef}
+          style={{ top: dashboardTopPx, width: dashboardWidthPx }}
+        >
+          <DashboardArea />
+        </div>
+
         {activePopup && (
           <ZonePopover
             location={activePopup.location}
@@ -110,24 +135,14 @@ export default function AppShell() {
         )}
       </div>
 
-      {/* Matches the dashboard card's scaled width/right-offset exactly —
-          the card lives inside the transform: scale()'d .shell (1302px/
-          1.25rem in unscaled canvas units), while this section is a normal-
-          flow sibling below the canvas, so its width has to be scaled by
-          hand instead of inheriting the transform. */}
-      <div className={styles.bottomLayout}>
-        <div className={styles.legendWrapper} style={{ marginTop: -legendPullUpPx }}>
+      <div className={styles.belowCanvas}>
+        <div className={styles.belowCanvasLeft}>
           <Legend />
+          <ConfidenceSection />
         </div>
-        <div
-          className={styles.logsArea}
-          style={{ width: DASHBOARD_WIDTH_PX * scale, marginRight: DASHBOARD_RIGHT_OFFSET_PX * scale, flexShrink: 0 }}
-        >
+        <div className={styles.logsArea} ref={logsRef} style={{ marginTop: overhangPx }}>
           <EventLogTabs />
         </div>
-      </div>
-      <div className={styles.bottomFullWidth}>
-        <ConfidenceSection />
       </div>
     </main>
   );

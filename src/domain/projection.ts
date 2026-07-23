@@ -1,6 +1,6 @@
 import { type EstimatorSettings, type FarmEvent, TIME_WINDOW_SPEC } from './contract';
 import { type Location, LOCATIONS } from './zones';
-import { type EventType, EVENT_TYPE_CONFIDENCE } from './event';
+import { EVENT_TYPE_CONFIDENCE } from './event';
 
 export function credibilityOf(event: Pick<FarmEvent, 'event_type' | 'intensity'>): number {
   const confidence = EVENT_TYPE_CONFIDENCE[event.event_type] ?? 0;

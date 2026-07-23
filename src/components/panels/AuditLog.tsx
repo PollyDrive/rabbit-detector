@@ -17,7 +17,7 @@ function EventGroupList({ groups }: { groups: Record<string, FarmEvent[]> }) {
             {events.map((event) => (
               <li key={`event-${event.id}`} className={styles.eventItem}>
                 <span className={styles.eventType}>{event.event_type}</span>
-                {event.event_type !== "Пропажа моркови" && (
+                {event.event_type !== "Пропажа морковки" && (
                   <span className={styles.intensity}>Интенсивность: {event.intensity}</span>
                 )}
                 <span className={styles.time}>Время: {event.time}с</span>
@@ -30,7 +30,7 @@ function EventGroupList({ groups }: { groups: Record<string, FarmEvent[]> }) {
   );
 }
 
-export function AuditLog() {
+export function AuditLog({ mobile = false }: { mobile?: boolean }) {
   const projection = useDashboardProjection();
   const safeProjection = isDashboardProjection(projection) ? projection : undefined;
 
@@ -53,7 +53,7 @@ export function AuditLog() {
   const hasData = Object.keys(evidenceByLocation).length > 0 || Object.keys(topSignalsByLocation).length > 0;
 
   return (
-    <section aria-label="Журнал аудита" className={styles.panel}>
+    <section aria-label="Журнал аудита" className={[styles.panel, mobile ? styles.mobile : ""].join(" ")}>
       {!hasData ? (
         <div className={styles.noData}>Нет данных для объяснения</div>
       ) : (

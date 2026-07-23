@@ -1,9 +1,9 @@
 .panel {
   padding: 0.625rem;
-  background: #000000;
-  border-radius: 0;
+  background: var(--surface-dark-solid);
+  border-radius: 3px;
   color: #ffffff;
-  font-size: 0.5rem;
+  font-size: 0.8125rem;
   height: 100%;
   box-sizing: border-box;
 }
@@ -38,10 +38,11 @@
 
 .zoneGroupHeading {
   margin: 0.25rem 0;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--tone-mid);
   text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .eventList {
@@ -65,16 +66,33 @@
 .eventType {
   font-weight: 600;
   color: #d1d5db;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .intensity {
   color: #9ca3af;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 
 .time {
   color: #6b7280;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   margin-left: auto;
+}
+
+.mobile .zoneGroupHeading {
+  font-size: 0.68rem;
+}
+
+.mobile .eventType {
+  font-size: 0.8rem;
+}
+
+.mobile .intensity,
+.mobile .time {
+  font-size: 0.68rem;
+}
+
+.mobile .sectionHeading {
+  font-size: 0.85rem;
 }

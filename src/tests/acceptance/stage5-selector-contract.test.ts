@@ -29,6 +29,7 @@ describe('stage 5 real dashboard projection selector contract', () => {
       high: 3,
       pointEstimate: 1,
       confidencePercent: 33,
+      suspiciousZonesCount: 2,
     })
     expect(projection.recommendations.length).toBeGreaterThan(0)
     expect(projection.zones['Теплица']).toMatchObject({
@@ -80,5 +81,6 @@ describe('stage 5 real dashboard projection selector contract', () => {
     expect(afterExpiry.high).toBe(0)
     expect(afterExpiry.pointEstimate).toBe(0)
     expect(afterExpiry.confidencePercent).toBe(0)
+    expect(afterExpiry.suspiciousZonesCount).toBe(0)
   })
 })

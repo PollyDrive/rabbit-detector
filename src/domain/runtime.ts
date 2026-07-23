@@ -41,7 +41,7 @@ export function pickRandomEventDetails(
 
   return {
     ...picked,
-    intensity: picked.event_type === 'Пропажа моркови' ? CARROT_FIXED_INTENSITY : randomInt(1, 10, random),
+    intensity: picked.event_type === 'Пропажа морковки' ? CARROT_FIXED_INTENSITY : randomInt(1, 10, random),
   };
 }
 

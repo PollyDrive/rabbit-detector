@@ -1,12 +1,7 @@
 .area {
-  background: rgb(43 39 39 / 82%);
-  color: #ffffff;
-  border-radius: 0;
-  padding: 1rem;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.5em;
 }
 
 /* ZoneBoardTable's own wrapper/table (DashboardBoard.module.css) is styled
@@ -21,6 +16,8 @@
 .area td {
   color: inherit;
   border-bottom-color: rgba(255, 255, 255, 0.15);
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
 }
 
 .explainabilityContainer {

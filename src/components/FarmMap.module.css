@@ -20,9 +20,38 @@
   position: absolute;
   z-index: 2;
   cursor: pointer;
-  /* background: rgba(255, 0, 0, 0.2); Uncomment for debugging */
+  border: 1.5px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 2px;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 }
 
-.hitbox:hover {
-  background: rgba(255, 255, 255, 0.1);
+.hitbox:hover,
+.hitbox:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hitboxTouchHint {
+  border: 1.5px dashed rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hitboxTouchHint:active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.hitboxDisabled {
+  cursor: default;
+}
+
+.hitboxDisabled.hitboxTouchHint {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: none;
+}
+
+.hitboxDisabled:hover,
+.hitboxDisabled:focus-visible,
+.hitboxDisabled.hitboxTouchHint:active {
+  background: none;
+  border-color: rgba(255, 255, 255, 0.22);
 }

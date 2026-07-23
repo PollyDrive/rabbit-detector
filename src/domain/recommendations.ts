@@ -46,7 +46,7 @@ function buildRecommendationText(
   }
 
   switch (dominantSignal) {
-    case 'Пропажа моркови':
+    case 'Пропажа морковки':
       if (location === 'Огород') {
         return 'выпустить пса в огород';
       }

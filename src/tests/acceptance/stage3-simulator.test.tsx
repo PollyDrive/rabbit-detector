@@ -33,7 +33,7 @@ describe('stage 3 simulator engine', () => {
     act(() => {
       vi.advanceTimersByTime(3000)
     })
-    fireEvent.click(screen.getByRole('button', { name: /пауза/i }))
+    fireEvent.click(screen.getByRole('button', { name: /остановить/i }))
     const rowsAfterPause = screen.getAllByText(/^#\d+$/).length
 
     act(() => {

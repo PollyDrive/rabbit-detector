@@ -19,10 +19,10 @@ describe('stage 5 integrated app flow', () => {
 
     const logRegion = screen.getByRole('region', { name: 'Лог событий' })
     const log = within(logRegion).getByRole('table')
-    const initialSeedRow = within(log).getByRole('row', { name: /#1\b.*seed/i })
+    const initialSeedRow = within(log).getByRole('row', { name: /#1\b.*стартовые данные/i })
 
     expect(initialSeedRow).toBeVisible()
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(0)
 
     fireEvent.click(screen.getByRole('button', { name: 'Теплица' }))
     fireEvent.change(screen.getByLabelText(/тип события/i), {
@@ -33,21 +33,21 @@ describe('stage 5 integrated app flow', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /добавить/i }))
 
-    const manualRow = within(log).getByRole('row', { name: /#25\b.*Теплица.*manual/i })
+    const manualRow = within(log).getByRole('row', { name: /#25\b.*Теплица.*вручную/i })
 
     expect(manualRow).toBeVisible()
-    expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/вручную/i).length).toBeGreaterThan(0)
     expect(screen.queryByRole('dialog', { name: 'Ручной ввод' })).not.toBeInTheDocument()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     expect(screen.getByText('Игровое время: 03:00:00')).toBeVisible()
 
@@ -56,8 +56,8 @@ describe('stage 5 integrated app flow', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /пересоздать историю/i }))
 
-    expect(screen.getAllByText(/seed/i).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/manual/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/вручную/i).length).toBeGreaterThan(0)
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
@@ -68,6 +68,6 @@ describe('stage 5 integrated app flow', () => {
       vi.advanceTimersByTime(5000)
     })
 
-    expect(screen.getAllByText(/sim/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/симуляция/i).length).toBeGreaterThan(0)
   })
 })

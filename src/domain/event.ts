@@ -4,7 +4,7 @@ import type { FarmEvent } from "./contract";
 
 export const EVENT_TYPES = [
   'Следы',
-  'Пропажа моркови',
+  'Пропажа морковки',
   'Новая яма',
   'Шуршание',
   'Датчик движения',
@@ -14,7 +14,7 @@ export type EventType = typeof EVENT_TYPES[number];
 
 export const EVENT_TYPE_CONFIDENCE: Record<EventType, number> = {
   'Следы': 1.0,
-  'Пропажа моркови': 0.8,
+  'Пропажа морковки': 0.8,
   'Новая яма': 0.6,
   'Шуршание': 0.4,
   'Датчик движения': 0.2,
@@ -23,10 +23,16 @@ export const EVENT_TYPE_CONFIDENCE: Record<EventType, number> = {
 export const EVENT_SOURCES = ['sim', 'manual', 'seed'] as const;
 export type EventSource = typeof EVENT_SOURCES[number];
 
+export const EVENT_SOURCE_LABELS: Record<EventSource, string> = {
+  sim: 'симуляция',
+  manual: 'вручную',
+  seed: 'стартовые данные',
+};
+
 export const COMPATIBILITY_MATRIX: Record<Location, readonly EventType[]> = {
-  'Огород': ['Следы', 'Пропажа моркови', 'Новая яма'],
-  'Теплица': ['Следы', 'Пропажа моркови', 'Новая яма', 'Шуршание', 'Датчик движения'],
-  'Сарай': ['Пропажа моркови', 'Шуршание', 'Датчик движения'],
+  'Огород': ['Следы', 'Пропажа морковки', 'Новая яма'],
+  'Теплица': ['Следы', 'Пропажа морковки', 'Новая яма', 'Шуршание', 'Датчик движения'],
+  'Сарай': ['Пропажа морковки', 'Шуршание', 'Датчик движения'],
   'Забор — Запад': ['Следы', 'Новая яма', 'Шуршание', 'Датчик движения'],
   'Забор — Юго-Запад': ['Следы', 'Новая яма', 'Шуршание', 'Датчик движения'],
   'Забор — Восток': ['Следы', 'Новая яма', 'Шуршание', 'Датчик движения'],

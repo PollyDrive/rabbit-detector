@@ -5,11 +5,11 @@
   max-width: calc(100vw - 1rem);
   margin: 0;
   padding: 0.65rem;
-  border: none;
-  border-radius: 0;
-  background: #ffffff;
-  color: #111827;
-  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(43, 36, 32, 0.14);
+  border-radius: 4px;
+  background: var(--paper-bg);
+  color: var(--paper-text);
+  box-shadow: 0 0.35rem 1rem rgba(15, 12, 8, 0.28);
   z-index: 100;
 }
 
@@ -26,15 +26,101 @@
   border: none;
   border-radius: 50%;
   background: transparent;
-  color: #6b7280;
+  color: var(--paper-text-muted);
   font-size: 0.9rem;
   line-height: 1;
   cursor: pointer;
 }
 
 .closeButton:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: #111827;
+  background: rgba(43, 36, 32, 0.08);
+  color: var(--paper-text);
+}
+
+.popupCompact {
+  width: 10.5rem;
+  padding: 0.6rem;
+}
+
+.popupCompact .closeButton {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.popupCompact .title {
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+}
+
+.popupCompact .form {
+  gap: 0.5rem;
+}
+
+.popupCompact .field {
+  gap: 0.28rem;
+}
+
+.popupCompact .field > label {
+  font-size: 0.65rem;
+}
+
+.popupCompact .select {
+  padding: 0.3rem 0.35rem;
+  font-size: 0.62rem;
+  min-height: 1.9rem;
+}
+
+.popupCompact .sliderScaleLabels {
+  font-size: 0.6rem;
+}
+
+.popupCompact .actions button {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.64rem;
+  min-height: 1.9rem;
+}
+
+.popupCompact {
+  width: 10.5rem;
+  padding: 0.6rem;
+}
+
+.popupCompact .closeButton {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.popupCompact .title {
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+}
+
+.popupCompact .form {
+  gap: 0.5rem;
+}
+
+.popupCompact .field {
+  gap: 0.28rem;
+}
+
+.popupCompact .field > label {
+  font-size: 0.65rem;
+}
+
+.popupCompact .select {
+  padding: 0.5rem 0.4rem;
+  font-size: 0.7rem;
+  min-height: 2.75rem;
+}
+
+.popupCompact .sliderScaleLabels {
+  font-size: 0.6rem;
+}
+
+.popupCompact .actions button {
+  padding: 0.7rem 0.5rem;
+  font-size: 0.72rem;
+  min-height: 2.75rem;
 }
 
 .popupFlippedLeft {
@@ -53,7 +139,7 @@
   margin: 0 0 0.6rem;
   font-size: 0.77rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--paper-text);
 }
 
 .form {
@@ -83,22 +169,22 @@
 .field > label {
   font-size: 0.63rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--paper-text);
 }
 
 .select {
   width: 100%;
   padding: 0.33rem 0.42rem;
   font-size: 0.6rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0;
+  border: 1px solid rgba(43, 36, 32, 0.25);
+  border-radius: 3px;
   background: #ffffff;
-  color: #111827;
+  color: var(--paper-text);
 }
 
 .slider {
   width: 100%;
-  accent-color: #556b2f;
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
@@ -106,11 +192,11 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.53rem;
-  color: #374151;
+  color: var(--paper-text-muted);
 }
 
 .error {
-  color: #b00020;
+  color: var(--tone-danger);
   margin: 0;
   font-size: 0.57rem;
 }
@@ -124,16 +210,21 @@
   padding: 0.47rem 0.67rem;
   font-size: 0.63rem;
   font-weight: 600;
-  border-radius: 0;
+  border-radius: 3px;
   cursor: pointer;
   border: none;
 }
 
 .primaryButton {
-  background: #556b2f;
+  background: var(--accent);
   color: #ffffff;
 }
 
 .primaryButton:hover {
-  background: #445924;
+  background: var(--accent-hover);
+}
+
+.primaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

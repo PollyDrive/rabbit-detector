@@ -134,10 +134,15 @@ function farmReducer(state: FarmState, action: FarmAction): FarmState {
     }
 
     case 'FAST_FORWARD': {
+      const nextTime = state.gameTime + FAST_FORWARD_STEP_S;
+      if (nextTime > 24 * 3600) {
+        log.warn('Fast forward limit reached');
+        return state;
+      }
       log.info('Fast forwarding 1 hour');
       return {
         ...state,
-        gameTime: state.gameTime + FAST_FORWARD_STEP_S,
+        gameTime: nextTime,
         lastDispatchTime: now,
         lastRejectedReason: null,
       };

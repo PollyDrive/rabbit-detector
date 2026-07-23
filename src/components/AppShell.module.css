@@ -3,6 +3,9 @@
   height: 100vh;
   overflow: auto;
   background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scaleViewport {
@@ -31,26 +34,24 @@
   position: absolute;
   left: 1.25rem;
   top: 1.25rem;
-  width: 24rem;
-  height: auto;
+  width: auto;
   z-index: 5;
   display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.25em;
+  font-size: clamp(11px, 0.82vw, 20px);
+  transform-origin: top left;
 }
+
 
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  top: 980px;
-  width: 1200px;
-  height: 40rem;
+  width: 56em;
   z-index: 5;
-}
-
-.zonesTileArea {
-  width: 100%;
-  flex-shrink: 0;
+  font-size: clamp(11px, 0.82vw, 20px);
+  transform-origin: top right;
 }
 
 /*
@@ -60,15 +61,15 @@
  * the offsets stack (see stage1_global_review fix).
  */
 .controlContent {
-  width: 100%;
+  width: 23em;
   height: 100%;
-  background: rgb(43 39 39 / 82%);
+  background: var(--surface-dark-on-art);
   color: #ffffff;
-  border-radius: 0;
-  padding: 1.25rem;
+  border-radius: 4px;
+  padding: 1.1em;
   box-sizing: border-box;
   display: grid;
-  gap: 1rem;
+  gap: 1em;
   align-content: start;
 }
 
@@ -79,78 +80,124 @@
 
 .controlContent h2 {
   margin-top: 0;
+  font-size: 1.3em;
+  line-height: 1.15;
+}
+
+.controlContent h3 {
+  font-size: 1.05em;
+  line-height: 1.15;
 }
 
 .dashboardContent {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--surface-dark-on-art);
   color: white;
-  border-radius: 0;
-  padding: 1rem 1rem 1.125rem;
+  border-radius: 4px;
+  padding: 1em 1em 1.125em;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
-  gap: 0.875rem;
+  gap: 0.875em;
   align-content: start;
   overflow: auto;
 }
 
+.dashboardDetailRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1em;
+  align-items: stretch;
+}
+
 .logsArea {
   box-sizing: border-box;
-  background: #111827;
+  background: var(--surface-dark-solid);
+  border-radius: 4px;
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
 }
 
 .dashboardTitle {
   margin: 0;
-  font-size: 1.55rem;
+  font-size: 1.55em;
   line-height: 1.05;
   letter-spacing: -0.025em;
   color: #ffffff;
 }
 
 .clock {
-  margin: 0 0 12px;
+  margin: 0 0 0.75em;
   font-variant-numeric: tabular-nums;
-  font-size: 1.1rem;
+  font-size: 1.2em;
 }
 
 .buttonRow {
   display: flex;
-  gap: 0.625rem;
+  gap: 0.625em;
   flex-wrap: wrap;
 }
 
 .controlContent button {
-  padding: 0.75rem 1.25rem;
-  font-size: 1rem;
+  padding: 0.6em 1em;
+  font-size: 1em;
   font-weight: 600;
-  border: none;
-  border-radius: 0;
-  background: #556b2f;
-  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.controlContent button:hover {
-  background: #445924;
+/* Compound with .controlContent to out-specificity the plain `.controlContent
+   button` rule above (both target border-color) — see .stepper .stepperButton
+   for the same pattern elsewhere in this codebase. */
+.controlContent .actionPrimary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.controlContent .actionPrimary:hover {
+  background: var(--accent-hover);
+}
+
+.controlContent .actionSecondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.controlContent .actionSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.controlContent .actionDanger {
+  background: transparent;
+  border-color: var(--tone-danger);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.controlContent .actionDanger:hover {
+  background: var(--tone-danger);
+  border-color: var(--tone-danger);
+  color: #ffffff;
 }
 
 .switchRow {
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.625em;
   cursor: pointer;
+  font-size: 1.1em;
 }
 
 .controlContent .switchRow .switch {
   flex: 0 0 auto;
-  width: 3rem;
-  height: 1.625rem;
-  padding: 0.1875rem;
+  width: 2.5em;
+  height: 1.4em;
+  padding: 0.175em;
   border-radius: 999px;
   background: #6b7280;
   border: none;
@@ -165,8 +212,8 @@
 }
 
 .switchKnob {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.05em;
+  height: 1.05em;
   border-radius: 50%;
   background: #ffffff;
   transform: translateX(0);
@@ -174,7 +221,7 @@
 }
 
 .switch.switchOn .switchKnob {
-  transform: translateX(1.375rem);
+  transform: translateX(1.1em);
 }
 
 .controlTextAction {
@@ -232,19 +279,36 @@
   margin-bottom: 16px;
 }
 
-.bottomLayout {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1.25rem 0;
+/* Natural heights on both sides (no align-items: stretch) — forcing the
+   short text column to match the tall log column used to leave a big
+   empty gap in whichever one was shorter. */
+.belowCanvas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1.5rem 1.25rem 2.5rem;
+  width: 100%;
+  max-width: 2560px;
 }
 
-.legendWrapper {
-  flex: 1;
+.belowCanvasLeft {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
 }
 
-.bottomFullWidth {
-  width: 70%;
-  padding: 0;
+/* Cap overlay panel scaling when window > 2560px */
+/* The clamp(10px, 0.785vw, 20px) handles the caps automatically, 
+   but keeping the media query as a safety fallback if needed. */
+@media (min-width: 160rem) {
+  .controlArea, .dashboardArea {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 68.75rem) /* 1100px */ {
+  .belowCanvas {
+    grid-template-columns: 1fr;
+  }
 }

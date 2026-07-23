@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CANVAS_WIDTH, MIN_DESKTOP_WIDTH } from "../domain/constants";
+import { CANVAS_WIDTH, MIN_DESKTOP_WIDTH, MAX_DESKTOP_WIDTH } from "../domain/constants";
 
 /**
  * Scales the fixed-desktop canvas to fill the viewport width, but never
@@ -11,7 +11,7 @@ export function useCanvasScale(): number {
 
   useEffect(() => {
     const computeScale = () => {
-      const effectiveWidth = Math.max(window.innerWidth, MIN_DESKTOP_WIDTH);
+      const effectiveWidth = Math.min(Math.max(window.innerWidth, MIN_DESKTOP_WIDTH), MAX_DESKTOP_WIDTH);
       setScale(effectiveWidth / CANVAS_WIDTH);
     };
 
