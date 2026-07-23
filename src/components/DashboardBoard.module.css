@@ -4,31 +4,42 @@
   color: var(--paper-text);
 }
 
-.summary {
-  display: grid;
-  gap: 0.5em;
-}
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.875em;
-  width: 100%;
+/* One unified light card instead of three separate boxes — the hero range
+   is what the player should read first, the two stats are context beside
+   it, not competing tiles of the same visual weight. */
+.summaryStrip {
+  display: flex;
   align-items: stretch;
-}
-
-.metricTile {
-  display: grid;
-  gap: 0.25em;
-  align-content: center;
-  justify-items: center;
-  min-height: 4.25em;
-  padding: 0.75em 1.125em 0.8em;
+  gap: 1.1em;
+  padding: 0.85em 1.1em;
   border-radius: 3px;
   background: rgb(var(--paper-bg-rgb) / 88%);
   border: 1px solid rgba(43, 36, 32, 0.14);
-  text-align: center;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.heroBlock {
+  flex: 1.5 1 0;
+  display: grid;
+  gap: 0.45em;
+  align-content: center;
+  min-width: 0;
+}
+
+.statDivider {
+  align-self: stretch;
+  width: 1px;
+  background: rgba(43, 36, 32, 0.16);
+}
+
+.statBlock {
+  flex: 1 1 0;
+  display: grid;
+  gap: 0.45em;
+  align-content: start;
+  justify-items: start;
+  text-align: left;
+  min-width: 0;
 }
 
 .metricLabel {
@@ -41,20 +52,10 @@
 }
 
 .metricValue {
-  font-size: 1.75em;
+  font-size: 2.6em;
   line-height: 1;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
-}
-
-.heroTile {
-  display: grid;
-  gap: 0.625em;
-  padding: 1em 1.25em 1.125em;
-  border-radius: 3px;
-  background: rgb(var(--paper-bg-rgb) / 88%);
-  border: 1px solid rgba(43, 36, 32, 0.14);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .heroTop {
@@ -197,7 +198,12 @@
 }
 
 @media (max-width: 48rem) {
-  .metrics {
-    grid-template-columns: 1fr;
+  .summaryStrip {
+    flex-direction: column;
+  }
+
+  .statDivider {
+    width: auto;
+    height: 1px;
   }
 }
