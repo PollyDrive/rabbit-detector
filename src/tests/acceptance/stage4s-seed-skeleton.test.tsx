@@ -55,7 +55,7 @@ function renderSkeleton(state: FarmState, projection: DashboardProjection) {
 describe('stage 4S seed walking skeleton', () => {
   it('seed_path_renders_event_row_and_dashboard_cell', () => {
     const seededState = buildState([
-      withId(concurrentZonesScenario.events[3], 1),
+      withId(concurrentZonesScenario.events[4], 1),
     ])
 
     renderSkeleton(seededState, projectionFor('Огород'))

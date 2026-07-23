@@ -66,6 +66,13 @@ export const concurrentZonesScenario = {
       time: 302,
     },
     {
+      event_type: 'Шуршание' as const,
+      intensity: 6,
+      location: 'Сарай' as const,
+      source: 'seed' as const,
+      time: 302,
+    },
+    {
       event_type: 'Новая яма' as const,
       intensity: 5,
       location: 'Огород' as const,
@@ -78,6 +85,13 @@ export const concurrentZonesScenario = {
       location: 'Огород' as const,
       source: 'seed' as const,
       time: 304,
+    },
+    {
+      event_type: 'Новая яма' as const,
+      intensity: 5,
+      location: 'Огород' as const,
+      source: 'seed' as const,
+      time: 305,
     }
   ]
 };

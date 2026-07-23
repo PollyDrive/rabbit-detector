@@ -42,12 +42,12 @@ describe('stage 5 integrated app flow', () => {
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     expect(screen.getByText('Игровое время: 03:00:00')).toBeVisible()
 

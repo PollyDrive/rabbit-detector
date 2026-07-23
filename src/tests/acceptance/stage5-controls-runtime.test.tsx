@@ -37,17 +37,17 @@ describe('stage 5 runtime controls -> integrated farm session', () => {
 
     expect(screen.getAllByText(/вручную/i).length).toBe(1)
     expect(within(dashboard).queryByText(/0\s*-\s*1/)).not.toBeInTheDocument()
-    expect(within(dashboard).getByText('Огород')).toBeVisible()
+    expect(within(dashboard).getAllByText('Огород')[0]).toBeVisible()
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     act(() => {
       vi.advanceTimersByTime(ANTI_SPAM_INTERVAL_MS + 1)
     })
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     expect(screen.getAllByText(/вручную/i).length).toBe(1)
     expect(screen.getAllByText(/стартовые данные/i).length).toBeGreaterThan(0)

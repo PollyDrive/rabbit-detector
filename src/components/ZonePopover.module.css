@@ -80,6 +80,49 @@
   min-height: 1.9rem;
 }
 
+.popupCompact {
+  width: 10.5rem;
+  padding: 0.6rem;
+}
+
+.popupCompact .closeButton {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.popupCompact .title {
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+}
+
+.popupCompact .form {
+  gap: 0.5rem;
+}
+
+.popupCompact .field {
+  gap: 0.28rem;
+}
+
+.popupCompact .field > label {
+  font-size: 0.65rem;
+}
+
+.popupCompact .select {
+  padding: 0.5rem 0.4rem;
+  font-size: 0.7rem;
+  min-height: 2.75rem;
+}
+
+.popupCompact .sliderScaleLabels {
+  font-size: 0.6rem;
+}
+
+.popupCompact .actions button {
+  padding: 0.7rem 0.5rem;
+  font-size: 0.72rem;
+  min-height: 2.75rem;
+}
+
 .popupFlippedLeft {
   transform: translate(calc(-100% - 0.5rem), calc(-100% - 0.5rem));
 }

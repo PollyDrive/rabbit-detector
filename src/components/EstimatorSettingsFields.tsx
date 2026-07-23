@@ -42,6 +42,11 @@ interface StepperFieldProps {
 function StepperField({ label, ariaLabel, value, onChange, step, min, max, helperText }: StepperFieldProps) {
   const round = (n: number) => Math.round(n * 100) / 100;
   const inputId = `input-${ariaLabel.replace(/\s+/g, '-').toLowerCase()}`;
+  // Guards against a NaN/undefined value ever reaching the input or the
+  // −/+ arithmetic (Math.max/min propagate NaN instead of clamping it) —
+  // without this, one stray NaN in settings state gets permanently baked
+  // in the moment the user next clicks − or +.
+  const safeValue = Number.isFinite(value) ? value : min;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valStr = e.target.value;
@@ -58,7 +63,7 @@ function StepperField({ label, ariaLabel, value, onChange, step, min, max, helpe
         {label}
       </label>
       <div className={styles.stepper}>
-        <StepperButton ariaLabel="Уменьшить" onClick={() => onChange(Math.max(min, round(value - step)))}>
+        <StepperButton ariaLabel="Уменьшить" onClick={() => onChange(Math.max(min, round(safeValue - step)))}>
           −
         </StepperButton>
         <input
@@ -68,11 +73,11 @@ function StepperField({ label, ariaLabel, value, onChange, step, min, max, helpe
           max={max}
           step={step}
           aria-label={ariaLabel}
-          value={value}
+          value={safeValue}
           onChange={handleInputChange}
           className={styles.stepperValue}
         />
-        <StepperButton ariaLabel="Увеличить" onClick={() => onChange(Math.min(max, round(value + step)))}>
+        <StepperButton ariaLabel="Увеличить" onClick={() => onChange(Math.min(max, round(safeValue + step)))}>
           +
         </StepperButton>
       </div>
@@ -148,6 +153,12 @@ export function EstimatorSettingsFields() {
   const context = useEstimatorSettings();
   const settings = context?.settings ?? DEFAULT_ESTIMATOR_SETTINGS;
   const updateSetting = context?.updateSetting ?? (() => {});
+  const suspiciousActivityWindowSeconds = Number.isFinite(settings.suspiciousActivityWindowSeconds)
+    ? settings.suspiciousActivityWindowSeconds
+    : DEFAULT_ESTIMATOR_SETTINGS.suspiciousActivityWindowSeconds;
+  const suspiciousActivityMinEvents = Number.isFinite(settings.suspiciousActivityMinEvents)
+    ? settings.suspiciousActivityMinEvents
+    : DEFAULT_ESTIMATOR_SETTINGS.suspiciousActivityMinEvents;
 
   return (
     <div className={styles.settingsShell}>
@@ -175,8 +186,9 @@ export function EstimatorSettingsFields() {
         />
         {/* Visually hidden, not removed — dogSuppression has no effect yet
             (dog toggle doesn't feed into the estimator), but the acceptance
-            suite still asserts the control exists in the DOM. */}
-        <div className={styles.srOnly}>
+            suite still asserts the control exists in the DOM. `inert` keeps
+            its −/input/+ out of tab order too, not just off-screen. */}
+        <div className={styles.srOnly} inert>
           <StepperField
             label="dogSuppression"
             ariaLabel="dogSuppression"
@@ -197,6 +209,26 @@ export function EstimatorSettingsFields() {
           min={0}
           max={10}
           helperText="Интервал времени в секундах для объединения сигналов"
+        />
+        <StepperField
+          label="Минимум слабых сигналов"
+          ariaLabel="Suspicious activity min events"
+          value={suspiciousActivityMinEvents}
+          onChange={(val) => updateSetting("suspiciousActivityMinEvents", val)}
+          step={1}
+          min={2}
+          max={10}
+          helperText="Сколько слабых сигналов нужно для статуса подозрительности"
+        />
+        <StepperField
+          label="Окно подозрительности"
+          ariaLabel="Suspicious activity window"
+          value={suspiciousActivityWindowSeconds}
+          onChange={(val) => updateSetting("suspiciousActivityWindowSeconds", val)}
+          step={1}
+          min={0}
+          max={60}
+          helperText={`${suspiciousActivityMinEvents}+ слабых сигнала в зоне ближе друг к другу, чем ${suspiciousActivityWindowSeconds} сек — зона подозрительна`}
         />
       </div>
       <div className={styles.thresholdFieldWrap}>

@@ -37,7 +37,7 @@
 
   /* Base font size scales with viewport width so rem-based text grows on
      larger screens instead of staying pinned at a fixed pixel size. */
-  font-size: clamp(15px, 0.85vw + 9px, 20px);
+  font-size: clamp(14px, 0.5vw + 10px, 22px);
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.2;
   color-scheme: dark;

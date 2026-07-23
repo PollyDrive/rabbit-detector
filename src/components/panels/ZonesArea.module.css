@@ -1,9 +1,4 @@
 .area {
-  background: var(--surface-dark-on-art);
-  color: #ffffff;
-  border-radius: 4px;
-  padding: 1em;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
@@ -21,8 +16,8 @@
 .area td {
   color: inherit;
   border-bottom-color: rgba(255, 255, 255, 0.15);
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
 }
 
 .explainabilityContainer {

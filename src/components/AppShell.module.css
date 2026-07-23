@@ -3,6 +3,9 @@
   height: 100vh;
   overflow: auto;
   background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scaleViewport {
@@ -37,27 +40,17 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 1.25em;
-  font-size: 1rem;
+  font-size: clamp(11px, 0.82vw, 20px);
   transform-origin: top left;
 }
 
 
-.zonesAreaContainer {
-  position: absolute;
-  left: 1.25rem;
-  bottom: 1.25rem;
-  z-index: 5;
-  width: 22em;
-  font-size: 1rem;
-  transform-origin: bottom left;
-}
-
 .dashboardArea {
   position: absolute;
   right: 1.25rem;
-  width: 52rem;
+  width: 56em;
   z-index: 5;
-  font-size: 1rem;
+  font-size: clamp(11px, 0.82vw, 20px);
   transform-origin: top right;
 }
 
@@ -68,12 +61,12 @@
  * the offsets stack (see stage1_global_review fix).
  */
 .controlContent {
-  width: 19em;
+  width: 23em;
   height: 100%;
   background: var(--surface-dark-on-art);
   color: #ffffff;
   border-radius: 4px;
-  padding: 1.25em;
+  padding: 1.1em;
   box-sizing: border-box;
   display: grid;
   gap: 1em;
@@ -87,6 +80,13 @@
 
 .controlContent h2 {
   margin-top: 0;
+  font-size: 1.3em;
+  line-height: 1.15;
+}
+
+.controlContent h3 {
+  font-size: 1.05em;
+  line-height: 1.15;
 }
 
 .dashboardContent {
@@ -102,6 +102,13 @@
   gap: 0.875em;
   align-content: start;
   overflow: auto;
+}
+
+.dashboardDetailRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1em;
+  align-items: stretch;
 }
 
 .logsArea {
@@ -126,7 +133,7 @@
 .clock {
   margin: 0 0 0.75em;
   font-variant-numeric: tabular-nums;
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
 
 .buttonRow {
@@ -136,7 +143,7 @@
 }
 
 .controlContent button {
-  padding: 0.75em 1.25em;
+  padding: 0.6em 1em;
   font-size: 1em;
   font-weight: 600;
   border: 1px solid transparent;
@@ -168,12 +175,12 @@
 
 .controlContent .actionDanger {
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.65);
+  border-color: var(--tone-danger);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .controlContent .actionDanger:hover {
-  background: rgb(var(--surface-dark) / 40%);
+  background: var(--tone-danger);
   border-color: var(--tone-danger);
   color: #ffffff;
 }
@@ -183,14 +190,14 @@
   align-items: center;
   gap: 0.625em;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
 .controlContent .switchRow .switch {
   flex: 0 0 auto;
-  width: 3em;
-  height: 1.625em;
-  padding: 0.1875em;
+  width: 2.5em;
+  height: 1.4em;
+  padding: 0.175em;
   border-radius: 999px;
   background: #6b7280;
   border: none;
@@ -205,8 +212,8 @@
 }
 
 .switchKnob {
-  width: 1.25em;
-  height: 1.25em;
+  width: 1.05em;
+  height: 1.05em;
   border-radius: 50%;
   background: #ffffff;
   transform: translateX(0);
@@ -214,7 +221,7 @@
 }
 
 .switch.switchOn .switchKnob {
-  transform: translateX(1.375em);
+  transform: translateX(1.1em);
 }
 
 .controlTextAction {
@@ -281,6 +288,8 @@
   align-items: start;
   gap: 1.5rem;
   padding: 1.5rem 1.25rem 2.5rem;
+  width: 100%;
+  max-width: 2560px;
 }
 
 .belowCanvasLeft {
@@ -289,7 +298,16 @@
   min-width: 0;
 }
 
-@media (max-width: 68.75rem) {
+/* Cap overlay panel scaling when window > 2560px */
+/* The clamp(10px, 0.785vw, 20px) handles the caps automatically, 
+   but keeping the media query as a safety fallback if needed. */
+@media (min-width: 160rem) {
+  .controlArea, .dashboardArea {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 68.75rem) /* 1100px */ {
   .belowCanvas {
     grid-template-columns: 1fr;
   }

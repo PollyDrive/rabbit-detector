@@ -121,7 +121,7 @@ export function MobileMapView() {
               transformOrigin: "top left",
             }}
           >
-            <FarmMap onZoneClick={handleZoneClick} touchHint />
+            <FarmMap onZoneClick={handleZoneClick} touchHint disabled={state.running} />
             <BadgeLayer events={state.events} />
           </div>
         </div>

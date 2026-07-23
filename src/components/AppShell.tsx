@@ -10,7 +10,7 @@ import { ZonePopover } from "./ZonePopover";
 import { ControlArea } from "./panels/ControlArea";
 import { DashboardArea } from "./panels/DashboardArea";
 import { EventLogTabs } from "./panels/EventLogTabs";
-import { Legend, ConfidenceSection, ZonesTile } from "./Legend";
+import { Legend, ConfidenceSection } from "./Legend";
 import { useFarm } from "../context/FarmContext";
 import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } from "./OnboardingModal";
 
@@ -18,8 +18,7 @@ import { HelpButton, OnboardingModal, hasSeenOnboarding, markOnboardingSeen } fr
 // plain rem in AppShell.module.css, tuned per breakpoint (tablet/desktop/
 // wide-desktop media queries), NOT from a JS-computed transform. Only their
 // vertical anchor is computed here, since it has to track the farm art's
-// own continuous scale — DASHBOARD_TOP_PX is a canvas coordinate (below
-const DASHBOARD_TOP_PX = 1050;
+const DASHBOARD_TOP_PX = 900;
 const PANEL_MARGIN_REM = 1.25;
 
 function getRootFontSizePx() {
@@ -38,25 +37,28 @@ export default function AppShell() {
   const scale = useCanvasScale();
   const rootFontPx = getRootFontSizePx();
   const panelMarginPx = PANEL_MARGIN_REM * rootFontPx;
-  
-  // We scale the panels proportionally with the canvas, but boost their native
-  // size by 35% so they stay readable when scaled down to small screens.
-  const panelScale = scale * 1.35;
 
   // Measuring each panel's own rendered height — rather than assuming a
   // constant — is what actually keeps the reserved space under the farm
   // art matching what's really there, at any viewport/content amount.
   const [controlRef, controlSize] = useElementSize<HTMLDivElement>();
   const [dashboardRef, dashboardSize] = useElementSize<HTMLDivElement>();
+  const [logsRef, logsSize] = useElementSize<HTMLDivElement>();
 
   const dashboardTopPx = DASHBOARD_TOP_PX * scale;
-  const controlBottomPx = panelMarginPx + controlSize.height * panelScale;
-  const dashboardBottomPx = dashboardTopPx + dashboardSize.height * panelScale;
-  
+  const controlBottomPx = panelMarginPx + controlSize.height;
+  const dashboardBottomPx = dashboardTopPx + dashboardSize.height;
+
+  // Match the dashboard's rendered width to the event log below it —
+  // undefined (falls back to the CSS default) until the log has painted once.
+  // On screens <= 1100px, the log spans the full width, so we fall back to CSS default.
+  const isSingleColumn = typeof window !== 'undefined' ? window.innerWidth <= 1100 : false;
+  const dashboardWidthPx = !isSingleColumn && logsSize.width > 0 ? logsSize.width : undefined;
+
   // Keep the viewport height bounded by the canvas and control area.
   // The dashboard will intentionally overhang the bottom of the map if it's tall enough.
   const scaleViewportHeight = Math.max(CANVAS_HEIGHT * scale, controlBottomPx);
-  
+
   // Calculate how much the dashboard overhangs the canvas to push the logs down
   const overhangPx = Math.max(0, dashboardBottomPx - (CANVAS_HEIGHT * scale));
 
@@ -98,7 +100,7 @@ export default function AppShell() {
             transformOrigin: "top left",
           }}
         >
-          <FarmMap onZoneClick={handleZoneClick} />
+          <FarmMap onZoneClick={handleZoneClick} disabled={state.running} />
           <BadgeLayer events={state.events} />
         </div>
 
@@ -111,24 +113,15 @@ export default function AppShell() {
           className={styles.controlArea} 
           data-testid="control-area" 
           ref={controlRef}
-          style={{ transform: `scale(${panelScale})` }}
         >
           <ControlArea />
-        </div>
-        
-        <div 
-          className={styles.zonesAreaContainer}
-          data-testid="zones-tile-area"
-          style={{ transform: `scale(${panelScale})` }}
-        >
-          <ZonesTile />
         </div>
         
         <div
           className={styles.dashboardArea}
           data-testid="dashboard-area"
           ref={dashboardRef}
-          style={{ top: dashboardTopPx, transform: `scale(${panelScale})` }}
+          style={{ top: dashboardTopPx, width: dashboardWidthPx }}
         >
           <DashboardArea />
         </div>
@@ -147,7 +140,7 @@ export default function AppShell() {
           <Legend />
           <ConfidenceSection />
         </div>
-        <div className={styles.logsArea} style={{ marginTop: overhangPx }}>
+        <div className={styles.logsArea} ref={logsRef} style={{ marginTop: overhangPx }}>
           <EventLogTabs />
         </div>
       </div>

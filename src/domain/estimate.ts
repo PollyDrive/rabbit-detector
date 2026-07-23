@@ -7,50 +7,94 @@ export interface EstimateResult {
   pointEstimate: number;
   confidencePercent: number;
   suspiciousZonesCount: number;
+  suspiciousZoneNames: string[];
 }
 
-const SUSPICIOUS_ACTIVITY_WINDOW_SECONDS = 10;
+function countRabbitsInZone(strongEvents: FarmEvent[]): number {
+  if (strongEvents.length === 0) return 0;
+  
+  const counts: Record<string, number> = {
+    'Следы': 0,
+    'Пропажа морковки': 0,
+    'Новая яма': 0,
+    'Датчик движения': 0,
+    'Шуршание': 0,
+  };
+  
+  for (const e of strongEvents) {
+    counts[e.event_type] = (counts[e.event_type] || 0) + 1;
+  }
+  
+  const visualRabbits = Math.max(counts['Следы'], counts['Пропажа морковки'], counts['Новая яма']);
+  const sensorRabbits = (counts['Датчик движения'] > 0 || counts['Шуршание'] > 0) ? 1 : 0;
+  
+  return Math.max(visualRabbits, sensorRabbits);
+}
 
-
-
-function countSignificantLocations(events: FarmEvent[], tau: number): { count: number; suspiciousCount: number } {
+function computeHighAndSuspicious(
+  windowEvents: FarmEvent[],
+  settings: EstimatorSettings
+): { high: number; suspiciousNames: string[] } {
   const byLocation: Record<string, FarmEvent[]> = {};
-  for (const event of events) {
+  for (const event of windowEvents) {
     if (!byLocation[event.location]) byLocation[event.location] = [];
     byLocation[event.location].push(event);
   }
 
-  let count = 0;
-  let suspiciousCount = 0;
+  let high = 0;
+  const suspiciousNames: string[] = [];
   for (const loc in byLocation) {
-    const isGuaranteed = byLocation[loc].some((e) => credibilityOf(e) >= tau);
-    const isSuspicious = !isGuaranteed && byLocation[loc].sort((a, b) => a.time - b.time).some((e, i, arr) => i < arr.length - 1 && arr[i + 1].time - e.time <= SUSPICIOUS_ACTIVITY_WINDOW_SECONDS);
+    const zoneEvents = byLocation[loc];
+    const strongZoneEvents = zoneEvents.filter((event) => credibilityOf(event) >= settings.tau);
     
-    if (isGuaranteed || isSuspicious) {
-      count++;
+    let maxRabbitsInZone = 0;
+    for (const event of strongZoneEvents) {
+       const windowStart = event.time - settings.concurrencyWindowSeconds;
+       const concurrentEvents = strongZoneEvents.filter(e => e.time >= windowStart && e.time <= event.time);
+       const rabbits = countRabbitsInZone(concurrentEvents);
+       if (rabbits > maxRabbitsInZone) {
+         maxRabbitsInZone = rabbits;
+       }
+    }
+
+    const weakZoneEvents = zoneEvents.filter((event) => credibilityOf(event) < settings.tau);
+    const n = settings.suspiciousActivityMinEvents;
+    const isSuspicious = weakZoneEvents.sort((a, b) => a.time - b.time).some((e, i, arr) => {
+      if (i + n - 1 < arr.length) {
+        return arr[i + n - 1].time - e.time <= settings.suspiciousActivityWindowSeconds;
+      }
+      return false;
+    });
+
+    if (maxRabbitsInZone > 0) {
+      high += maxRabbitsInZone;
     }
     if (isSuspicious) {
-      suspiciousCount++;
+      high += 1;
+      suspiciousNames.push(loc);
     }
   }
-  return { count, suspiciousCount };
+
+  return { high, suspiciousNames };
 }
 
-function countOccupiedLocationsAt(events: FarmEvent[], currentTime: number, settings: EstimatorSettings): number {
+function countConcurrentRabbitsAt(strongEvents: FarmEvent[], currentTime: number, settings: EstimatorSettings): number {
   const windowStart = currentTime - settings.concurrencyWindowSeconds;
-  const occupiedLocations = new Set<FarmEvent['location']>();
-
-  for (const event of events) {
-    if (event.time < windowStart || event.time > currentTime) {
-      continue;
-    }
-
-    if (credibilityOf(event) >= settings.tau) {
-      occupiedLocations.add(event.location);
+  
+  const byLocation: Record<string, FarmEvent[]> = {};
+  for (const event of strongEvents) {
+    if (event.time >= windowStart && event.time <= currentTime) {
+      if (!byLocation[event.location]) byLocation[event.location] = [];
+      byLocation[event.location].push(event);
     }
   }
 
-  return occupiedLocations.size;
+  let totalRabbits = 0;
+  for (const loc in byLocation) {
+    totalRabbits += countRabbitsInZone(byLocation[loc]);
+  }
+
+  return totalRabbits;
 }
 
 export function computeEstimate(
@@ -68,17 +112,19 @@ export function computeEstimate(
       pointEstimate: 0,
       confidencePercent: 0,
       suspiciousZonesCount: 0,
+      suspiciousZoneNames: [],
     };
   }
 
-  const { count: high, suspiciousCount: suspiciousZonesCount } = countSignificantLocations(windowEvents, settings.tau);
+  const { high, suspiciousNames: suspiciousZoneNames } = computeHighAndSuspicious(windowEvents, settings);
+  const suspiciousZonesCount = suspiciousZoneNames.length;
   const strongEvents = windowEvents.filter((event) => credibilityOf(event) >= settings.tau);
 
   let low = 0;
   for (const event of strongEvents) {
-    const occupiedLocations = countOccupiedLocationsAt(strongEvents, event.time, settings);
-    if (occupiedLocations > low) {
-      low = occupiedLocations;
+    const rabbits = countConcurrentRabbitsAt(strongEvents, event.time, settings);
+    if (rabbits > low) {
+      low = rabbits;
     }
   }
 
@@ -91,5 +137,6 @@ export function computeEstimate(
     pointEstimate,
     confidencePercent,
     suspiciousZonesCount,
+    suspiciousZoneNames,
   };
 }

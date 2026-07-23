@@ -10,7 +10,7 @@ describe('stage 3 game clock', () => {
     const rowsBefore = screen.getAllByText(/^#\d+$/).length
     const clockBefore = screen.getByText(/игровое время/i).textContent
 
-    fireEvent.click(screen.getByRole('button', { name: /промотать час/i }))
+    fireEvent.click(screen.getByRole('button', { name: /промотать/i }))
 
     const rowsAfter = screen.getAllByText(/^#\d+$/).length
     const clockAfter = screen.getByText(/игровое время/i).textContent

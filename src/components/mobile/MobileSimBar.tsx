@@ -22,15 +22,15 @@ export function MobileSimBar() {
           type="button"
           className={styles.playButton}
           onClick={() => setRunning(!state.running)}
-          aria-label={state.running ? "Пауза" : "Запустить"}
+          aria-label={state.running ? "Остановить" : "Запустить"}
         >
           <span aria-hidden="true">{state.running ? "⏸" : "▶"}</span>
         </button>
         <span className={styles.clock}>{formatGameTime(state.gameTime)}</span>
       </div>
 
-      <button type="button" className={styles.chip} onClick={fastForward}>
-        Промотать час
+      <button type="button" className={styles.chip} onClick={fastForward} disabled={state.gameTime >= 24 * 3600} style={{ opacity: state.gameTime >= 24 * 3600 ? 0.5 : 1 }}>
+        {state.gameTime >= 24 * 3600 ? "Только на сутки" : "Промотать час"}
       </button>
       <button type="button" className={styles.chip} onClick={regenerateHistory}>
         Пересоздать историю

@@ -28,15 +28,15 @@
 
 .headerRow {
   display: grid;
-  grid-template-columns: 2.75rem 1.1fr 1.2fr 1.6fr 1.3fr 0.9fr;
-  column-gap: 0.6rem;
+  grid-template-columns: 2rem 1.22fr 1fr 4.4rem 7.8rem 4.3rem;
+  column-gap: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 2.75rem 1.1fr 1.2fr 1.6fr 1.3fr 0.9fr;
-  column-gap: 0.6rem;
+  grid-template-columns: 2rem 1.22fr 1fr 4.4rem 7.8rem 4.3rem;
+  column-gap: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 

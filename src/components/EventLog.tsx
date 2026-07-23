@@ -27,11 +27,11 @@ export function EventLog({ mobile = false }: { mobile?: boolean }) {
           {events.map((event) => (
             <tr key={event.id} className={styles.row}>
               <td className={styles.cell}>#{event.id}</td>
-              <td className={styles.cell}>
+              <td className={styles.cell} title={event.location}>
                 {event.location}
                 {mockedZones && event.location in mockedZones ? "\u200B" : null}
               </td>
-              <td className={styles.cell}>{event.event_type}</td>
+              <td className={styles.cell} title={event.event_type}>{event.event_type}</td>
               <td className={styles.cell}>
                 {event.event_type === "Пропажа морковки" ? (
                   "—"

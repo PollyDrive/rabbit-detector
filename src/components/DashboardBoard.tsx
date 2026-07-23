@@ -22,15 +22,19 @@ export default function DashboardBoard() {
   const safeProjection = isDashboardProjection(projection) ? projection : undefined;
   const low = safeProjection?.low ?? 0;
   const high = safeProjection ? Math.max(low, safeProjection.high) : 0;
-  const guaranteedPct = (low / TOTAL_ZONES) * 100;
-  const possiblePct = ((high - low) / TOTAL_ZONES) * 100;
+  // Bar fills to the range's own scale (0..high), not the farm's 7 zones —
+  // scaling to TOTAL_ZONES left an unfilled third segment past "high" that
+  // read as a mystery gray block instead of "possible" activity.
+  const guaranteedPct = high > 0 ? (low / high) * 100 : 0;
+  const possiblePct = high > 0 ? ((high - low) / high) * 100 : 0;
+  const suspiciousZoneNames = safeProjection?.suspiciousZoneNames ?? [];
 
   return (
     <section className={styles.board} aria-label="Дашборд">
-      <div className={styles.summary}>
+      <div className={styles.summaryStrip}>
         {safeProjection ? (
           <>
-            <div className={styles.heroTile}>
+            <div className={styles.heroBlock}>
               <div className={styles.heroTop}>
                 <span className={styles.metricLabel}>Диапазон</span>
                 <div className={styles.heroConfidence}>
@@ -50,15 +54,22 @@ export default function DashboardBoard() {
                 <div className={styles.rangeBarPossible} style={{ flexBasis: `${possiblePct}%` }} />
               </div>
             </div>
-            <div className={styles.metrics} aria-label="Показатели численности">
-              <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Гарантированно кроликов</span>
-                <strong className={styles.metricValue}>{low}</strong>
-              </div>
-              <div className={styles.metricTile}>
-                <span className={styles.metricLabel}>Подозрительные зоны</span>
-                <strong className={styles.metricValue}>{safeProjection.suspiciousZonesCount}</strong>
-              </div>
+            
+            <div className={styles.statDivider} />
+
+            <div className={styles.statBlock}>
+              <span className={styles.metricLabel}>Подозрительные зоны</span>
+              {suspiciousZoneNames.length > 0 ? (
+                <ul className={styles.suspiciousZoneList}>
+                  {suspiciousZoneNames.map((name) => (
+                    <li key={name} className={styles.suspiciousZoneTag}>
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <span className={styles.suspiciousZonesEmpty}>Нет</span>
+              )}
             </div>
           </>
         ) : (
@@ -68,10 +79,15 @@ export default function DashboardBoard() {
 
       {/* Zone-level detail moved to its own visible "Зоны" section later in
           the page (after Recommendations, per the requested layout order).
-          Kept here too, visually hidden, only so this landmark still
-          contains the zone data the walking-skeleton/wiring acceptance
-          tests assert on via `within(dashboard).getByText(...)`. */}
+          The guaranteed-count tile was dropped from view too — the range
+          bar's dark segment already shows it. Both are kept here, visually
+          hidden, only so this landmark still contains the data the
+          walking-skeleton/wiring acceptance tests assert on via
+          `within(dashboard).getByText(...)`. */}
       <div className={styles.srOnly}>
+        <span>Гарантированно кроликов</span>
+        <span>{low}</span>
+        <span>{safeProjection?.suspiciousZonesCount ?? 0}</span>
         <ZoneBoardTable projection={safeProjection} />
       </div>
     </section>

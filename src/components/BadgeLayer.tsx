@@ -9,6 +9,8 @@ const BADGE_VISIBLE_MS = 4000;
 interface BadgeStack {
   count: number;
   label: string;
+  intensity: number;
+  isCarrot: boolean;
 }
 
 interface BadgeLayerProps {
@@ -34,6 +36,8 @@ export function BadgeLayer({ events }: BadgeLayerProps) {
         next[event.location] = {
           count: (existing?.count ?? 0) + 1,
           label: event.event_type,
+          intensity: event.intensity,
+          isCarrot: event.event_type === "Пропажа морковки",
         };
       }
       return next;
@@ -84,6 +88,7 @@ export function BadgeLayer({ events }: BadgeLayerProps) {
             data-testid={`badge-${location}`}
           >
             <span>{stack.label}</span>
+            {!stack.isCarrot && <span className={styles.badgeIntensity}>· {stack.intensity}</span>}
             {stack.count > 1 && <span className={styles.badgeCount}>×{stack.count}</span>}
           </div>
         );

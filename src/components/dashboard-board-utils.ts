@@ -15,6 +15,7 @@ export interface DashboardProjection {
   pointEstimate: number;
   confidencePercent: number;
   suspiciousZonesCount: number;
+  suspiciousZoneNames?: string[];
   recommendations: Array<{
     zone: string;
     priority: number;
